@@ -99,7 +99,7 @@ public class RoomDB extends ConnectDB {
                     }
                 });
     }
-    public void getRamdonRooms(){
+    public void getRandomRooms(){
         List<Room>rooms = new ArrayList<Room>();
         db.collection("rooms")
                 .orderBy("cost")
