@@ -23,6 +23,8 @@ import com.trinhtien2212.findhomerental.model.Room;
 import com.trinhtien2212.findhomerental.presenter.GetRoomByListRoomIds;
 import com.trinhtien2212.findhomerental.presenter.RoomPresenter;
 import com.trinhtien2212.findhomerental.ui.Util;
+import com.trinhtien2212.findhomerental.ui.home.HomeFragment;
+import com.trinhtien2212.findhomerental.ui.home.RoomsResult;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -73,7 +75,7 @@ public class RoomDB extends ConnectDB {
                 });
 
     }
-    public void getAllRoomOfUser(String userUid){
+    public void getAllRoomOfUser(String userUid,RoomsResult roomsResult){
         List<Room>rooms = new ArrayList<Room>();
         db.collection("rooms")
                 .whereEqualTo("userCreatedId", userUid)
@@ -92,14 +94,14 @@ public class RoomDB extends ConnectDB {
                                 Log.d("Room", document.getId() + " => " + document.getData());
                             }
                             //ToDo
-                            getImagesOfRoom(rooms,-1);
+                            getImagesOfRoom(rooms,-1,roomsResult);
                         } else {
                             Log.d("Error", "Error getting documents: ", task.getException());
                         }
                     }
                 });
     }
-    public void getRandomRooms(){
+    public void getRandomRooms(RoomsResult homeFragment){
         List<Room>rooms = new ArrayList<Room>();
         db.collection("rooms")
                 .orderBy("cost")
@@ -119,12 +121,13 @@ public class RoomDB extends ConnectDB {
                                 Log.d("Room", document.getId() + " => " + document.getData());
                             }
                             //ToDo
-                            getImagesOfRoom(rooms,-1);
+                            getImagesOfRoom(rooms,-1,homeFragment);
                         } else {
                             Log.d("Error", "Error getting documents: ", task.getException());
                         }
                     }
                 });
+
     }
     public void getRoom(String roomID, GetRoomByListRoomIds getRoomByListRoomIds){
         DocumentReference docRef = db.collection("rooms").document(roomID);
@@ -149,10 +152,11 @@ public class RoomDB extends ConnectDB {
             }
         });
     }
-    public void getImagesOfRoom(List<Room>rooms,int index){
+    public void getImagesOfRoom(List<Room>rooms, int index, RoomsResult roomsResult){
         final int index2 = index+1;
         if(index2 == rooms.size()){
             //ToDo
+            roomsResult.returnRooms(rooms);
             return;
         }
         Room room = rooms.get(index2);
@@ -170,7 +174,7 @@ public class RoomDB extends ConnectDB {
 //                            images.add((String) data.get(key));
 //                        }
                         room.setImagesMap(document.getData());
-                       getImagesOfRoom(rooms,index2);
+                       getImagesOfRoom(rooms,index2, roomsResult);
                     } else {
                         Log.d("Error", "No such document");
                     }

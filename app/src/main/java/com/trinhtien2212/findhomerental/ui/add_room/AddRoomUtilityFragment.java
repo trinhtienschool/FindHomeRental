@@ -124,11 +124,7 @@ public class AddRoomUtilityFragment extends Fragment {
         cb.setChecked(true);
     }
     private void setUpdateImage(ImageButton ib,String url){
-        Picasso.get()
-                .load(url)
-                .placeholder(R.drawable.image_holder)
-                .error(R.drawable.image_holder)
-                .into(ib);
+      Util.setImage(ib,url);
     }
     private void handleClickSaveButton(){
         if(imageUris.size()<5){

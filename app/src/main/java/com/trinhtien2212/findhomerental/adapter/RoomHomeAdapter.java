@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.trinhtien2212.findhomerental.R;
 import com.trinhtien2212.findhomerental.model.Room;
+import com.trinhtien2212.findhomerental.ui.Util;
 
 import java.util.List;
 
@@ -35,8 +36,11 @@ public class RoomHomeAdapter extends RecyclerView.Adapter<RoomHomeAdapter.RoomVi
         if(room == null){
             return;
         }
+
+
+        Util.setImage(holder.imgHome,room.getImages().get(0));
 //        holder.txtName.setText(room.getName());
-        holder.txtPrice.setText(room.getCost()+"");
+        holder.txtPrice.setText(Util.formatCurrency(room.getCost()));
         holder.txtAddress.setText(room.getAddress());
 //        ToDo
 //        holder.imgHome.setImageResource(room.get());
@@ -48,12 +52,12 @@ public class RoomHomeAdapter extends RecyclerView.Adapter<RoomHomeAdapter.RoomVi
     }
 
     public class RoomViewHolder extends RecyclerView.ViewHolder{
-        private TextView txtName, txtPrice, txtAddress;
+        private TextView  txtPrice, txtAddress;
         private ImageView imgHome;
 
         public RoomViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtName = itemView.findViewById(R.id.title2);
+
             txtPrice = itemView.findViewById(R.id.titlePrice2);
             txtAddress = itemView.findViewById(R.id.titleAddress2);
             imgHome = itemView.findViewById(R.id.imageHome2);
