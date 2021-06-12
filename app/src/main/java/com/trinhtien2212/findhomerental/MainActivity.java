@@ -1,12 +1,15 @@
 package com.trinhtien2212.findhomerental;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
+import com.trinhtien2212.findhomerental.ui.home.GoogleSignIn;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -32,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                Log.e("Co","Co vo dang nahp");
+                startActivity(new Intent(MainActivity.this, GoogleSignIn.class));
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

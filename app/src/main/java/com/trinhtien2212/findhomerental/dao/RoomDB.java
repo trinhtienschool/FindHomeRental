@@ -91,7 +91,35 @@ public class RoomDB extends ConnectDB {
 
                                 Log.d("Room", document.getId() + " => " + document.getData());
                             }
-                            //
+                            //ToDo
+                            getImagesOfRoom(rooms,-1);
+                        } else {
+                            Log.d("Error", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+    public void getRamdonRooms(){
+        List<Room>rooms = new ArrayList<Room>();
+        db.collection("rooms")
+                .orderBy("cost")
+//                .whereEqualTo("roomID", userUid)
+                .limit(30)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Room room = document.toObject(Room.class);
+                                room.setUtilities(document);
+                                rooms.add(room);
+                                Log.e("Room",room.toString());
+
+                                Log.d("Room", document.getId() + " => " + document.getData());
+                            }
+                            //ToDo
+                            getImagesOfRoom(rooms,-1);
                         } else {
                             Log.d("Error", "Error getting documents: ", task.getException());
                         }
@@ -113,6 +141,38 @@ public class RoomDB extends ConnectDB {
                        getRoomByListRoomIds.addRoom(room);
                     } else {
                         Log.d("Error", "No such document"+roomID);
+                    }
+                } else {
+                    Log.d("Error", "get failed with ", task.getException());
+
+                }
+            }
+        });
+    }
+    public void getImagesOfRoom(List<Room>rooms,int index){
+        final int index2 = index+1;
+        if(index2 == rooms.size()){
+            //ToDo
+            return;
+        }
+        Room room = rooms.get(index2);
+        DocumentReference docRef = db.collection("images").document(room.getRoomID());
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+//                        Map<String,Object>data = document.getData();
+//                        Log.e("map: ",data.toString());
+//                        List<String>images = new ArrayList<String>();
+//                        for(String key: data.keySet()){
+//                            images.add((String) data.get(key));
+//                        }
+                        room.setImagesMap(document.getData());
+                       getImagesOfRoom(rooms,index2);
+                    } else {
+                        Log.d("Error", "No such document");
                     }
                 } else {
                     Log.d("Error", "get failed with ", task.getException());

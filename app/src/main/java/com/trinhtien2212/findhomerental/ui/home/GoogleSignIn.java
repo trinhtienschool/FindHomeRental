@@ -80,8 +80,8 @@ public class GoogleSignIn extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         currentUser = mAuth.getCurrentUser();
         if(currentUser !=null){
-            Intent intent = new Intent(GoogleSignIn.this, AddRoomActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(GoogleSignIn.this, AddRoomActivity.class);
+//            startActivity(intent);
         }
     }
     private void signIn() {

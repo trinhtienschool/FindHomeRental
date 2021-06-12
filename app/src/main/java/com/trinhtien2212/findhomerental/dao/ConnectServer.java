@@ -11,7 +11,7 @@ public abstract class ConnectServer implements Callback{
     public static final int DELETEROOM = 3;
     public  static  final int DELETEUSER = 4;
     public static  final int GETALLUSER = 5;
-    protected final String LINK_SERVER = "http://192.168.1.6:5001/data-ceremony-314315/us-central1/app/";
+    protected final String LINK_SERVER = "https://us-central1-data-ceremony-314315.cloudfunctions.net/app/";
     protected DataClient dataClient = APIUtils.getData();
 //    protected Retrofit retrofit2 = RetrofitClient.getClient(LINK_SERVER);
     public  abstract void connectServer(Object object,int action);
