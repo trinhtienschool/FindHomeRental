@@ -107,16 +107,16 @@ public class UserListActivity extends AppCompatActivity {
         Toast.makeText(this, "Load data page", Toast.LENGTH_SHORT).show();
 
         List<User> list = new ArrayList<>();
-        User u1 = new User("Trần Nhật Thy", "nhatthy1224@gmail.com", R.drawable.ic_baseline_person_24);
-        User u2 = new User("Trần Nhật Thy", "nhatthy1224@gmail.com", R.drawable.ic_baseline_person_24);
-        User u3 = new User("Trần Nhật Thy", "nhatthy1224@gmail.com", R.drawable.ic_baseline_person_24);
-        User u4 = new User("Trần Nhật Thy", "nhatthy1224@gmail.com", R.drawable.ic_baseline_person_24);
-        User u5 = new User("Trần Nhật Thy", "nhatthy1224@gmail.com", R.drawable.ic_baseline_person_24);
-        User u6 = new User("Trần Nhật Thy", "nhatthy1224@gmail.com", R.drawable.ic_baseline_person_24);
-        User u7 = new User("Trần Nhật Thy", "nhatthy1224@gmail.com", R.drawable.ic_baseline_person_24);
-        User u8 = new User("Trần Nhật Thy", "nhatthy1224@gmail.com", R.drawable.ic_baseline_person_24);
-        User u9 = new User("Trần Nhật Thy", "nhatthy1224@gmail.com", R.drawable.ic_baseline_person_24);
-        User u10 = new User("Trần Nhật Thy", "nhatthy1224@gmail.com", R.drawable.ic_baseline_person_24);
+        User u1 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
+        User u2 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
+        User u3 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
+        User u4 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
+        User u5 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
+        User u6 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
+        User u7 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
+        User u8 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
+        User u9 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
+        User u10 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
 
         list.add(u1);
         list.add(u2);

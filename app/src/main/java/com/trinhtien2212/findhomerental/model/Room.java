@@ -1,31 +1,9 @@
 package com.trinhtien2212.findhomerental.model;
 
-<<<<<<< HEAD
-public class Room {
-    private String name,price, address;
-    private int img;
-
-    public Room(String name, String price, String address, int img) {
-        this.name = name;
-        this.price = price;
-        this.address = address;
-        this.img = img;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public String getAddress() {
-        return address;
-=======
 import android.util.Log;
 
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -36,18 +14,23 @@ import java.util.Map;
 import java.util.Random;
 
 public class Room implements Serializable {
+    public Room(int cost, String address) {
+        this.cost = cost;
+        this.address = address;
+    }
 
-    private String roomID, userCreatedId,address,imageUrl,description;
+    private String roomID, userCreatedId, address, imageUrl, description;
     private Date dateCreated;
-    private boolean isDeleted,isPark,isWifi,isHotWater,isFre,isAttic,isTivi,isWardrobe,isFence,isWC,isFreeTime, isAirCondition;
+    private boolean isDeleted, isPark, isWifi, isHotWater, isFre, isAttic, isTivi, isWardrobe, isFence, isWC, isFreeTime, isAirCondition;
     private float area;
     private String phone;
-    private int cost,deposit,eleCost,watCost;
+    private int cost, deposit, eleCost, watCost;
     private Location location;
-    private List<String>images = new ArrayList<>();
+    private List<String> images = new ArrayList<>();
+
     public Room() {
         dateCreated = new Date();
-        Log.e("Contructor","Dang vao contructor");
+        Log.e("Contructor", "Dang vao contructor");
 //       isDeleted = false;
 //       isPark = false;
 //       isWifi = false;
@@ -88,42 +71,43 @@ public class Room implements Serializable {
         this.isAirCondition = isAirCondition;
     }
 
-    public Map<String,Object> convertToMap(){
-        Map<String,Object>map = new HashMap<String,Object>();
-        map.put("userCreatedId",this.userCreatedId);
-        map.put("dateCreated",this.dateCreated);
-        map.put("isDeleted",this.isDeleted);
-        map.put("address",this.address);
-        map.put("phone",this.phone);
-        map.put("imageUrl",this.imageUrl);
-        map.put("description",this.description);
-        map.put("area",this.area);
-        map.put("cost",this.cost);
-        map.put("deposit",this.deposit);
-        map.put("eleCost",this.eleCost);
-        map.put("watCost",this.watCost);
-        map.put("isPark",this.isPark);
-        map.put("isWifi",this.isWifi);
-        map.put("isHotWater",this.isHotWater);
-        map.put("isFre",this.isFre);
-        map.put("isAttic",this.isAttic);
-        map.put("isTivi",this.isTivi);
-        map.put("isWardrobe",this.isWardrobe);
-        map.put("isFence",this.isFence);
-        map.put("isWC",this.isWC);
-        map.put("isFreeTime",this.isFreeTime);
-        map.put("isAirCondition",this.isAirCondition);
+    public Map<String, Object> convertToMap() {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("userCreatedId", this.userCreatedId);
+        map.put("dateCreated", this.dateCreated);
+        map.put("isDeleted", this.isDeleted);
+        map.put("address", this.address);
+        map.put("phone", this.phone);
+        map.put("imageUrl", this.imageUrl);
+        map.put("description", this.description);
+        map.put("area", this.area);
+        map.put("cost", this.cost);
+        map.put("deposit", this.deposit);
+        map.put("eleCost", this.eleCost);
+        map.put("watCost", this.watCost);
+        map.put("isPark", this.isPark);
+        map.put("isWifi", this.isWifi);
+        map.put("isHotWater", this.isHotWater);
+        map.put("isFre", this.isFre);
+        map.put("isAttic", this.isAttic);
+        map.put("isTivi", this.isTivi);
+        map.put("isWardrobe", this.isWardrobe);
+        map.put("isFence", this.isFence);
+        map.put("isWC", this.isWC);
+        map.put("isFreeTime", this.isFreeTime);
+        map.put("isAirCondition", this.isAirCondition);
         return map;
     }
 
-    public Map<String,String>convertImagesListToMap(){
-        Map<String,String>map = new HashMap<String,String>();
-        for(int i = 0;i<this.images.size();i++){
-            map.put(i+"",images.get(i));
+    public Map<String, String> convertImagesListToMap() {
+        Map<String, String> map = new HashMap<String, String>();
+        for (int i = 0; i < this.images.size(); i++) {
+            map.put(i + "", images.get(i));
         }
         return map;
     }
-//    public void generateRoom(String address){
+
+    //    public void generateRoom(String address){
 //        String[] userIds = {"8aN1S6AkhQXRNNqAzMuY01mybmZ2",
 //        "NBVp1vcmqBfabDVZ9mrx90RwaXj1",
 //        "h1PykH8RBNbaYi18K6jfnfaNV2x1",
@@ -161,15 +145,17 @@ public class Room implements Serializable {
 //        RoomDB roomDB = RoomDB.getInstance();
 //
 //    }
-    public int random(int start, int end){
+    public int random(int start, int end) {
         Random random = new Random();
-        return random.nextInt(20)+11;
+        return random.nextInt(20) + 11;
     }
-    public boolean randomTrueFalse(){
+
+    public boolean randomTrueFalse() {
         Random random = new Random();
         return random.nextBoolean();
     }
-    public int random(int size){
+
+    public int random(int size) {
         Random random = new Random();
         return random.nextInt(size);
     }
@@ -183,36 +169,15 @@ public class Room implements Serializable {
     }
 
     public String getAddress() {
-        Log.e("Address","Dang vao address");
+        Log.e("Address", "Dang vao address");
         return address;
 
->>>>>>> f26b338d4693b0f5733aa2ff69a394a8f79e82b4
     }
 
     public void setAddress(String address) {
         this.address = address;
     }
 
-<<<<<<< HEAD
-    public int getImg() {
-        return img;
-    }
-
-    public void setImg(int img) {
-        this.img = img;
-    }
-
-    public Room(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-=======
     public String getPhone() {
         return phone;
     }
@@ -372,9 +337,11 @@ public class Room implements Serializable {
     public void setWatCost(int watCost) {
         this.watCost = watCost;
     }
-    public void addImage(String image){
+
+    public void addImage(String image) {
         this.images.add(image);
     }
+
     public String getRoomID() {
         return roomID;
     }
@@ -399,8 +366,8 @@ public class Room implements Serializable {
         this.images = images;
     }
 
-    public void setImagesMap(Map<String,Object>images){
-        for(String key: images.keySet()){
+    public void setImagesMap(Map<String, Object> images) {
+        for (String key : images.keySet()) {
             this.images.add((String) images.get(key));
         }
     }
@@ -444,21 +411,20 @@ public class Room implements Serializable {
     }
 
     public void setUtilities(DocumentSnapshot document) {
-        this.roomID = (String)document.getId();
-        this.isDeleted = (boolean)document.get("isDeleted");
-        this.isTivi = (boolean)document.get("isTivi");
-        this.isWardrobe = (boolean)document.get("isWardrobe");
-        this.isWifi = (boolean)document.get("isWifi");
-        this.isFre = (boolean)document.get("isFre");
-        if(document.get("isAirCondition") !=null) {
+        this.roomID = (String) document.getId();
+        this.isDeleted = (boolean) document.get("isDeleted");
+        this.isTivi = (boolean) document.get("isTivi");
+        this.isWardrobe = (boolean) document.get("isWardrobe");
+        this.isWifi = (boolean) document.get("isWifi");
+        this.isFre = (boolean) document.get("isFre");
+        if (document.get("isAirCondition") != null) {
             this.isAirCondition = (boolean) document.get("isAirCondition");
         }
-        this.isAttic = (boolean)document.get("isAttic");
-        this.isHotWater = (boolean)document.get("isHotWater");
-        this.isWC = (boolean)document.get("isWC");
-        this.isFreeTime = (boolean)document.get("isFreeTime");
-        this.isFence = (boolean)document.get("isFence");
-        this.isPark = (boolean)document.get("isPark");
->>>>>>> f26b338d4693b0f5733aa2ff69a394a8f79e82b4
+        this.isAttic = (boolean) document.get("isAttic");
+        this.isHotWater = (boolean) document.get("isHotWater");
+        this.isWC = (boolean) document.get("isWC");
+        this.isFreeTime = (boolean) document.get("isFreeTime");
+        this.isFence = (boolean) document.get("isFence");
+        this.isPark = (boolean) document.get("isPark");
     }
 }

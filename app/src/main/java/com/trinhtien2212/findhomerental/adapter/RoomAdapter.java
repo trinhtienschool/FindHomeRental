@@ -40,10 +40,11 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         if(room == null){
             return;
         }
-        holder.txtName.setText(room.getName());
-        holder.txtPrice.setText(room.getPrice());
+
+        holder.txtPrice.setText(room.getCost());
         holder.txtAddress.setText(room.getAddress());
-        holder.imgHome.setImageResource(room.getImg());
+//        ToDo
+//        holder.imgHome.setImageResource(room.getImages(0));
     }
 
     @Override
@@ -75,7 +76,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
                 } else{
                     List<Room> list = new ArrayList<>();
                     for(Room r: mListroomOld){
-                        if(r.getName().toLowerCase().contains(strSearch.toLowerCase()) || r.getAddress().contains(strSearch.toLowerCase())){
+                        if(r.getAddress().contains(strSearch.toLowerCase())){
                             list.add(r);
                         }
                     }

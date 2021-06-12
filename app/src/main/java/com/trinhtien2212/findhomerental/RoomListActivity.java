@@ -110,12 +110,12 @@ public class RoomListActivity extends AppCompatActivity implements PopupMenu.OnM
         Toast.makeText(this, "Load data page", Toast.LENGTH_SHORT).show();
 
         List<Room> list = new ArrayList<>();
-        Room r1 = new Room("Nhà trọ 1", "1,0 triệu VND/căn", "8 Tân Hòa Đông, Quận 6", R.drawable.room);
-        Room r2 = new Room("Nhà trọ 2", "1,1 triệu VND/căn", "18 Tân Hòa Đông, Quận 6", R.drawable.room);
-        Room r3 = new Room("Nhà trọ 3", "1,2 triệu VND/căn", "28 Tân Hòa Đông, Quận 6", R.drawable.room);
-        Room r4 = new Room("Nhà trọ 4", "1,3 triệu VND/căn", "38 Tân Hòa Đông, Quận 6", R.drawable.room);
-        Room r5 = new Room("Nhà trọ 5", "1,4 triệu VND/căn", "48 Tân Hòa Đông, Quận 6", R.drawable.room);
-        Room r6 = new Room("Nhà trọ 6", "1,5 triệu VND/căn", "58 Tân Hòa Đông, Quận 6", R.drawable.room);
+        Room r1 = new Room( 1600000, "8 Tân Hòa Đông, Quận 6");
+        Room r2 = new Room( 1600000, "18 Tân Hòa Đông, Quận 6");
+        Room r3 = new Room( 1600000, "28 Tân Hòa Đông, Quận 6");
+        Room r4 = new Room( 1600000, "38 Tân Hòa Đông, Quận 6");
+        Room r5 = new Room(1600000, "48 Tân Hòa Đông, Quận 6");
+        Room r6 = new Room(1600000, "58 Tân Hòa Đông, Quận 6");
 //        Room r7 = new Room("Nhà trọ 7", "1,6 triệu VND/căn", "68 Tân Hòa Đông, Quận 6", R.drawable.tro7);
 //        Room r8 = new Room("Nhà trọ 8", "1,7 triệu VND/căn", "78 Tân Hòa Đông, Quận 6", R.drawable.tro8);
 //        Room r9 = new Room("Nhà trọ 9", "1,8 triệu VND/căn", "88 Tân Hòa Đông, Quận 6", R.drawable.tro1);

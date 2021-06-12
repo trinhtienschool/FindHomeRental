@@ -38,7 +38,8 @@ public class RoomAdminAdapter extends RecyclerView.Adapter<RoomAdminAdapter.Room
             return;
         }
         holder.txtAddress.setText(room.getAddress());
-        holder.imgHome.setImageResource(room.getImg());
+//        ToDo
+//        holder.imgHome.setImageResource(room.getImages(0));
     }
 
     @Override

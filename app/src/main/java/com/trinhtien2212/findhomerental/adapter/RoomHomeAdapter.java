@@ -35,10 +35,11 @@ public class RoomHomeAdapter extends RecyclerView.Adapter<RoomHomeAdapter.RoomVi
         if(room == null){
             return;
         }
-        holder.txtName.setText(room.getName());
-        holder.txtPrice.setText(room.getPrice());
+//        holder.txtName.setText(room.getName());
+        holder.txtPrice.setText(room.getCost()+"");
         holder.txtAddress.setText(room.getAddress());
-        holder.imgHome.setImageResource(room.getImg());
+//        ToDo
+//        holder.imgHome.setImageResource(room.get());
     }
 
     @Override

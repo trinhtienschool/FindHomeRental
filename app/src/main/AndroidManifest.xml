@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FindHomeRental">
         <activity android:name=".ui.home.GoogleSignIn"></activity>
+        <activity android:name=".SearchActivity"></activity>
+        <activity android:name=".MainAdminActivity"></activity>
+        <activity android:name=".RoomListActivity"></activity>
+        <activity android:name=".UserListActivity"></activity>
+
+
         <activity android:name=".ui.add_room.AddRoomActivity"></activity>
         <activity
             android:name=".MainActivity"

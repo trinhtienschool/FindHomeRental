@@ -23,7 +23,7 @@ import com.gun0912.tedpermission.TedPermission;
 import com.squareup.picasso.Picasso;
 import com.trinhtien2212.findhomerental.R;
 import com.trinhtien2212.findhomerental.model.Room;
-import com.trinhtien2212.findhomerental.view.Util;
+import com.trinhtien2212.findhomerental.ui.Util;
 
 import java.util.ArrayList;
 import java.util.HashMap;

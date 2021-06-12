@@ -38,9 +38,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         if(User == null){
             return;
         }
-        holder.txtName.setText(User.getName());
+        holder.txtName.setText(User.getDisplayName());
         holder.txtEmail.setText(User.getEmail());
-        holder.imgHome.setImageResource(User.getImg());
+//        ToDo
+//        holder.imgHome.setImageResource(User.getImg());
     }
 
     @Override
