@@ -41,7 +41,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
             return;
         }
 
-        holder.txtPrice.setText(room.getCost());
+        holder.txtPrice.setText(room.getCost()+"");
         holder.txtAddress.setText(room.getAddress());
 //        ToDo
 //        holder.imgHome.setImageResource(room.getImages(0));
