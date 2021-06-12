@@ -20,7 +20,7 @@
     </style>
 
     <style name="Theme.FindHomeRental.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
+    <style name="Theme.NavigationDrawerApplication.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     <style name="Theme.FindHomeRental.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
