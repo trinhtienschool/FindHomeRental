@@ -102,7 +102,7 @@ public class HomeFragment extends Fragment implements RoomsResult{
     }
     private void assign(){
         realtimeBlurView = root.findViewById(R.id.realtimeBlurView);
-        progressBar = root.findViewById(R.id.progress_bar);
+        progressBar = root.findViewById(R.id.pb_saving);
         recyclerView = root.findViewById(R.id.recycler_home);
         btnSearch = root.findViewById(R.id.ImageButtonSearch);
 //        btnMenu = root.findViewById(R.id.menu_icon);
