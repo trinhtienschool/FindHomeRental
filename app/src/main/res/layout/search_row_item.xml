@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardCornerRadius="3dp"
+        app:cardElevation="3dp"
+        app:cardUseCompatPadding="true"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+            <ImageView
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:id="@+id/imageHome"
+                android:src="@drawable/tro1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/title1"
+                android:text="Căn hộ 1"
+                android:textSize="22sp"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:layout_toRightOf="@id/imageHome"
+                android:layout_toEndOf="@id/imageHome"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/titlePrice"
+                android:text="4,3 triệu VND/căn"
+                android:textSize="18sp"
+                android:textColor="#f00"
+                android:textStyle="bold"
+                android:layout_toRightOf="@id/imageHome"
+                android:layout_toEndOf="@id/imageHome"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/title1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/titleAddress"
+                android:text="88 Tân Hòa Đông, Quận 6"
+                android:textSize="18sp"
+                android:textColor="#000"
+                android:layout_toRightOf="@id/imageHome"
+                android:layout_toEndOf="@id/imageHome"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/titlePrice"/>
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

@@ -1,5 +1,28 @@
 package com.trinhtien2212.findhomerental.model;
 
+<<<<<<< HEAD
+public class Room {
+    private String name,price, address;
+    private int img;
+
+    public Room(String name, String price, String address, int img) {
+        this.name = name;
+        this.price = price;
+        this.address = address;
+        this.img = img;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getAddress() {
+        return address;
+=======
 import android.util.Log;
 
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -163,12 +186,33 @@ public class Room implements Serializable {
         Log.e("Address","Dang vao address");
         return address;
 
+>>>>>>> f26b338d4693b0f5733aa2ff69a394a8f79e82b4
     }
 
     public void setAddress(String address) {
         this.address = address;
     }
 
+<<<<<<< HEAD
+    public int getImg() {
+        return img;
+    }
+
+    public void setImg(int img) {
+        this.img = img;
+    }
+
+    public Room(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+=======
     public String getPhone() {
         return phone;
     }
@@ -415,5 +459,6 @@ public class Room implements Serializable {
         this.isFreeTime = (boolean)document.get("isFreeTime");
         this.isFence = (boolean)document.get("isFence");
         this.isPark = (boolean)document.get("isPark");
+>>>>>>> f26b338d4693b0f5733aa2ff69a394a8f79e82b4
     }
 }
