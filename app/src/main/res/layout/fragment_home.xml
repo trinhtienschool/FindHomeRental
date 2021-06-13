@@ -11,36 +11,6 @@
         android:layout_height="match_parent"
         tools:context=".ui.home.HomeFragment">
 
-
-        <!--    <RelativeLayout-->
-        <!--        android:id="@+id/toolbar"-->
-        <!--        android:layout_width="match_parent"-->
-        <!--        android:layout_height="wrap_content"-->
-        <!--        android:background="@color/colorPrimary"-->
-        <!--        android:padding="16dp"-->
-        <!--        app:layout_constraintStart_toStartOf="parent"-->
-        <!--        app:layout_constraintTop_toTopOf="parent">-->
-
-        <!--        <ImageButton-->
-        <!--            android:id="@+id/menu_icon"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_centerVertical="true"-->
-        <!--            android:background="@color/colorPrimary"-->
-        <!--            android:src="@drawable/ic_baseline_menu_24" />-->
-
-        <!--        <TextView-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginStart="16dp"-->
-        <!--            android:layout_marginLeft="16dp"-->
-        <!--            android:layout_toEndOf="@id/menu_icon"-->
-        <!--            android:layout_toRightOf="@id/menu_icon"-->
-        <!--            android:text="Thuê Phòng Trọ"-->
-        <!--            android:textColor="@color/white"-->
-        <!--            android:textSize="20sp" />-->
-        <!--    </RelativeLayout>-->
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutHeader"
             android:layout_width="match_parent"
@@ -98,21 +68,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layoutHeader" />
 
-        <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-        <!--        android:layout_width="wrap_content"-->
-        <!--        android:layout_height="wrap_content"-->
-        <!--        android:layout_marginEnd="50dp"-->
-        <!--        android:layout_marginRight="50dp"-->
-        <!--        android:layout_marginBottom="50dp"-->
-        <!--        android:src="@drawable/ic_baseline_add_24"-->
-        <!--        app:backgroundTint="@color/colorPrimary"-->
-        <!--        app:fabSize="normal"-->
-        <!--        app:layout_anchor="@id/recycler_home"-->
-        <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--        app:layout_constraintEnd_toEndOf="parent"-->
-        <!--        tools:ignore="MissingConstraints">-->
-        <!--    </com.google.android.material.floatingactionbutton.FloatingActionButton>-->
-    </androidx.constraintlayout.widget.ConstraintLayout>
+       </androidx.constraintlayout.widget.ConstraintLayout>
     <com.github.mmin18.widget.RealtimeBlurView
         android:id="@+id/realtimeBlurView"
         android:layout_width="match_parent"
