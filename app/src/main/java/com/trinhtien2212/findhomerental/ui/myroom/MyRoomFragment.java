@@ -52,7 +52,7 @@ public class MyRoomFragment extends Fragment implements RoomsResult {
         root = inflater.inflate(R.layout.fragment_my_room, container, false);
         assign();
         adapter = new MyRoomAdapter();
-
+        roomPresenter = new RoomPresenter(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mainActivity);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);

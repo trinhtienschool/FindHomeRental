@@ -21,7 +21,7 @@ import com.trinhtien2212.findhomerental.adapter.MyRoomAdapter;
 import com.trinhtien2212.findhomerental.dao.RoomDB;
 import com.trinhtien2212.findhomerental.model.Room;
 import com.trinhtien2212.findhomerental.presenter.RoomsResult;
-import com.trinhtien2212.findhomerental.ui.home.RoomsResult;
+
 
 import java.util.List;
 
