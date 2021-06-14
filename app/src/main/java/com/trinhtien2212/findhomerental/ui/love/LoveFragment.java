@@ -20,8 +20,8 @@ import com.trinhtien2212.findhomerental.adapter.LoveAdapter;
 import com.trinhtien2212.findhomerental.adapter.MyRoomAdapter;
 import com.trinhtien2212.findhomerental.dao.RoomDB;
 import com.trinhtien2212.findhomerental.model.Room;
+import com.trinhtien2212.findhomerental.presenter.BookmarkPresenter;
 import com.trinhtien2212.findhomerental.presenter.RoomsResult;
-import com.trinhtien2212.findhomerental.ui.home.RoomsResult;
 
 import java.util.List;
 
@@ -38,7 +38,7 @@ public class LoveFragment extends Fragment implements RoomsResult {
     private int currentPage=1, totalPage=2;
     private RealtimeBlurView realtimeBlurView;
     private ProgressBar progressBar;
-
+    private BookmarkPresenter bookmarkPresenter;
     public LoveFragment(){
     }
 
@@ -48,7 +48,7 @@ public class LoveFragment extends Fragment implements RoomsResult {
         root = inflater.inflate(R.layout.fragment_love, container, false);
         assign();
         adapter = new LoveAdapter();
-
+        bookmarkPresenter = new BookmarkPresenter(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mainActivity);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -82,11 +82,12 @@ public class LoveFragment extends Fragment implements RoomsResult {
 
     //Load data
     private void setFirstData(){
-
-        RoomDB roomDB = RoomDB.getInstance();
-        roomDB.getRandomRooms(this);
-
-        Toast.makeText(mainActivity, "Load data page", Toast.LENGTH_SHORT).show();
+        //ToDo
+//        bookmarkPresenter.getAllBookmarks();
+//        RoomDB roomDB = RoomDB.getInstance();
+//        roomDB.getRandomRooms(this);
+//
+//        Toast.makeText(mainActivity, "Load data page", Toast.LENGTH_SHORT).show();
     }
 
     @Override

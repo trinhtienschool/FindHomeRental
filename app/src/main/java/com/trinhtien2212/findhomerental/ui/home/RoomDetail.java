@@ -11,6 +11,9 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 
 import com.trinhtien2212.findhomerental.R;
+import com.trinhtien2212.findhomerental.model.Room;
+
+import java.util.List;
 
 public class RoomDetail extends AppCompatActivity {
 
@@ -29,5 +32,7 @@ public class RoomDetail extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+
     }
 }

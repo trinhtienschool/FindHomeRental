@@ -3,6 +3,7 @@ package com.trinhtien2212.findhomerental.presenter;
 import android.util.Log;
 
 import com.trinhtien2212.findhomerental.dao.BookmarkDB;
+import com.trinhtien2212.findhomerental.model.Location;
 import com.trinhtien2212.findhomerental.model.Room;
 
 import java.util.List;
@@ -10,7 +11,9 @@ import java.util.List;
 public class BookmarkPresenter implements Presenter, RoomsResult {
     private BookmarkDB bookmarkDB;
     private GetRoomByListRoomIds getRoomByListRoomIds;
-    public BookmarkPresenter(){
+    private RoomsResult roomsResult;
+    public BookmarkPresenter(RoomsResult roomsResult){
+        this.roomsResult = roomsResult;
         this.bookmarkDB = BookmarkDB.getInstance();
         getRoomByListRoomIds = new GetRoomByListRoomIds(this);
     }
@@ -37,15 +40,17 @@ public class BookmarkPresenter implements Presenter, RoomsResult {
 
     @Override
     public void onSuccess() {
-
+        Log.e("SAVE BookMark","Thanh cong");
     }
 
 
     @Override
     public void returnRooms(List<Room> rooms) {
+//        Log.e()
         //ToDo
-        for(Room room: rooms){
-            Log.e("PrintRoom",room.toString());
-        }
+//        for(Room room: rooms){
+//            Log.e("PrintRoom",room.toString());
+//        }
+        roomsResult.returnRooms(rooms);
     }
 }

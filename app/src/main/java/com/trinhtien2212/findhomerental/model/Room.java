@@ -21,7 +21,7 @@ public class Room implements Serializable {
 
     private String roomID, userCreatedId, address, imageUrl, description;
     private Date dateCreated;
-    private boolean isDeleted, isPark, isWifi, isHotWater, isFre, isAttic, isTivi, isWardrobe, isFence, isWC, isFreeTime, isAirCondition;
+    private boolean isDeleted, isPark, isWifi, isHotWater, isFre, isAttic , isTivi, isWardrobe , isFence, isWC, isFreeTime, isAirCondition;
     private float area;
     private String phone;
     private int cost, deposit, eleCost, watCost;

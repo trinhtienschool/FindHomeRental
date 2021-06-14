@@ -11,6 +11,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.trinhtien2212.findhomerental.model.User;
+import com.trinhtien2212.findhomerental.presenter.BookmarkPresenter;
 import com.trinhtien2212.findhomerental.ui.Util;
 import com.trinhtien2212.findhomerental.ui.home.GoogleSignIn;
 
@@ -41,7 +42,9 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 Log.e("Co","Co vo dang nahp");
-                startActivity(new Intent(MainActivity.this, GoogleSignIn.class));
+//                startActivity(new Intent(MainActivity.this, GoogleSignIn.class));
+                BookmarkPresenter bookmarkPresenter = new BookmarkPresenter(null);
+                bookmarkPresenter.addBookmark("01UWtdl8llR8uz883LbF","At137YkMB7OXy99UzZINGbVExY72");
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
