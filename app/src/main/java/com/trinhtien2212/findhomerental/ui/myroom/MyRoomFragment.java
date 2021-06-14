@@ -21,12 +21,12 @@ import com.github.mmin18.widget.RealtimeBlurView;
 import com.trinhtien2212.findhomerental.MainActivity;
 import com.trinhtien2212.findhomerental.PaginationScrollListener;
 import com.trinhtien2212.findhomerental.R;
-import com.trinhtien2212.findhomerental.SearchActivity;
 import com.trinhtien2212.findhomerental.adapter.MyRoomAdapter;
 import com.trinhtien2212.findhomerental.adapter.RoomHomeAdapter;
 import com.trinhtien2212.findhomerental.dao.RoomDB;
 import com.trinhtien2212.findhomerental.model.Room;
-import com.trinhtien2212.findhomerental.ui.home.RoomsResult;
+import com.trinhtien2212.findhomerental.presenter.RoomPresenter;
+import com.trinhtien2212.findhomerental.presenter.RoomsResult;
 
 import java.util.List;
 
@@ -37,13 +37,12 @@ public class MyRoomFragment extends Fragment implements RoomsResult {
     private MyRoomAdapter adapter;
     private List<Room> mListRoom;
     private MainActivity mainActivity;
-
     private View root;
     private boolean isLoading, isLastPage;
     private int currentPage=1, totalPage=2;
     private RealtimeBlurView realtimeBlurView;
     private ProgressBar progressBar;
-
+    private RoomPresenter roomPresenter;
     public MyRoomFragment(){
     }
 
@@ -58,23 +57,23 @@ public class MyRoomFragment extends Fragment implements RoomsResult {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
 
-        recyclerView.addOnScrollListener(new PaginationScrollListener(linearLayoutManager) {
-            @Override
-            public void loadMoreItems() {
-                isLoading = true;
-//                loadNextPage();
-            }
-
-            @Override
-            public boolean isLoading() {
-                return isLoading;
-            }
-
-            @Override
-            public boolean isLastPage() {
-                return isLastPage;
-            }
-        });
+//        recyclerView.addOnScrollListener(new PaginationScrollListener(linearLayoutManager) {
+//            @Override
+//            public void loadMoreItems() {
+//                isLoading = true;
+////                loadNextPage();
+//            }
+//
+//            @Override
+//            public boolean isLoading() {
+//                return isLoading;
+//            }
+//
+//            @Override
+//            public boolean isLastPage() {
+//                return isLastPage;
+//            }
+//        });
 
         setFirstData();
         return root;
@@ -87,15 +86,16 @@ public class MyRoomFragment extends Fragment implements RoomsResult {
 
     //Load data
     private void setFirstData(){
-
-        RoomDB roomDB = RoomDB.getInstance();
-        roomDB.getRandomRooms(this);
-
-        Toast.makeText(mainActivity, "Load data page", Toast.LENGTH_SHORT).show();
+        roomPresenter.getAllRoomsOfUser("mfSmbqjLoKd8YgphOJuZrQtJ7cj1");
+//        RoomDB roomDB = RoomDB.getInstance();
+//        roomDB.getRandomRooms(this);
+//
+//        Toast.makeText(mainActivity, "Load data page", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void returnRooms(List<Room> rooms) {
+
         mListRoom = rooms;
         adapter.setData(mListRoom);
         showWaiting(View.INVISIBLE);

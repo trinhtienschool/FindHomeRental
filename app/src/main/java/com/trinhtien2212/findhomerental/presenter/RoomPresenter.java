@@ -26,6 +26,9 @@ public class RoomPresenter implements Presenter,RoomsResult {
 
 
     }
+    public void getAllRoomsOfUser(String uid){
+        roomDB.getAllRoomOfUser(uid,this);
+    }
     public void getRandomRooms(){
         roomDB.getRandomRooms(this);
     }
