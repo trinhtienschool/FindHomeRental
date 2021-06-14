@@ -13,9 +13,11 @@ import com.trinhtien2212.findhomerental.R;
 import com.trinhtien2212.findhomerental.model.Room;
 import com.trinhtien2212.findhomerental.ui.Util;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
-public class RoomHomeAdapter extends RecyclerView.Adapter<RoomHomeAdapter.RoomViewHolder>{
+public class MyRoomAdapter extends RecyclerView.Adapter<MyRoomAdapter.RoomViewHolder>{
     private List<Room> mListroom;
 
 
@@ -26,7 +28,7 @@ public class RoomHomeAdapter extends RecyclerView.Adapter<RoomHomeAdapter.RoomVi
     @NonNull
     @Override
     public RoomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_item, parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_room_item, parent,false);
         return new RoomViewHolder(view);
     }
 
@@ -36,11 +38,15 @@ public class RoomHomeAdapter extends RecyclerView.Adapter<RoomHomeAdapter.RoomVi
         if(room == null){
             return;
         }
-        // Todo set img, price, address
+
         Util.setImage(holder.imgHome,room.getImages().get(0));
+
         holder.txtPrice.setText(Util.formatCurrency(room.getCost()));
         holder.txtAddress.setText(room.getAddress());
+//        ToDo
+
     }
+
 
     @Override
     public int getItemCount() {
@@ -48,15 +54,15 @@ public class RoomHomeAdapter extends RecyclerView.Adapter<RoomHomeAdapter.RoomVi
     }
 
     public class RoomViewHolder extends RecyclerView.ViewHolder{
-        private TextView  txtPrice, txtAddress;
+        private TextView txtPrice, txtAddress;
         private ImageView imgHome;
 
         public RoomViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            txtPrice = itemView.findViewById(R.id.titlePrice2);
-            txtAddress = itemView.findViewById(R.id.titleAddress2);
-            imgHome = itemView.findViewById(R.id.imageHome2);
+            txtPrice = itemView.findViewById(R.id.titlePrice3);
+            txtAddress = itemView.findViewById(R.id.titleAddress3);
+            imgHome = itemView.findViewById(R.id.imageHome3);
         }
     }
 }
