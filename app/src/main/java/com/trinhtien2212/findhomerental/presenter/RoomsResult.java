@@ -1,4 +1,4 @@
-package com.trinhtien2212.findhomerental.ui.home;
+package com.trinhtien2212.findhomerental.presenter;
 
 import com.trinhtien2212.findhomerental.model.Room;
 

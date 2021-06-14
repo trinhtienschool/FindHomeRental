@@ -107,7 +107,7 @@ public class RoomListActivity extends AppCompatActivity implements PopupMenu.OnM
         RoomAdminAdapter.setData(mListlist);
     }
     private List<Room> getListRoom(){
-        Toast.makeText(this, "Load data page", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Đang tải chờ xíu...", Toast.LENGTH_SHORT).show();
 
         List<Room> list = new ArrayList<>();
         Room r1 = new Room( 1600000, "8 Tân Hòa Đông, Quận 6");
@@ -185,26 +185,26 @@ public class RoomListActivity extends AppCompatActivity implements PopupMenu.OnM
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.item1:
-                Toast.makeText(this, "Lọc theo 500m", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.item2:
-                Toast.makeText(this, "Lọc theo 1000m", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.item3:
-                Toast.makeText(this, "Lọc theo 1500m", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.sort1:
-                Toast.makeText(this, "Sắp xếp theo giá tăng dần", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.sort2:
-                Toast.makeText(this, "Sắp xếp theo giá giảm dần", Toast.LENGTH_SHORT).show();
-                return true;
-            default:
-                return false;
-        }
-
+//        switch (item.getItemId()){
+//            case R.id.item1:
+//                Toast.makeText(this, "Lọc theo 500m", Toast.LENGTH_SHORT).show();
+//                return true;
+//            case R.id.item2:
+//                Toast.makeText(this, "Lọc theo 1000m", Toast.LENGTH_SHORT).show();
+//                return true;
+//            case R.id.item3:
+//                Toast.makeText(this, "Lọc theo 1500m", Toast.LENGTH_SHORT).show();
+//                return true;
+//            case R.id.sort1:
+//                Toast.makeText(this, "Sắp xếp theo giá tăng dần", Toast.LENGTH_SHORT).show();
+//                return true;
+//            case R.id.sort2:
+//                Toast.makeText(this, "Sắp xếp theo giá giảm dần", Toast.LENGTH_SHORT).show();
+//                return true;
+//            default:
+//                return false;
+//        }
+        return true;
     }
 
     @Override

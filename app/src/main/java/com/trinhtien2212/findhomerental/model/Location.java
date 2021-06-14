@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Location {
+public class Location{
     private String address;
     private double lat;
     private double lng;
@@ -93,5 +93,17 @@ public class Location {
         map.put("lng",this.lng);
         map.put("isDeleted",this.isDeleted);
         return map;
+    }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "address='" + address + '\'' +
+                ", lat=" + lat +
+                ", lng=" + lng +
+                ", isDeleted=" + isDeleted +
+                ", roomID='" + roomID + '\'' +
+                ", distance=" + distance +
+                '}';
     }
 }

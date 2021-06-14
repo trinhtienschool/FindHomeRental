@@ -24,11 +24,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/title1"
-                android:text="Căn hộ 1"
+                android:id="@+id/tv_address"
+                android:text="88 Hòa Đông, Quận 6"
                 android:textSize="22sp"
                 android:textColor="#000"
-                android:textStyle="bold"
+
                 android:layout_toRightOf="@id/imageHome"
                 android:layout_toEndOf="@id/imageHome"
                 android:layout_marginLeft="10dp"
@@ -36,30 +36,30 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/titlePrice"
+                android:id="@+id/tv_cost"
                 android:text="4,3 triệu VND/căn"
                 android:textSize="18sp"
-                android:textColor="#f00"
+                android:textColor="#FFBF00"
                 android:textStyle="bold"
                 android:layout_toRightOf="@id/imageHome"
                 android:layout_toEndOf="@id/imageHome"
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_below="@id/title1"/>
+                android:layout_below="@id/tv_address"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/titleAddress"
-                android:text="88 Tân Hòa Đông, Quận 6"
+                android:id="@+id/tv_distance"
+                android:text="Khoảng cách 1 km"
                 android:textSize="18sp"
-                android:textColor="#000"
+                android:textColor="#787878"
                 android:layout_toRightOf="@id/imageHome"
                 android:layout_toEndOf="@id/imageHome"
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_below="@id/titlePrice"/>
+                android:layout_below="@id/tv_cost"/>
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>

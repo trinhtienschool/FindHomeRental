@@ -104,7 +104,7 @@ public class UserListActivity extends AppCompatActivity {
         UserAdapter.setData(mListUser);
     }
     private List<User> getListUser(){
-        Toast.makeText(this, "Load data page", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Đang tải chờ xiu...", Toast.LENGTH_SHORT).show();
 
         List<User> list = new ArrayList<>();
         User u1 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");

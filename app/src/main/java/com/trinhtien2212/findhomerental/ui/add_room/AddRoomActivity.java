@@ -17,11 +17,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.trinhtien2212.findhomerental.R;
 import com.trinhtien2212.findhomerental.model.Room;
 import com.trinhtien2212.findhomerental.presenter.RoomPresenter;
+import com.trinhtien2212.findhomerental.presenter.RoomsResult;
 
 import java.util.List;
 import java.util.Map;
 
-public class AddRoomActivity extends AppCompatActivity {
+public class AddRoomActivity extends AppCompatActivity implements RoomsResult {
     private TabLayout mTabLayout;
     private ViewPager2 viewPager2;
     private AddRoomViewPagerAdapter adapter;
@@ -179,4 +180,8 @@ public class AddRoomActivity extends AppCompatActivity {
         Toast.makeText(this,status,Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public void returnRooms(List<Room> rooms) {
+
+    }
 }

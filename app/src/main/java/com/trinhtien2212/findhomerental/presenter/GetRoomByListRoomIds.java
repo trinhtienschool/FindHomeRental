@@ -7,13 +7,15 @@ import com.trinhtien2212.findhomerental.model.Location;
 import com.trinhtien2212.findhomerental.model.Room;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class GetRoomByListRoomIds {
     List<String> roomIds;
     List<Room> rooms;
     RoomDB roomDB;
-    RoomReturnResult roomReturnResult;
+    RoomsResult roomReturnResult;
     int countGetRoom,numOfItems,nextLastItemIndex;
     List<Location> locations;
     public GetRoomByListRoomIds(List<String>roomIds){
@@ -24,7 +26,7 @@ public class GetRoomByListRoomIds {
         numOfItems = 10;
         nextLastItemIndex = 10;
     }
-    public GetRoomByListRoomIds(RoomReturnResult roomReturnResult, List<Location>locations){
+    public GetRoomByListRoomIds(RoomsResult roomReturnResult, List<Location>locations){
         rooms = new ArrayList<Room>();
         roomDB = RoomDB.getInstance();
         countGetRoom = 0;
@@ -33,39 +35,47 @@ public class GetRoomByListRoomIds {
         this.roomReturnResult = roomReturnResult;
         this.locations = locations;
     }
-    public GetRoomByListRoomIds(RoomReturnResult roomReturnResult){
+    public GetRoomByListRoomIds(RoomsResult roomReturnResult){
         rooms = new ArrayList<Room>();
         roomDB = RoomDB.getInstance();
         countGetRoom = 0;
         numOfItems = 10;
         nextLastItemIndex = 0;
         this.roomReturnResult = roomReturnResult;
-        this.locations = locations;
+
     }
     public boolean hasNext(){
-        if(this.countGetRoom == roomIds.size())
-             return true;
-        else return false;
+        if(this.countGetRoom == roomIds.size()){
+            Log.e("hasNext GetRoom",this.countGetRoom+" : "+roomIds.size());
+            return false;
+        }
+        else return true;
     }
     public void getNextRooms(){
         this.rooms = new ArrayList<Room>();
-        nextLastItemIndex += numOfItems;
+        if(roomIds.size()>=countGetRoom+10) {
+            nextLastItemIndex += numOfItems;
+        }else nextLastItemIndex +=locations.size();
         getRoom();
     }
     public void getRoom(){
         Log.e("Size: ",roomIds.size()+"");
         if(countGetRoom == nextLastItemIndex || countGetRoom == roomIds.size()){
-            roomReturnResult.continueAction(this.rooms);
+            roomReturnResult.returnRooms(this.rooms);
             return;
         }
         roomDB.getRoom(roomIds.get(countGetRoom),this);
     }
+    public int getTotalItems(){
+        return roomIds.size();
+    }
     public void addRoom(Room room){
+        Log.e("Print: ","c: "+countGetRoom+"; last"+nextLastItemIndex+"; size: "+roomIds.size());
         if(locations !=null) room.setLocation(locations.get(countGetRoom));
         room.setRoomID(roomIds.get(countGetRoom));
         this.rooms.add(room);
         roomDB.getImages(room,this);
-        Log.e("RoomClass",this.rooms.get(countGetRoom).toString());
+        Log.e("RoomClass",this.rooms.toString());
         countGetRoom++;
     }
 
@@ -124,4 +134,6 @@ public class GetRoomByListRoomIds {
     public void setLocations(List<Location> locations) {
         this.locations = locations;
     }
+
+
 }

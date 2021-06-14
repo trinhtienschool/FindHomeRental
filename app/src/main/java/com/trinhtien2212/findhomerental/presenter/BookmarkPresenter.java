@@ -7,7 +7,7 @@ import com.trinhtien2212.findhomerental.model.Room;
 
 import java.util.List;
 
-public class BookmarkPresenter implements Presenter, RoomReturnResult {
+public class BookmarkPresenter implements Presenter, RoomsResult {
     private BookmarkDB bookmarkDB;
     private GetRoomByListRoomIds getRoomByListRoomIds;
     public BookmarkPresenter(){
@@ -40,8 +40,9 @@ public class BookmarkPresenter implements Presenter, RoomReturnResult {
 
     }
 
+
     @Override
-    public void continueAction(List<Room> rooms) {
+    public void returnRooms(List<Room> rooms) {
         //ToDo
         for(Room room: rooms){
             Log.e("PrintRoom",room.toString());

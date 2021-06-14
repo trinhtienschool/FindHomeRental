@@ -1,4 +1,4 @@
-package com.trinhtien2212.findhomerental;
+package com.trinhtien2212.findhomerental.ui.home;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -18,13 +18,18 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.mmin18.widget.RealtimeBlurView;
+import com.trinhtien2212.findhomerental.PaginationScrollListener;
+import com.trinhtien2212.findhomerental.R;
 import com.trinhtien2212.findhomerental.adapter.RoomAdapter;
 import com.trinhtien2212.findhomerental.model.Room;
+import com.trinhtien2212.findhomerental.presenter.RoomsResult;
+import com.trinhtien2212.findhomerental.presenter.SearchPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener, androidx.appcompat.widget.PopupMenu.OnMenuItemClickListener {
+public class SearchActivity extends AppCompatActivity implements RoomsResult, PopupMenu.OnMenuItemClickListener, androidx.appcompat.widget.PopupMenu.OnMenuItemClickListener {
     private RecyclerView recyclerView;
     private RoomAdapter roomAdapter;
     private List<Room> mListlist;
@@ -32,10 +37,11 @@ public class SearchActivity extends AppCompatActivity implements PopupMenu.OnMen
     private SearchView searchView;
     private ImageButton btnFilter, btnSort;
     private TextView txtTotalResults;
-
+    private RealtimeBlurView realtimeBlurView;
+    private ProgressBar pb_waiting;
     private boolean isLoading, isLastPage;
     private int currentPage=1, totalPage=2;
-
+    SearchPresenter searchPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +55,7 @@ public class SearchActivity extends AppCompatActivity implements PopupMenu.OnMen
         roomAdapter = new RoomAdapter();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        mListlist = new ArrayList<Room>();
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(roomAdapter);
 
@@ -58,7 +65,9 @@ public class SearchActivity extends AppCompatActivity implements PopupMenu.OnMen
                 isLoading = true;
                 progressBar.setVisibility(View.VISIBLE);
                 currentPage += 1;
-                loadNextPage();
+                getListRoom();
+//                loadNextPage();
+
             }
 
             @Override
@@ -71,54 +80,40 @@ public class SearchActivity extends AppCompatActivity implements PopupMenu.OnMen
                 return isLastPage;
             }
         });
+        searchPresenter = new SearchPresenter(this);
+        Bundle bundle = getIntent().getExtras();
+        String address = bundle.getString("address");
+        search(address);
+        realtimeBlurView = findViewById(R.id.realtimeBlurView);
+        pb_waiting = findViewById(R.id.pb_waiting);
 
-        setFirstData();
     }
 
-    private void loadNextPage() {
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                List<Room> list = getListRoom();
-                mListlist.addAll(list);
-                roomAdapter.notifyDataSetChanged();
-
-                isLoading = false;
-                progressBar.setVisibility(View.GONE);
-                if(currentPage == totalPage){
-                    isLastPage = true;
-                }
-            }
-        }, 2000);
-    }
+//    private void loadNextPage() {
+//        Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                //ToDo
+//                getListRoom();
+//                mListlist.addAll(list);
+//                roomAdapter.notifyDataSetChanged();
+//                isLoading = false;
+//                progressBar.setVisibility(View.GONE);
+//                if(currentPage == totalPage){
+//                    isLastPage = true;
+//                }
+//            }
+//        }, 2000);
+//    }
 
     //Load data
-    private void setFirstData(){
-        mListlist = getListRoom();
-        roomAdapter.setData(mListlist);
+    private void search(String address){
+        searchPresenter.searchLocation(address);
+//        showWaiting(View.VISIBLE);
     }
-    private List<Room> getListRoom(){
-        Toast.makeText(this, "Load data page", Toast.LENGTH_SHORT).show();
-
-        List<Room> list = new ArrayList<>();
-        Room r1 = new Room( 1600000, "8 Tân Hòa Đông, Quận 6");
-        Room r2 = new Room( 1600000, "18 Tân Hòa Đông, Quận 6");
-        Room r3 = new Room( 1600000, "28 Tân Hòa Đông, Quận 6");
-        Room r4 = new Room( 1600000, "38 Tân Hòa Đông, Quận 6");
-        Room r5 = new Room(1600000, "48 Tân Hòa Đông, Quận 6");
-        Room r6 = new Room(1600000, "58 Tân Hòa Đông, Quận 6");
-
-
-        list.add(r1);
-        list.add(r2);
-        list.add(r3);
-        list.add(r4);
-        list.add(r5);
-        list.add(r6);
-
-
-        return list;
+    private void getListRoom(){
+       searchPresenter.getNext();
     }
 
     @Override
@@ -172,20 +167,18 @@ public class SearchActivity extends AppCompatActivity implements PopupMenu.OnMen
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.item1:
-                Toast.makeText(this, "Lọc theo 500m", Toast.LENGTH_SHORT).show();
+
+            case R.id.item_distance_decrease:
+                mListlist.clear();
+                searchPresenter.sortDecrease();
+                showWaiting(View.VISIBLE);
+                Toast.makeText(this, "Sắp xếp theo khoảng cách giảm dần", Toast.LENGTH_SHORT).show();
                 return true;
-            case R.id.item2:
-                Toast.makeText(this, "Lọc theo 1000m", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.item3:
-                Toast.makeText(this, "Lọc theo 1500m", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.sort1:
-                Toast.makeText(this, "Sắp xếp theo giá tăng dần", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.sort2:
-                Toast.makeText(this, "Sắp xếp theo giá giảm dần", Toast.LENGTH_SHORT).show();
+            case R.id.item_distance_increase:
+                mListlist.clear();
+                searchPresenter.sortIncrease();
+                showWaiting(View.VISIBLE);
+                Toast.makeText(this, "Sắp xếp theo khoảng cách tăng dần", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return false;
@@ -196,5 +189,32 @@ public class SearchActivity extends AppCompatActivity implements PopupMenu.OnMen
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
+    }
+    private void showWaiting(int waiting){
+        realtimeBlurView.setVisibility(waiting);
+        pb_waiting.setVisibility(waiting);
+    }
+
+    @Override
+    public void returnRooms(List<Room> rooms) {
+        if(rooms!=null){
+            mListlist.addAll(rooms);
+            roomAdapter.setData(mListlist);
+            totalPage = searchPresenter.getTotalPage();
+            txtTotalResults.setText(searchPresenter.getTotalResults()+"");
+            if(currentPage == totalPage){
+                isLastPage = true;
+            }
+            recyclerView.post(new Runnable() {
+                public void run() {
+                    // There is no need to use notifyDataSetChanged()
+                    roomAdapter.notifyDataSetChanged();
+                }
+            });
+            isLoading = false;
+        }else Toast.makeText(this,"Không có kết quả",Toast.LENGTH_LONG).show();
+
+        progressBar.setVisibility(View.GONE);
+        showWaiting(View.INVISIBLE);
     }
 }

@@ -2,7 +2,6 @@ package com.trinhtien2212.findhomerental.ui.home;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,15 +20,15 @@ import com.github.mmin18.widget.RealtimeBlurView;
 import com.trinhtien2212.findhomerental.MainActivity;
 import com.trinhtien2212.findhomerental.PaginationScrollListener;
 import com.trinhtien2212.findhomerental.R;
-import com.trinhtien2212.findhomerental.SearchActivity;
 import com.trinhtien2212.findhomerental.adapter.RoomHomeAdapter;
-import com.trinhtien2212.findhomerental.dao.RoomDB;
 import com.trinhtien2212.findhomerental.model.Room;
+import com.trinhtien2212.findhomerental.presenter.RoomPresenter;
+import com.trinhtien2212.findhomerental.presenter.RoomsResult;
+import com.trinhtien2212.findhomerental.presenter.SearchPresenter;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment implements RoomsResult{
+public class HomeFragment extends Fragment implements RoomsResult {
 
     private ImageButton btnSearch;
     private EditText edtSearch;
@@ -37,13 +36,13 @@ public class HomeFragment extends Fragment implements RoomsResult{
     private RoomHomeAdapter adapter;
     private List<Room> mListRoom;
     private MainActivity mainActivity;
-
+    private RoomPresenter roomPresenter;
     private View root;
     private boolean isLoading, isLastPage;
     private int currentPage=1, totalPage=2;
     private RealtimeBlurView realtimeBlurView;
     private ProgressBar progressBar;
-
+    private SearchPresenter searchPresenter;
     public HomeFragment() {
     }
 
@@ -57,7 +56,7 @@ public class HomeFragment extends Fragment implements RoomsResult{
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mainActivity, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapter);
-
+        roomPresenter = new RoomPresenter(this);
         recyclerView.addOnScrollListener(new PaginationScrollListener(gridLayoutManager) {
             @Override
             public void loadMoreItems() {
@@ -85,8 +84,15 @@ public class HomeFragment extends Fragment implements RoomsResult{
                 if(TextUtils.isEmpty(edtSearch.getText().toString())){
                     Toast.makeText(mainActivity, "Bạn chưa nhập thông tin", Toast.LENGTH_LONG).show();
                 } else {
-                    Intent intent = new Intent(mainActivity, SearchActivity.class);
+                    Bundle bundle = new Bundle();
+                    Intent intent = new Intent(mainActivity,SearchActivity.class);
+                    bundle.putString("address",edtSearch.getText().toString());
+                    intent.putExtras(bundle);
                     startActivity(intent);
+//                    showWaiting(View.VISIBLE);
+//                    searchPresenter.searchLocation(edtSearch.getText().toString());
+//                    Intent intent = new Intent(mainActivity, SearchActivity.class);
+//                    startActivity(intent);
                 }
             }
         });
@@ -129,10 +135,10 @@ public class HomeFragment extends Fragment implements RoomsResult{
     //Load data
     private void setFirstData(){
 
-        RoomDB roomDB = RoomDB.getInstance();
-        roomDB.getRandomRooms(this);
 
-        Toast.makeText(mainActivity, "Load data page", Toast.LENGTH_SHORT).show();
+        roomPresenter.getRandomRooms();
+
+        Toast.makeText(mainActivity, "Đang tải chờ xíu...", Toast.LENGTH_SHORT).show();
     }
     private void getListRoom(){
 

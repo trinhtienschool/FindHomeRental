@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.trinhtien2212.findhomerental.R;
 import com.trinhtien2212.findhomerental.model.Room;
+import com.trinhtien2212.findhomerental.ui.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,9 +41,10 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         if(room == null){
             return;
         }
-
-        holder.txtPrice.setText(room.getCost()+"");
-        holder.txtAddress.setText(room.getAddress());
+        Util.setImage(holder.imgHome,room.getImages().get(0));
+        holder.tv_address.setText(room.getAddress());
+        holder.tv_cost.setText("Giá thuê 1 tháng: "+Util.formatCurrency(room.getCost()));
+        holder.tv_distance.setText("Khoảng cách: "+Util.formatDistance(room.getLocation().getDistance()));
 //        ToDo
 //        holder.imgHome.setImageResource(room.getImages(0));
     }
@@ -53,15 +55,15 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     }
 
     public class RoomViewHolder extends RecyclerView.ViewHolder{
-        private TextView txtName, txtPrice, txtAddress;
+        private TextView tv_address,tv_cost,tv_distance;
         private ImageView imgHome;
 
         public RoomViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtName = itemView.findViewById(R.id.title1);
-            txtPrice = itemView.findViewById(R.id.titlePrice);
-            txtAddress = itemView.findViewById(R.id.titleAddress);
-            imgHome = itemView.findViewById(R.id.imageHome);
+           imgHome = itemView.findViewById(R.id.imageHome);
+            tv_address = itemView.findViewById(R.id.tv_address);
+            tv_cost = itemView.findViewById(R.id.tv_cost);
+            tv_distance = itemView.findViewById(R.id.tv_distance);
         }
     }
 

@@ -12,11 +12,13 @@
         android:theme="@style/AppTheme">
 
         <androidx.appcompat.widget.Toolbar
+
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/Theme.NavigationDrawerApplication.PopupOverlay" />
+
 
     </com.google.android.material.appbar.AppBarLayout>
 

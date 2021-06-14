@@ -23,8 +23,7 @@ import com.trinhtien2212.findhomerental.model.Room;
 import com.trinhtien2212.findhomerental.presenter.GetRoomByListRoomIds;
 import com.trinhtien2212.findhomerental.presenter.RoomPresenter;
 import com.trinhtien2212.findhomerental.ui.Util;
-import com.trinhtien2212.findhomerental.ui.home.HomeFragment;
-import com.trinhtien2212.findhomerental.ui.home.RoomsResult;
+import com.trinhtien2212.findhomerental.presenter.RoomsResult;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -75,7 +74,7 @@ public class RoomDB extends ConnectDB {
                 });
 
     }
-    public void getAllRoomOfUser(String userUid,RoomsResult roomsResult){
+    public void getAllRoomOfUser(String userUid,RoomPresenter roomPresenter){
         List<Room>rooms = new ArrayList<Room>();
         db.collection("rooms")
                 .whereEqualTo("userCreatedId", userUid)
@@ -94,14 +93,14 @@ public class RoomDB extends ConnectDB {
                                 Log.d("Room", document.getId() + " => " + document.getData());
                             }
                             //ToDo
-                            getImagesOfRoom(rooms,-1,roomsResult);
+                            getImagesOfRoom(rooms,-1,roomPresenter);
                         } else {
                             Log.d("Error", "Error getting documents: ", task.getException());
                         }
                     }
                 });
     }
-    public void getRandomRooms(RoomsResult homeFragment){
+    public void getRandomRooms(RoomsResult roomsResult){
         List<Room>rooms = new ArrayList<Room>();
         db.collection("rooms")
                 .orderBy("cost")
@@ -121,7 +120,7 @@ public class RoomDB extends ConnectDB {
                                 Log.d("Room", document.getId() + " => " + document.getData());
                             }
                             //ToDo
-                            getImagesOfRoom(rooms,-1,homeFragment);
+                            getImagesOfRoom(rooms,-1,roomsResult);
                         } else {
                             Log.d("Error", "Error getting documents: ", task.getException());
                         }
@@ -152,7 +151,7 @@ public class RoomDB extends ConnectDB {
             }
         });
     }
-    public void getImagesOfRoom(List<Room>rooms, int index, RoomsResult roomsResult){
+    public void getImagesOfRoom(List<Room>rooms, int index,RoomsResult roomsResult){
         final int index2 = index+1;
         if(index2 == rooms.size()){
             //ToDo

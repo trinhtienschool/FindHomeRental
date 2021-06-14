@@ -9,18 +9,25 @@ import com.trinhtien2212.findhomerental.model.Location;
 import com.trinhtien2212.findhomerental.model.Room;
 import com.trinhtien2212.findhomerental.ui.add_room.AddRoomActivity;
 
-public class RoomPresenter implements Presenter {
+import java.util.List;
+
+public class RoomPresenter implements Presenter,RoomsResult {
     AddRoomActivity addRoomActivity;
     ConnectServer connectServer;
     RoomDB roomDB;
     Room room;
+    RoomsResult roomsResult;
 
-    public RoomPresenter(AddRoomActivity addRoomActivity) {
-        this.addRoomActivity = addRoomActivity;
+    public RoomPresenter(RoomsResult roomsResult) {
+//        this.addRoomActivity = addRoomActivity;
+        this.roomsResult = roomsResult;
         this.connectServer = new SaveLocationBehavior(this);
         this.roomDB = RoomDB.getInstance();
 
 
+    }
+    public void getRandomRooms(){
+        roomDB.getRandomRooms(this);
     }
     public void setRoom(Room room){
         this.room = room;
@@ -71,5 +78,10 @@ public class RoomPresenter implements Presenter {
     @Override
     public void onSuccess() {
         addRoomActivity.notifyStatus("Lưu thành công");
+    }
+
+    @Override
+    public void returnRooms(List<Room> rooms) {
+        roomsResult.returnRooms(rooms);
     }
 }

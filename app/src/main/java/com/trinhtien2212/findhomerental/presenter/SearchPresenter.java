@@ -11,19 +11,29 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
-public class SearchPresenter implements Presenter, RoomReturnResult {
+public class SearchPresenter implements Presenter, RoomsResult {
     List<Location> locations =new ArrayList<Location>();
+
     GetRoomByListRoomIds getRoomByListRoomIds;
+    RoomsResult roomsResult;
+    public SearchPresenter(RoomsResult roomsResult){
+        this.roomsResult = roomsResult;
+    }
     public void searchLocation(String address){
         SearchLocationBehavior searchLocationBehavior = new SearchLocationBehavior(this);
         searchLocationBehavior.connectServer(new Location(address),10);
         getRoomByListRoomIds = new GetRoomByListRoomIds(this);
     }
     public void parseJson(String json) throws JSONException {
-        if(json.equalsIgnoreCase("{\"roomIDs\":[{}]}"))
+        if(json.equalsIgnoreCase("{\"roomIDs\":[{}]}")){
+           returnRooms(null);
             return;
+        }
+
         JSONObject jsonObject = new JSONObject(json);
         JSONArray jsonArray = jsonObject.getJSONArray("roomIDs");
         for(int i=0;i<jsonArray.length();i++){
@@ -32,19 +42,40 @@ public class SearchPresenter implements Presenter, RoomReturnResult {
             location.setLocation(searchRoomResult);
             locations.add(location);
         }
-       List<String>roomIds = new ArrayList<String>();
+        Log.e("locations size: ",locations.size()+"");
+
+       setUpGetRoomByRoomIds(locations);
+    }
+    private void setUpGetRoomByRoomIds(List<Location>locations){
+        getRoomByListRoomIds.setLocations(locations);
+        getRoomByListRoomIds.setRoomIds(getRoomIds(locations));
+        getRoomByListRoomIds.setCountGetRoom(0);
+        getNext();
+    }
+    private List<String>getRoomIds(List<Location>locations){
+        List<String>roomIds = new ArrayList<String>();
         for(Location l: locations){
             roomIds.add(l.getRoomID());
         }
-        getRoomByListRoomIds.setLocations(locations);
-        getRoomByListRoomIds.setRoomIds(roomIds);
-        getNext();
+        return roomIds;
+    }
+    public int getTotalPage(){
+        int totalItems = getRoomByListRoomIds.getTotalItems();
+        if(totalItems%10 == 0) return totalItems/10;
+        else return totalItems/10+1;
+    }
+    public int getTotalResults(){
+        return getRoomByListRoomIds.getTotalItems();
     }
     public boolean hasNext(){
        return getRoomByListRoomIds.hasNext();
     }
     public void getNext(){
-        this.getRoomByListRoomIds.getNextRooms();
+        if(!hasNext()) {
+            Log.e("HasNext","Dang vao !hasNext searchPresenter");
+            roomsResult.returnRooms(null);
+        }
+        else this.getRoomByListRoomIds.getNextRooms();
     }
     //    public List<Room> next(){
 //        nextLastItemIndex = countGetRoom + numOfItems;
@@ -77,11 +108,37 @@ public class SearchPresenter implements Presenter, RoomReturnResult {
 
     }
 
+//    @Override
+//    public void continueAction(List<Room> rooms) {
+//        //ToDo
+//        for(Room room: rooms){
+//            Log.e("PrintRoom",room.toString());
+//        }
+//    }
+
     @Override
-    public void continueAction(List<Room> rooms) {
-        //ToDo
-        for(Room room: rooms){
-            Log.e("PrintRoom",room.toString());
-        }
+    public void returnRooms(List<Room> rooms) {
+        roomsResult.returnRooms(rooms);
+    }
+
+   public void sortIncrease(){
+       Collections.sort(locations, new Comparator<Location>() {
+           @Override
+           public int compare(Location o1, Location o2) {
+               return (int)(o1.getDistance()*1000-o2.getDistance()*1000);
+           }
+       });
+       Log.e("Lo after sort inc",locations.toString());
+       setUpGetRoomByRoomIds(locations);
+   }
+    public void sortDecrease(){
+        Collections.sort(locations, new Comparator<Location>() {
+            @Override
+            public int compare(Location o1, Location o2) {
+                return (int)(o2.getDistance()*1000-o1.getDistance()*1000);
+            }
+        });
+        Log.e("Lo after sort dec",locations.toString());
+        setUpGetRoomByRoomIds(locations);
     }
 }

@@ -20,6 +20,8 @@ public class SearchLocationBehavior extends ConnectServer {
     @Override
     public void connectServer(Object object, int action) {
         if(object instanceof Location) {
+            Log.e("Location search",object.toString());
+            Log.e("action",action+"");
             Location location = (Location)object;
             retrofit2.Call<Object> callback = this.dataClient.searchData(location.getAddress(), action);
             callback.enqueue(this);
@@ -47,21 +49,23 @@ public class SearchLocationBehavior extends ConnectServer {
 
     @Override
     public void onFailure(Call call, Throwable t) {
-        HttpException exception = (HttpException) t;
-        switch (exception.code()) {
-            case 400:
-                // Handle code 400
-
-                Log.e("Code",400+"");
-                break;
-            case 500:
-                // Handle code 500
-                Log.e("Code",500+"");
-                break;
-            default:
-                break;
-        }
-        searchPresenter.onFail();
-        Log.e("Fai","Fail");
+        Log.e("Error",t.getMessage());
+        Log.e("Error",t.toString());
+//        HttpException exception = (HttpException) t;
+//        switch (exception.code()) {
+//            case 400:
+//                // Handle code 400
+//
+//                Log.e("Code",400+"");
+//                break;
+//            case 500:
+//                // Handle code 500
+//                Log.e("Code",500+"");
+//                break;
+//            default:
+//                break;
+//        }
+//        searchPresenter.onFail();
+//        Log.e("Fai","Fail");
     }
 }
