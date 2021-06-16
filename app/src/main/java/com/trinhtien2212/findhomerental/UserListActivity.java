@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.trinhtien2212.findhomerental.adapter.UserAdapter;
 import com.trinhtien2212.findhomerental.model.User;
+import com.trinhtien2212.findhomerental.ui.PaginationScrollListener;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -20,7 +20,6 @@ import android.widget.Toast;
 import com.github.mmin18.widget.RealtimeBlurView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.trinhtien2212.findhomerental.MainActivity;
-import com.trinhtien2212.findhomerental.PaginationScrollListener;
 import com.trinhtien2212.findhomerental.R;
 import com.trinhtien2212.findhomerental.adapter.MyRoomAdapter;
 import com.trinhtien2212.findhomerental.adapter.RoomHomeAdapter;

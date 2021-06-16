@@ -15,12 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.github.mmin18.widget.RealtimeBlurView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.trinhtien2212.findhomerental.MainActivity;
-import com.trinhtien2212.findhomerental.PaginationScrollListener;
 import com.trinhtien2212.findhomerental.R;
 import com.trinhtien2212.findhomerental.adapter.LoveAdapter;
 import com.trinhtien2212.findhomerental.model.Room;
 import com.trinhtien2212.findhomerental.presenter.BookmarkPresenter;
 import com.trinhtien2212.findhomerental.presenter.RoomsResult;
+import com.trinhtien2212.findhomerental.ui.PaginationScrollListener;
 
 
 import java.util.ArrayList;
