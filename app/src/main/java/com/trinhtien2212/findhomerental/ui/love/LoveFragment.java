@@ -1,6 +1,7 @@
 package com.trinhtien2212.findhomerental.ui.love;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,38 @@ public class LoveFragment extends Fragment implements RoomsResult {
         mainActivity = (MainActivity) getActivity();
         root = inflater.inflate(R.layout.fragment_love, container, false);
         assign();
+        buildRecyclerView();
+
+        actionItemRecyclerView();
+
+        setFirstData();
+        return root;
+    }
+    private void assign(){
+        realtimeBlurView = root.findViewById(R.id.realtimeBlurView4);
+        progressBar = root.findViewById(R.id.pb_saving4);
+        recyclerView = root.findViewById(R.id.recycler_home4);
+    }
+
+    //Load data
+    private void setFirstData(){
+        RoomDB roomDB = RoomDB.getInstance();
+        roomDB.getRandomRooms(this);
+
+        Toast.makeText(mainActivity, "Load data page", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void returnRooms(List<Room> rooms) {
+        mListRoom = rooms;
+        adapter.setData(mListRoom);
+        showWaiting(View.INVISIBLE);
+    }
+    private void showWaiting(int waiting){
+        realtimeBlurView.setVisibility(waiting);
+        progressBar.setVisibility(waiting);
+    }
+    private void buildRecyclerView(){
         adapter = new LoveAdapter();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mainActivity);
@@ -70,33 +103,22 @@ public class LoveFragment extends Fragment implements RoomsResult {
                 return isLastPage;
             }
         });
-
-        setFirstData();
-        return root;
     }
-    private void assign(){
-        realtimeBlurView = root.findViewById(R.id.realtimeBlurView4);
-        progressBar = root.findViewById(R.id.pb_saving4);
-        recyclerView = root.findViewById(R.id.recycler_home4);
-    }
+    public void actionItemRecyclerView(){
+        adapter.setOnItemClickListener(new LoveAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int positon) {
+                // Todo item
+                Log.e("Room", mListRoom.get(positon).toString());
+            }
 
-    //Load data
-    private void setFirstData(){
+            @Override
+            public void onDeleteClick(int position) {
+                // ToDo button DELETE
 
-        RoomDB roomDB = RoomDB.getInstance();
-        roomDB.getRandomRooms(this);
+            }
 
-        Toast.makeText(mainActivity, "Load data page", Toast.LENGTH_SHORT).show();
-    }
 
-    @Override
-    public void returnRooms(List<Room> rooms) {
-        mListRoom = rooms;
-        adapter.setData(mListRoom);
-        showWaiting(View.INVISIBLE);
-    }
-    private void showWaiting(int waiting){
-        realtimeBlurView.setVisibility(waiting);
-        progressBar.setVisibility(waiting);
+        });
     }
 }

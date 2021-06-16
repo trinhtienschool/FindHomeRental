@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,32 +52,19 @@ public class MyRoomFragment extends Fragment implements RoomsResult {
         mainActivity = (MainActivity) getActivity();
         root = inflater.inflate(R.layout.fragment_my_room, container, false);
         assign();
-        adapter = new MyRoomAdapter();
-        roomPresenter = new RoomPresenter(this);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mainActivity);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(adapter);
+        buildRecyclerView();
 
-//        recyclerView.addOnScrollListener(new PaginationScrollListener(linearLayoutManager) {
-//            @Override
-//            public void loadMoreItems() {
-//                isLoading = true;
-////                loadNextPage();
-//            }
-//
-//            @Override
-//            public boolean isLoading() {
-//                return isLoading;
-//            }
-//
-//            @Override
-//            public boolean isLastPage() {
-//                return isLastPage;
-//            }
-//        });
+        actionItemRecyclerView();
 
         setFirstData();
         return root;
+    }
+
+
+    // ToDo Remove Item
+    public void removeItem(int position){
+        mListRoom.remove(position);
+        adapter.notifyDataSetChanged();
     }
     private void assign(){
         realtimeBlurView = root.findViewById(R.id.realtimeBlurView3);
@@ -87,15 +75,10 @@ public class MyRoomFragment extends Fragment implements RoomsResult {
     //Load data
     private void setFirstData(){
         roomPresenter.getAllRoomsOfUser("mfSmbqjLoKd8YgphOJuZrQtJ7cj1");
-//        RoomDB roomDB = RoomDB.getInstance();
-//        roomDB.getRandomRooms(this);
-//
-//        Toast.makeText(mainActivity, "Load data page", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void returnRooms(List<Room> rooms) {
-
         mListRoom = rooms;
         adapter.setData(mListRoom);
         showWaiting(View.INVISIBLE);
@@ -103,5 +86,35 @@ public class MyRoomFragment extends Fragment implements RoomsResult {
     private void showWaiting(int waiting){
         realtimeBlurView.setVisibility(waiting);
         progressBar.setVisibility(waiting);
+    }
+
+    private void buildRecyclerView(){
+        adapter = new MyRoomAdapter();
+        roomPresenter = new RoomPresenter(this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mainActivity);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void actionItemRecyclerView(){
+        adapter.setOnItemClickListener(new MyRoomAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int positon) {
+                // Todo item
+                Log.e("Room", mListRoom.get(positon).toString());
+            }
+
+            @Override
+            public void onDeleteClick(int position) {
+                // ToDo button DELETE
+                removeItem(position);
+            }
+
+            @Override
+            public void onEditClick(int position) {
+                // Todo Button EDIT
+            }
+
+        });
     }
 }
