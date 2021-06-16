@@ -13,16 +13,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mmin18.widget.RealtimeBlurView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.trinhtien2212.findhomerental.MainActivity;
 import com.trinhtien2212.findhomerental.PaginationScrollListener;
 import com.trinhtien2212.findhomerental.R;
 import com.trinhtien2212.findhomerental.adapter.LoveAdapter;
-import com.trinhtien2212.findhomerental.adapter.MyRoomAdapter;
-import com.trinhtien2212.findhomerental.dao.RoomDB;
 import com.trinhtien2212.findhomerental.model.Room;
 import com.trinhtien2212.findhomerental.presenter.BookmarkPresenter;
 import com.trinhtien2212.findhomerental.presenter.RoomsResult;
 
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -45,6 +46,7 @@ public class LoveFragment extends Fragment implements RoomsResult {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         mainActivity = (MainActivity) getActivity();
+        mListRoom = new ArrayList<Room>();
         root = inflater.inflate(R.layout.fragment_love, container, false);
         assign();
         adapter = new LoveAdapter();
@@ -57,7 +59,9 @@ public class LoveFragment extends Fragment implements RoomsResult {
             @Override
             public void loadMoreItems() {
                 isLoading = true;
-//                loadNextPage();
+                progressBar.setVisibility(View.VISIBLE);
+                currentPage += 1;
+                getListRoom();
             }
 
             @Override
@@ -70,6 +74,7 @@ public class LoveFragment extends Fragment implements RoomsResult {
                 return isLastPage;
             }
         });
+//        bookmarkPresenter.("0b4oSVQ6aB6fpmvbkVvo",FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         setFirstData();
         return root;
@@ -79,9 +84,9 @@ public class LoveFragment extends Fragment implements RoomsResult {
         progressBar = root.findViewById(R.id.pb_saving4);
         recyclerView = root.findViewById(R.id.recycler_home4);
     }
-
     //Load data
     private void setFirstData(){
+        bookmarkPresenter.getAllBookmarks(FirebaseAuth.getInstance().getCurrentUser().getUid());
         //ToDo
 //        bookmarkPresenter.getAllBookmarks();
 //        RoomDB roomDB = RoomDB.getInstance();
@@ -89,15 +94,40 @@ public class LoveFragment extends Fragment implements RoomsResult {
 //
 //        Toast.makeText(mainActivity, "Load data page", Toast.LENGTH_SHORT).show();
     }
-
+    private void getListRoom(){
+        bookmarkPresenter.getNext();
+    }
     @Override
     public void returnRooms(List<Room> rooms) {
-        mListRoom = rooms;
-        adapter.setData(mListRoom);
+
+        if(rooms!=null){
+            mListRoom.addAll(rooms);
+            adapter.setData(mListRoom);
+            totalPage = bookmarkPresenter.getTotalPage();
+//            txtTotalResults.setText(searchPresenter.getTotalResults()+"");
+            if(currentPage == totalPage){
+                isLastPage = true;
+            }
+            recyclerView.post(new Runnable() {
+                public void run() {
+                    // There is no need to use notifyDataSetChanged()
+                    adapter.notifyDataSetChanged();
+                }
+            });
+            isLoading = false;
+//            bookmarkPresenter.removeRoom("0b4oSVQ6aB6fpmvbkVvo",FirebaseAuth.getInstance().getCurrentUser().getUid());
+        }else Toast.makeText(mainActivity,"Chưa có yêu thích nào",Toast.LENGTH_LONG).show();
+
+        progressBar.setVisibility(View.GONE);
         showWaiting(View.INVISIBLE);
     }
     private void showWaiting(int waiting){
         realtimeBlurView.setVisibility(waiting);
         progressBar.setVisibility(waiting);
+    }
+
+    public void showStatus(String s) {
+        Toast.makeText(mainActivity,s,Toast.LENGTH_SHORT).show();
+
     }
 }

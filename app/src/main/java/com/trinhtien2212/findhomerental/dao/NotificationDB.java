@@ -35,11 +35,13 @@ public class NotificationDB extends ConnectDB {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
+                        notificationPresenter.onSuccess();
                         Log.e("Note","Thanh cong") ;
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                notificationPresenter.onFail();
                 Log.e("Note","That bai");
             }
         });
@@ -52,15 +54,18 @@ public class NotificationDB extends ConnectDB {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         List<Notification>notifications = new ArrayList<Notification>();
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("GetAllNot", document.getId() + " => " + document.getData());
-                                Notification notification = new Notification();
-                                notification.setNotification(document.getData());
-                                notifications.add(notification);
-                                Log.e("noti: ",notification.toString());
-                            }
-                            notificationPresenter.setNotForList(notifications);
+                            if(!task.getResult().isEmpty()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    Log.d("GetAllNot", document.getId() + " => " + document.getData());
+                                    Notification notification = new Notification();
+                                    notification.setNotification(document.getData());
+                                    notifications.add(notification);
+                                    Log.e("noti: ", notification.toString());
+                                }
+                                notificationPresenter.returnNotification(notifications);
+                            }else notificationPresenter.returnNotification(null);
                         } else {
+                            notificationPresenter.returnNotification(null);
                             Log.d("GetAllNot", "Error getting documents: ", task.getException());
                         }
                     }

@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.github.mmin18.widget.RealtimeBlurView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.trinhtien2212.findhomerental.MainActivity;
 import com.trinhtien2212.findhomerental.PaginationScrollListener;
 import com.trinhtien2212.findhomerental.R;
@@ -52,7 +53,7 @@ public class MyRoomFragment extends Fragment implements RoomsResult {
         root = inflater.inflate(R.layout.fragment_my_room, container, false);
         assign();
         adapter = new MyRoomAdapter();
-
+        roomPresenter = new RoomPresenter(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mainActivity);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -86,7 +87,7 @@ public class MyRoomFragment extends Fragment implements RoomsResult {
 
     //Load data
     private void setFirstData(){
-        roomPresenter.getAllRoomsOfUser("mfSmbqjLoKd8YgphOJuZrQtJ7cj1");
+        roomPresenter.getAllRoomsOfUser(FirebaseAuth.getInstance().getCurrentUser().getUid());
 //        RoomDB roomDB = RoomDB.getInstance();
 //        roomDB.getRandomRooms(this);
 //
@@ -95,10 +96,14 @@ public class MyRoomFragment extends Fragment implements RoomsResult {
 
     @Override
     public void returnRooms(List<Room> rooms) {
-
-        mListRoom = rooms;
-        adapter.setData(mListRoom);
-        showWaiting(View.INVISIBLE);
+        if(rooms == null){
+            Toast.makeText(mainActivity,"Chưa có bài đăng phòng trọ nào",Toast.LENGTH_LONG).show();
+            showWaiting(View.INVISIBLE);
+        }else {
+            mListRoom = rooms;
+            adapter.setData(mListRoom);
+            showWaiting(View.INVISIBLE);
+        }
     }
     private void showWaiting(int waiting){
         realtimeBlurView.setVisibility(waiting);

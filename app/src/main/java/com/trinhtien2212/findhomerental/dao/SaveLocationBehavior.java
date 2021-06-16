@@ -1,5 +1,7 @@
 package com.trinhtien2212.findhomerental.dao;
 
+import android.util.Log;
+
 import com.trinhtien2212.findhomerental.model.Location;
 import com.trinhtien2212.findhomerental.presenter.RoomPresenter;
 
@@ -40,11 +42,16 @@ public class SaveLocationBehavior extends ConnectServer {
     public void onResponse(Call call, Response response) {
         if(action == ADDROOM || action == UPDATEROOM) {
             this.roomPresenter.saveImage();
+            Log.e("Dang vao onResponse","On response");
+        }else if(action == DELETEROOM){
+            this.roomPresenter.onSuccess();
         }
+
     }
 
     @Override
     public void onFailure(Call call, Throwable t) {
+        Log.e("Error",t.toString());
         roomPresenter.onFail();
     }
 }

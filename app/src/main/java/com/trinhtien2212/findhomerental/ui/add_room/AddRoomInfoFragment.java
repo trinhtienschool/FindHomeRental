@@ -3,6 +3,7 @@ package com.trinhtien2212.findhomerental.ui.add_room;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -25,8 +27,9 @@ import java.util.Map;
 
 public class AddRoomInfoFragment extends Fragment {
     private View view;
-    private EditText txt_costPerMonth, txt_depositCost, txt_eleCost, txt_watCost, txt_description;
+    private EditText txt_costPerMonth, txt_depositCost, txt_eleCost, txt_watCost, txt_description,txt_area;
     private Button btn_NextImageFrag;
+    private TextView tv_area;
     private AddRoomActivity addRoomActivity;
 
     @Override
@@ -40,8 +43,11 @@ public class AddRoomInfoFragment extends Fragment {
     }
 
     public void init() {
+        tv_area = view.findViewById(R.id.tv_area);
+        tv_area.setText(Html.fromHtml("Diện tích (m<sup><small>2</small></sup>)"));
+        txt_area = view.findViewById(R.id.txt_area);
         txt_costPerMonth = view.findViewById(R.id.txt_costPerMonth);
-        txt_costPerMonth.requestFocus();
+//        txt_costPerMonth.requestFocus();
         txt_depositCost = view.findViewById(R.id.txt_depositCost);
         txt_eleCost = view.findViewById(R.id.txt_eleCost);
         txt_watCost = view.findViewById(R.id.txt_watCost);
@@ -54,6 +60,7 @@ public class AddRoomInfoFragment extends Fragment {
             txt_eleCost.setText(Util.formatCurrency(room.getEleCost()));
             txt_watCost.setText(Util.formatCurrency(room.getWatCost()));
             txt_description.setText(room.getDescription());
+            txt_area.setText(room.getArea()+"");
         }
         
         
@@ -62,13 +69,15 @@ public class AddRoomInfoFragment extends Fragment {
         setOnClickField(txt_depositCost);
         setOnClickField(txt_eleCost);
         setOnClickField(txt_watCost);
+        setOnClickField(txt_area);
         setOnClickField(txt_description);
 
         //travel next field
         setOnNextField(txt_costPerMonth, txt_depositCost);
         setOnNextField(txt_depositCost, txt_eleCost);
         setOnNextField(txt_eleCost, txt_watCost);
-        setOnNextField(txt_watCost, txt_description);
+        setOnNextField(txt_watCost,txt_area);
+        setOnNextField(txt_area, txt_description);
 
         //format currency
         setFormatCurrency(txt_costPerMonth);
@@ -109,6 +118,11 @@ public class AddRoomInfoFragment extends Fragment {
         int wCost = checkError(txt_watCost, 1000);
         if (wCost == -1)  hasError = true;
 
+        String area = txt_area.getText().toString().trim();
+        if (area.isEmpty() || area.startsWith("Lỗi:")) {
+            setError(txt_description, "Trường này không được bỏ trống");
+            hasError = true;
+        }
         String description = txt_description.getText().toString().trim();
         if (description.isEmpty() || description.startsWith("Lỗi:")) {
             setError(txt_description, "Trường này không được bỏ trống");
@@ -121,6 +135,7 @@ public class AddRoomInfoFragment extends Fragment {
         map.put("dCost", dCost);
         map.put("eCost", eCost);
         map.put("wCost", wCost);
+        map.put("area",Float.parseFloat(area));
         return map;
     }
 

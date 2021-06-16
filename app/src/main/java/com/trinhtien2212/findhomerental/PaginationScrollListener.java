@@ -1,4 +1,4 @@
-package com.trinhtien2212.findhomerental;
+package com.trinhtien2212.findhomerental.ui.home;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;

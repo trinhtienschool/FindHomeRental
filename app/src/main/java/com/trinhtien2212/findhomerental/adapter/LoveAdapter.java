@@ -3,6 +3,7 @@ package com.trinhtien2212.findhomerental.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -61,6 +62,7 @@ public class LoveAdapter extends RecyclerView.Adapter<LoveAdapter.RoomViewHolder
             txtPrice = itemView.findViewById(R.id.titlePrice4);
             txtAddress = itemView.findViewById(R.id.titleAddress4);
             imgHome = itemView.findViewById(R.id.imageHome4);
+
         }
     }
 }

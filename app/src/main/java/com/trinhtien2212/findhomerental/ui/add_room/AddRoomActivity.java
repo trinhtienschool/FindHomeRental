@@ -18,11 +18,12 @@ import com.trinhtien2212.findhomerental.R;
 import com.trinhtien2212.findhomerental.model.Room;
 import com.trinhtien2212.findhomerental.presenter.RoomPresenter;
 import com.trinhtien2212.findhomerental.presenter.RoomsResult;
+import com.trinhtien2212.findhomerental.presenter.StatusResult;
 
 import java.util.List;
 import java.util.Map;
 
-public class AddRoomActivity extends AppCompatActivity implements RoomsResult {
+public class AddRoomActivity extends AppCompatActivity implements StatusResult {
     private TabLayout mTabLayout;
     private ViewPager2 viewPager2;
     private AddRoomViewPagerAdapter adapter;
@@ -36,9 +37,8 @@ public class AddRoomActivity extends AppCompatActivity implements RoomsResult {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_room);
         init();
-        room = new Room();
+        this.room = new Room();
         isUpdate = false;
-        roomPresenter = new RoomPresenter(this);
         //include back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);      //icon in appbar
         getSupportActionBar().setDisplayShowHomeEnabled(true);      //back button in android
@@ -52,12 +52,19 @@ public class AddRoomActivity extends AppCompatActivity implements RoomsResult {
         showWaiting(View.INVISIBLE);
 
         Bundle bundle = getIntent().getExtras();
-        Room room = (Room) bundle.getSerializable("room");
-        if(room !=null){
+        if(bundle !=null) {
+            Room roomReceive = (Room) bundle.getSerializable("room");
+            if (roomReceive != null) {
 //            Log.e("Room",room.toString());
-            this.room = room;
-            isUpdate = true;
+                this.room = roomReceive;
+                isUpdate = true;
+            }
         }
+
+        //Test delete
+//        roomPresenter = new RoomPresenter(this,room);
+//        roomPresenter.deleteRoom();
+
 
     }
     @Override
@@ -121,6 +128,7 @@ public class AddRoomActivity extends AppCompatActivity implements RoomsResult {
         room.setDeposit((int)info.get("dCost"));
         room.setEleCost((int)info.get("eCost"));
         room.setWatCost((int)info.get("wCost"));
+        room.setArea((float)info.get("area"));
         room.setDescription((String)info.get("description"));
 //        room.putAll(info);
         Log.e("Room",room.toString());
@@ -133,7 +141,6 @@ public class AddRoomActivity extends AppCompatActivity implements RoomsResult {
         room.setUserCreatedId(FirebaseAuth.getInstance().getCurrentUser().getUid());
         room.setImages((List<String>) utilities.get("images"));
 
-        room.setImageUrl(((List<String>) utilities.get("images")).get(0));
         List<String>utilitiesList = (List<String>) utilities.get("utilities");
 
         for(String utility : utilitiesList){
@@ -163,7 +170,7 @@ public class AddRoomActivity extends AppCompatActivity implements RoomsResult {
                     room.setIsPark(true);
             }
         }
-        roomPresenter.setRoom(room);
+        roomPresenter = new RoomPresenter(this,room);
         if(isUpdate){
             roomPresenter.updateRoom();
         }
@@ -180,8 +187,15 @@ public class AddRoomActivity extends AppCompatActivity implements RoomsResult {
         Toast.makeText(this,status,Toast.LENGTH_LONG).show();
     }
 
-    @Override
-    public void returnRooms(List<Room> rooms) {
 
+
+    @Override
+    public void onFail() {
+        notifyStatus("Thất bại");
+    }
+
+    @Override
+    public void onSuccess() {
+        notifyStatus("Thành công");
     }
 }

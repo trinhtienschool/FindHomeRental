@@ -11,20 +11,24 @@ import com.trinhtien2212.findhomerental.ui.add_room.AddRoomActivity;
 
 import java.util.List;
 
-public class RoomPresenter implements Presenter,RoomsResult {
-    AddRoomActivity addRoomActivity;
+public class RoomPresenter implements StatusResult, RoomsResult {
     ConnectServer connectServer;
     RoomDB roomDB;
     Room room;
     RoomsResult roomsResult;
-
+    StatusResult statusResult;
     public RoomPresenter(RoomsResult roomsResult) {
 //        this.addRoomActivity = addRoomActivity;
         this.roomsResult = roomsResult;
         this.connectServer = new SaveLocationBehavior(this);
         this.roomDB = RoomDB.getInstance();
-
-
+    }
+    public RoomPresenter(StatusResult statusResult,Room room) {
+//        this.addRoomActivity = addRoomActivity;
+        this.statusResult = statusResult;
+        this.room = room;
+        this.connectServer = new SaveLocationBehavior(this);
+        this.roomDB = RoomDB.getInstance();
     }
 
     public void getAllRoomsOfUser(String uid){
@@ -63,7 +67,7 @@ public class RoomPresenter implements Presenter,RoomsResult {
         connectServer.connectServer(location, ConnectServer.UPDATEROOM);
     }
 
-    public void deleteRoom(Room room) {
+    public void deleteRoom() {
 
         //phai set isDeleted = true
         this.roomDB.deleteRoom(this.room.getRoomID(), this);
@@ -75,17 +79,19 @@ public class RoomPresenter implements Presenter,RoomsResult {
     }
 
     @Override
-    public void onFail() {
+    public void returnRooms(List<Room> rooms) {
+        roomsResult.returnRooms(rooms);
+    }
 
+
+    @Override
+    public void onFail() {
+        statusResult.onFail();
     }
 
     @Override
     public void onSuccess() {
-        addRoomActivity.notifyStatus("Lưu thành công");
-    }
-
-    @Override
-    public void returnRooms(List<Room> rooms) {
-        roomsResult.returnRooms(rooms);
+        Log.e("Thanh cong","Xóa thành công");
+        statusResult.onSuccess();
     }
 }

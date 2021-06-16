@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.add_room.AddRoomInfoFragment">
+    tools:context=".ui.add_room.AddRoomInfoFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <ScrollView
@@ -67,6 +67,23 @@
                 android:layout_marginBottom="5dp"
                 android:inputType="number"
                 android:hint="Giá tiền nước" />
+            <TextView
+                android:id="@+id/tv_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Diện tích:(m2)"
+
+                android:textColor="#FF9800"
+                android:textSize="25sp"/>
+
+            <EditText
+                android:id="@+id/txt_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_marginBottom="5dp"
+                android:inputType="number"
+                android:hint="Diện tích"/>
 
             <TextView
                 android:id="@+id/textView4"

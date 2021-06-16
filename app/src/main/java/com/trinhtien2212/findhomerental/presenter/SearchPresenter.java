@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class SearchPresenter implements Presenter, RoomsResult {
+public class SearchPresenter implements StatusResult, RoomsResult {
     List<Location> locations =new ArrayList<Location>();
 
     GetRoomByListRoomIds getRoomByListRoomIds;
