@@ -14,6 +14,9 @@ import java.util.Map;
 import java.util.Random;
 
 public class Room implements Serializable {
+
+
+
     public Room(int cost, String address) {
         this.cost = cost;
         this.address = address;
@@ -21,7 +24,7 @@ public class Room implements Serializable {
 
     private String roomID, userCreatedId, address, imageUrl, description;
     private Date dateCreated;
-    private boolean isDeleted, isPark, isWifi, isHotWater, isFre, isAttic, isTivi, isWardrobe, isFence, isWC, isFreeTime, isAirCondition;
+    public static boolean isDeleted, isPark, isWifi, isHotWater, isFre, isAttic, isTivi, isWardrobe, isFence, isWC, isFreeTime, isAirCondition;
     private float area;
     private String phone;
     private int cost, deposit, eleCost, watCost;
