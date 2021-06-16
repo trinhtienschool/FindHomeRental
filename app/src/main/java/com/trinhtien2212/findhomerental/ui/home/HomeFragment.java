@@ -3,6 +3,7 @@ package com.trinhtien2212.findhomerental.ui.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.github.mmin18.widget.RealtimeBlurView;
 import com.trinhtien2212.findhomerental.MainActivity;
 
+import com.trinhtien2212.findhomerental.MainAdminActivity;
 import com.trinhtien2212.findhomerental.R;
 import com.trinhtien2212.findhomerental.adapter.MyRoomAdapter;
 import com.trinhtien2212.findhomerental.adapter.RoomHomeAdapter;
@@ -30,7 +32,7 @@ import com.trinhtien2212.findhomerental.ui.PaginationScrollListener;
 
 import java.util.List;
 
-public class HomeFragment extends Fragment implements RoomsResult {
+public class HomeFragment extends Fragment implements RoomsResult, RoomHomeAdapter.ItemClickListener {
 
     private ImageButton btnSearch;
     private EditText edtSearch;
@@ -80,7 +82,7 @@ public class HomeFragment extends Fragment implements RoomsResult {
     }
 
     private void buildRecyclerView() {
-        adapter = new RoomHomeAdapter();
+        adapter = new RoomHomeAdapter(mListRoom, this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mainActivity, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -129,13 +131,11 @@ public class HomeFragment extends Fragment implements RoomsResult {
         progressBar.setVisibility(waiting);
     }
 
-    private void actionItemRecyclerView(){
-        adapter.setOnItemClickListener(new RoomHomeAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int positon) {
-                // Todo item
-                mListRoom.get(positon);
-            }
-        });
+    @Override
+    public void onItemClick(int position) {
+        // Todo ITEM
+        Log.d("Home", "itemClick: clicked" + position);
+        Intent intent = new Intent(mainActivity, MainAdminActivity.class);
+        startActivity(intent);
     }
 }

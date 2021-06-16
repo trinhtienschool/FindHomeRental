@@ -14,7 +14,7 @@ public class MainAdminActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_admin);
 
         btnUser = findViewById(R.id.buttonUserManagement);
         btnRoom = findViewById(R.id.buttonRoomManagement);

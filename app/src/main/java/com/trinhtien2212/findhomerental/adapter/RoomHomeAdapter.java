@@ -1,5 +1,6 @@
 package com.trinhtien2212.findhomerental.adapter;
 
+import android.telecom.Call;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,18 +14,16 @@ import com.trinhtien2212.findhomerental.R;
 import com.trinhtien2212.findhomerental.model.Room;
 import com.trinhtien2212.findhomerental.ui.Util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RoomHomeAdapter extends RecyclerView.Adapter<RoomHomeAdapter.RoomViewHolder>{
-    private List<Room> mListroom;
-    private OnItemClickListener mListener;
+    private List<Room> mListroom = new ArrayList<>();
+    private ItemClickListener mItemClickListener;
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        mListener = listener;
-    }
-
-    public interface OnItemClickListener{
-        void onItemClick(int positon);
+    public RoomHomeAdapter(List<Room> rooms, ItemClickListener itemClickListener){
+        this.mListroom = rooms;
+        this.mItemClickListener = itemClickListener;
     }
 
     public void setData(List<Room> list){
@@ -35,7 +34,7 @@ public class RoomHomeAdapter extends RecyclerView.Adapter<RoomHomeAdapter.RoomVi
     @Override
     public RoomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_item, parent,false);
-        return new RoomViewHolder(view, mListener);
+        return new RoomViewHolder(view, mItemClickListener);
     }
 
     @Override
@@ -55,11 +54,16 @@ public class RoomHomeAdapter extends RecyclerView.Adapter<RoomHomeAdapter.RoomVi
         return mListroom == null ? 0 : mListroom.size();
     }
 
-    public class RoomViewHolder extends RecyclerView.ViewHolder{
+    public interface ItemClickListener{
+        void onItemClick(int position);
+    }
+
+    public class RoomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView  txtPrice, txtAddress;
         private ImageView imgHome;
 
-        public RoomViewHolder(@NonNull View itemView, OnItemClickListener listener) {
+
+        public RoomViewHolder(@NonNull View itemView, ItemClickListener itemClickListener) {
             super(itemView);
 
             txtPrice = itemView.findViewById(R.id.titlePrice2);
@@ -67,17 +71,12 @@ public class RoomHomeAdapter extends RecyclerView.Adapter<RoomHomeAdapter.RoomVi
             imgHome = itemView.findViewById(R.id.imageHome2);
 
             // ToDo set action for item
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(listener != null){
-                        int position = getAdapterPosition();
-                        if(position != RecyclerView.NO_POSITION){
-                            listener.onItemClick(position);
-                        }
-                    }
-                }
-            });
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            mItemClickListener.onItemClick(getAdapterPosition());
         }
     }
 }
