@@ -15,7 +15,11 @@ public class User {
         this.email = email;
         this.photoUrl = photoUrl;
     }
-
+    public User(String displayName,String photoUrl,String userUid){
+        this.userUid = userUid;
+        this.photoUrl=photoUrl;
+        this.displayName=displayName;
+    }
     public User() {
     }
 

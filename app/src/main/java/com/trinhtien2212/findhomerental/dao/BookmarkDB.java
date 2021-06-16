@@ -9,6 +9,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.trinhtien2212.findhomerental.model.Bookmark;
 import com.trinhtien2212.findhomerental.presenter.BookmarkPresenter;
 
@@ -65,7 +66,22 @@ public class BookmarkDB extends ConnectDB{
             }
         });
     }
-    public void getAllBookmarks(String userUid, BookmarkPresenter bookmarkPresenter){
+    public void removeRoomOfBookmark(String key,BookmarkPresenter bookmarkPresenter,String userUid) {
+        Map<String, Object> updates = new HashMap<>();
+        updates.put(key, FieldValue.delete());
+        DocumentReference docRef = db.collection("bookmarks").document(userUid);
+        docRef.update(updates).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    bookmarkPresenter.onSuccess();
+                }else{
+                    bookmarkPresenter.onFail();
+                }
+            }
+        });
+    }
+    public void getAllBookmarks(Bookmark bookmark,String userUid, BookmarkPresenter bookmarkPresenter){
         DocumentReference docRef = db.collection("bookmarks").document(userUid);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -79,16 +95,17 @@ public class BookmarkDB extends ConnectDB{
 //                        for(String key: data.keySet()){
 //                            images.add((String) data.get(key));
 //                        }
-                        Bookmark bookmark = new Bookmark();
+
                         List<String> roomIds = bookmark.convertToRoomId(document.getData());
                         Log.e("RoomIDs",roomIds.toString());
                         bookmarkPresenter.setListRoomIds(roomIds);
                     } else {
                         Log.d("Error", "No such document");
+                        bookmarkPresenter.returnRooms(null);
                     }
                 } else {
                     Log.d("Error", "get failed with ", task.getException());
-
+                    bookmarkPresenter.returnRooms(null);
                 }
             }
         });

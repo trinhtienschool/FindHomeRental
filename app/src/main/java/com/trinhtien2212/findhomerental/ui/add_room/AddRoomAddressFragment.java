@@ -51,43 +51,35 @@ public class AddRoomAddressFragment extends Fragment {
         }
     }
     private Map<String,Object> getFieldData() {
-        String province = txt_province.getText().toString().trim();
-        String district = txt_district.getText().toString().trim();
-        String commune = txt_commune.getText().toString().trim();
-        String street = txt_street.getText().toString().trim();
-        String apart_number = txt_apart_number.getText().toString().trim();
-        String phone = txt_phone.getText().toString().trim();
-        if (province.isEmpty() || province.equals("Trường này không được bỏ trống")) {
-            setError(txt_province);
-            return null;
-        }
-        if (district.equals("Trường này không được bỏ trống") || district.isEmpty()) {
-            setError(txt_district);
-            return null;
-        }
-        if (commune.isEmpty() || commune.equals("Trường này không được bỏ trống")) {
-            setError(txt_commune);
-            return null;
-        }
-        if (street.isEmpty() || street.equals("Trường này không được bỏ trống")) {
-            setError(txt_street);
-            return null;
-        }
-        if (apart_number.isEmpty() || apart_number.equals("Trường này không được bỏ trống")) {
-            setError(txt_apart_number);
-            return null;
-        }
-        if (phone.isEmpty() || phone.equals("Trường này không được bỏ trống")) {
-            setError(txt_phone);
-            return null;
-        }
+        boolean hasError = false;
+        String province = checkError(txt_province);
+        if(province ==null) hasError = true;
+        String district = checkError(txt_district);
+        if(district ==null) hasError = true;
+        String commune =checkError(txt_commune);
+        if (commune == null) hasError = true;
+        String street = checkError(txt_street);
+        if(street == null) hasError = true;
+        String apart_number = checkError(txt_apart_number);
+        if(apart_number == null) hasError = true;
+        String phone = checkError(txt_phone);
+        if(phone == null) hasError = true;
+
+        if(hasError) return null;
 
         Map<String,Object>map = new HashMap<String, Object>();
         map.put("address",apart_number+" "+street+", "+commune+", "+district+", "+province);
         map.put("phone",phone);
         return map;
     }
-
+    private String checkError(EditText editText){
+        String text = editText.getText().toString().trim();
+        if (text.isEmpty() || text.equals("Lỗi: Trường này không được bỏ trống")) {
+            setError(editText);
+            return null;
+        }
+        return text;
+    }
     private void setError(EditText editText) {
         editText.setText("Lỗi: Trường này không được bỏ trống");
         editText.setTextColor(Color.RED);
