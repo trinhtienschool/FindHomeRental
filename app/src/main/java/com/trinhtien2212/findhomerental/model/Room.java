@@ -24,12 +24,19 @@ public class Room implements Serializable {
 
     private String roomID, userCreatedId, address, imageUrl, description;
     private Date dateCreated;
+
     public static boolean isDeleted, isPark, isWifi, isHotWater, isFre, isAttic, isTivi, isWardrobe, isFence, isWC, isFreeTime, isAirCondition;
+
+
+
     private float area;
     private String phone;
     private int cost, deposit, eleCost, watCost;
     private Location location;
     private List<String> images = new ArrayList<>();
+    private String userPhotoUrl;
+    private String userDisplayName;
+
 
     public Room() {
         dateCreated = new Date();
@@ -148,6 +155,8 @@ public class Room implements Serializable {
 //        RoomDB roomDB = RoomDB.getInstance();
 //
 //    }
+
+
     public int random(int start, int end) {
         Random random = new Random();
         return random.nextInt(20) + 11;
@@ -411,6 +420,21 @@ public class Room implements Serializable {
                 ", images=" + images +
                 ", isAirCondition=" + isAirCondition +
                 '}';
+    }
+    public String getUserPhotoUrl() {
+        return userPhotoUrl;
+    }
+
+    public void setUserPhotoUrl(String userPhotoUrl) {
+        this.userPhotoUrl = userPhotoUrl;
+    }
+
+    public String getUserDisplayName() {
+        return userDisplayName;
+    }
+
+    public void setUserDisplayName(String userDisplayName) {
+        this.userDisplayName = userDisplayName;
     }
 
     public void setUtilities(DocumentSnapshot document) {

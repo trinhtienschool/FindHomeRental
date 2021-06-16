@@ -55,7 +55,7 @@ public class GetRoomByListRoomIds {
         this.rooms = new ArrayList<Room>();
         if(roomIds.size()>=countGetRoom+10) {
             nextLastItemIndex += numOfItems;
-        }else nextLastItemIndex +=locations.size();
+        }else nextLastItemIndex +=roomIds.size();
         getRoom();
     }
     public void getRoom(){
@@ -70,6 +70,11 @@ public class GetRoomByListRoomIds {
         return roomIds.size();
     }
     public void addRoom(Room room){
+        if(room ==null){
+            countGetRoom++;
+            getRoom();
+            return;
+        }
         Log.e("Print: ","c: "+countGetRoom+"; last"+nextLastItemIndex+"; size: "+roomIds.size());
         if(locations !=null) room.setLocation(locations.get(countGetRoom));
         room.setRoomID(roomIds.get(countGetRoom));

@@ -19,9 +19,13 @@ import android.widget.TextView;
 import com.trinhtien2212.findhomerental.R;
 import com.trinhtien2212.findhomerental.model.Room;
 
+
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
+
+
 import java.util.List;
 
 
@@ -78,6 +82,7 @@ public class RoomDetail extends AppCompatActivity {
 
             }
         });
+
         if (Room.isAirCondition = true) {
             hinh_may_lanh.setImageResource(R.drawable.cool_machin_yellow);
             text_may_lanh.setTextColor(Color.YELLOW);
@@ -106,5 +111,9 @@ public class RoomDetail extends AppCompatActivity {
             hinh_xe_dap.setImageResource(R.drawable.bike_yellow);
             text_xe_dap.setTextColor(Color.YELLOW);
         }
+
+
+
+
     }
 }

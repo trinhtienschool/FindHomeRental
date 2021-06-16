@@ -100,6 +100,7 @@ public class AddRoomUtilityFragment extends Fragment {
             if(room.isWardrobe()) setChecked(cb_ward);
             if(room.isWifi()) setChecked(cb_wifi);
             if(room.isFre()) setChecked(cb_fre);
+            if(room.isAttic()) setChecked(cb_att);
             if(room.isAirCondition()) setChecked(cb_ac);
             if(room.isHotWater()) setChecked(cb_hotWater);
             if(room.isWC()) setChecked(cb_wc);
@@ -108,7 +109,7 @@ public class AddRoomUtilityFragment extends Fragment {
             if(room.isPark()) setChecked(cb_park);
 
             btn_add_room.setText("Cập nhật");
-
+            imageUris = room.getImages();
 
 
         }

@@ -14,16 +14,19 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.trinhtien2212.findhomerental.MainActivity;
 import com.trinhtien2212.findhomerental.model.Room;
+import com.trinhtien2212.findhomerental.model.User;
 import com.trinhtien2212.findhomerental.presenter.GetRoomByListRoomIds;
 import com.trinhtien2212.findhomerental.presenter.RoomPresenter;
-import com.trinhtien2212.findhomerental.ui.Util;
 import com.trinhtien2212.findhomerental.presenter.RoomsResult;
+import com.trinhtien2212.findhomerental.ui.Util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -31,25 +34,26 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
-public class RoomDB extends ConnectDB {
+public class RoomDB_Test extends ConnectDB {
 
     FirebaseStorage storage;
     StorageReference storageRef;
     List<String> imageInternalUri;
     List<String>imageStorageUrl;
 
-    public RoomDB() {
+    public RoomDB_Test() {
         this.storage = FirebaseStorage.getInstance();
         this.storageRef = storage.getReference();
     }
 
 
-    private static volatile RoomDB instance;
+    private static volatile RoomDB_Test instance;
 
-    public static synchronized RoomDB getInstance() {
+    public static synchronized RoomDB_Test getInstance() {
         if (instance == null) {
-            instance = new RoomDB();
+            instance = new RoomDB_Test();
 
         }
         return instance;
@@ -108,32 +112,77 @@ public class RoomDB extends ConnectDB {
                 });
     }
     public void getRandomRooms(RoomsResult roomsResult){
-        List<Room>rooms = new ArrayList<Room>();
+        List<String>roomIds = new ArrayList<String>();
         db.collection("rooms")
-                .orderBy("cost")
-//                .whereEqualTo("roomID", userUid)
-                .limit(30)
+
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Room room = document.toObject(Room.class);
-                                room.setUtilities(document);
-                                rooms.add(room);
-                                Log.e("Room",room.toString());
+//                                Room room = document.toObject(Room.class);
+//                                room.setUtilities(document);
+                                roomIds.add(document.getId());
+//                                Log.e("Room",roomIds.toString());
 
-                                Log.d("Room", document.getId() + " => " + document.getData());
+//                                Log.d("Room", document.getId() + " => " + document.getData());
                             }
                             //ToDo
-                            getImagesOfRoom(rooms,-1,roomsResult);
+                            List<User>user = new ArrayList<User>();
+                            user.add(new User("Quang Tiến Trịnh","https://lh3.googleusercontent.com/a/AATXAJxOJxva-0nLh6nFY1Yj6roQ-8e7kvy9wG4KxVA3=s96-c","YteQEWwKOyZK6McOen4Q6IqEquj2"));
+                            user.add(new User("Tiến Trịnh","https://lh3.googleusercontent.com/a/AATXAJyAP-1dDG2WUbKDB_BEqxJatMEu_chlS39p8Ae2=s96-c","gDDcWuWA9DgNtTuLrGEG7RVvFOi1"));
+                            user.add(new User("Quang Tiến Trịnh","https://lh3.googleusercontent.com/a/AATXAJytLzWz1dr7uvFPbiLPsvrkx-r9ZQU4F_nQesdC=s96-c","h1PykH8RBNbaYi18K6jfnfaNV2x1"));
+                            user.add(new User("Tâm Quyết","https://lh3.googleusercontent.com/a/AATXAJzRARmurWfjIsZrT6voenLlU5IF6m5Kuo9PpEr7=s96-c","iudgy5K9vFMS7RlgULYtDDPyAXf1"));
+                            user.add(new User("Trịnh Quang Tiến","https://lh3.googleusercontent.com/a/AATXAJz_Bct5ZCfD6bJidIMH6eXqpqpXOSexZNqngECf=s96-c","npsT4ViIQeSGCqZ19gs8NMmCDQp2"));
+                            user.add(new User("Quang Tiến Trịnh","https://lh3.googleusercontent.com/a/AATXAJzeH6VqIHq7TaX6Jswm29bDcyqbCPHeCL_1b1RW=s96-c","p1O3NUAmPpeGrlXkMtLmCpKjoSW2"));
+
+//                            getImagesOfRoom(rooms,-1,roomsResult);
+                            update(roomIds,-1,user);
                         } else {
                             Log.d("Error", "Error getting documents: ", task.getException());
                         }
                     }
                 });
 
+    }
+
+//    Test
+    public void update(List<String>roomIds,int index,List<User>users){
+
+        final int index2 = index+1;
+        int user_index = new Random().nextInt(6);
+        User user = users.get(user_index);
+        if(index2 == roomIds.size()) {
+            Log.e("Xong","Da update xong");
+            return;
+        }
+        Map<String,Object>map = new HashMap<String, Object>();
+        map.put("userPhotoUrl",user.getPhotoUrl());
+        map.put("userUid", FieldValue.delete());
+        map.put("userCreatedId", user.getUserUid());
+        map.put("imageUrl",FieldValue.delete());
+        map.put("isAirCondition",new Random().nextBoolean());
+        map.put("userDisplayName",user.getDisplayName());
+
+        DocumentReference washingtonRef = db.collection("rooms").document(roomIds.get(index2));
+
+// Set the "isCapital" field of the city 'DC'
+        washingtonRef
+                .update(map)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("Succ", "DocumentSnapshot successfully updated!");
+                        update(roomIds,index2,users);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("ErrorUpdate", "Error updating document", e);
+                    }
+                });
     }
     public void getRoom(String roomID, GetRoomByListRoomIds getRoomByListRoomIds){
         DocumentReference docRef = db.collection("rooms").document(roomID);
