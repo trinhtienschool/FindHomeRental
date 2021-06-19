@@ -1,6 +1,7 @@
 package com.trinhtien2212.findhomerental.ui.love;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,31 +50,11 @@ public class LoveFragment extends Fragment implements RoomsResult {
         mListRoom = new ArrayList<Room>();
         root = inflater.inflate(R.layout.fragment_love, container, false);
         assign();
-        adapter = new LoveAdapter();
-        bookmarkPresenter = new BookmarkPresenter(this);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mainActivity);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(adapter);
 
-        recyclerView.addOnScrollListener(new PaginationScrollListener(linearLayoutManager) {
-            @Override
-            public void loadMoreItems() {
-                isLoading = true;
-                progressBar.setVisibility(View.VISIBLE);
-                currentPage += 1;
-                getListRoom();
-            }
+        buildRecyclerView();
 
-            @Override
-            public boolean isLoading() {
-                return isLoading;
-            }
+        actionItemRecyclerView();
 
-            @Override
-            public boolean isLastPage() {
-                return isLastPage;
-            }
-        });
 //        bookmarkPresenter.("0b4oSVQ6aB6fpmvbkVvo",FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         setFirstData();
@@ -125,9 +106,50 @@ public class LoveFragment extends Fragment implements RoomsResult {
         realtimeBlurView.setVisibility(waiting);
         progressBar.setVisibility(waiting);
     }
+    private void buildRecyclerView(){
+        adapter = new LoveAdapter();
 
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mainActivity);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
+
+        recyclerView.addOnScrollListener(new PaginationScrollListener(linearLayoutManager) {
+            @Override
+            public void loadMoreItems() {
+                isLoading = true;
+//                loadNextPage();
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+
+            @Override
+            public boolean isLastPage() {
+                return isLastPage;
+            }
+        });
+    }
+    public void actionItemRecyclerView() {
+        adapter.setOnItemClickListener(new LoveAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int positon) {
+                // Todo item
+                Log.e("Room", mListRoom.get(positon).toString());
+            }
+
+            @Override
+            public void onDeleteClick(int position) {
+                // ToDo button DELETE
+
+            }
+
+
+        });
+
+    }
     public void showStatus(String s) {
         Toast.makeText(mainActivity,s,Toast.LENGTH_SHORT).show();
-
     }
 }

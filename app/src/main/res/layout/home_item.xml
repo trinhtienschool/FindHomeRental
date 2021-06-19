@@ -34,14 +34,6 @@
                 android:text="88 Tân Hòa Đông, Quận 6"
                 android:textColor="#000"
                 android:textSize="18sp" />
-<!--            <TextView-->
-<!--                android:id="@+id/title2"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Căn hộ 1"-->
-<!--                android:textColor="#000"-->
-<!--                android:textSize="22sp"-->
-<!--                android:textStyle="bold" />-->
 
             <TextView
                 android:id="@+id/titlePrice2"
