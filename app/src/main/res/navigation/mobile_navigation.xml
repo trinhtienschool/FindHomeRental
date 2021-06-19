@@ -13,11 +13,11 @@
     <fragment
         android:id="@+id/nav_myroom"
         android:name="com.trinhtien2212.findhomerental.ui.myroom.MyRoomFragment"
-        android:label="My Room"
+        android:label="@string/menu_myRoom"
         tools:layout="@layout/fragment_my_room" />
     <fragment
         android:id="@+id/nav_love"
         android:name="com.trinhtien2212.findhomerental.ui.love.LoveFragment"
-        android:label="Love"
+        android:label="@string/menu_love"
         tools:layout="@layout/fragment_love" />
 </navigation>

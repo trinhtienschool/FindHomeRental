@@ -8,10 +8,14 @@
     <string name="action_signIn">Đăng nhập</string>
     <string name="action_search">Tìm kiếm...</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="menu_myRoom">MyRoom</string>
+    <string name="menu_home">Trang chủ</string>
+    <string name="menu_logout">Đăng xuất</string>
+    <string name="menu_love">Yêu thích</string>
+    <string name="menu_myRoom">Phòng của tôi</string>
+    <string name="menu_share">Chia sẻ</string>
+    <string name="menu_contactus">Liên hệ</string>
+    <string name="menu_warn">Cảnh báo</string>
+    <string name="menu_admin">Quản trị viên</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_room_detail">RoomDetail</string>

@@ -12,4 +12,5 @@
     <color name="colorPrimaryLight">#F8F7E9</color>
     <color name="colorAccent">#333333</color>
     <color name="colorText">#ECA900</color>
+    <color name="colorLabel">#FFFFFF</color>
 </resources>

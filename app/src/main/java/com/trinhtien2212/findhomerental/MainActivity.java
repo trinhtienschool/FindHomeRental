@@ -123,7 +123,9 @@ public class MainActivity extends AppCompatActivity implements IUserResult, Stat
 ////        notificationPresenter.addNotification(notification);
 //        notificationPresenter.getNotifications("1234567890");
 
+
 //        //Test user
+
 //        UserManagerPresenter userManagerPresenter = new UserManagerPresenter(this,this);
 //        userManagerPresenter.getAllUsers();
 //        User user = new User();
