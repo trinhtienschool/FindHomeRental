@@ -92,6 +92,8 @@ dependencies {
     //picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    //image slideshow
+    implementation 'com.github.denzcoskun:ImageSlideshow:0.0.6'
 
 
 }
