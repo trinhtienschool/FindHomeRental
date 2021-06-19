@@ -167,14 +167,13 @@ public class SearchActivity extends AppCompatActivity implements RoomsResult, Po
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()){
-
-            case R.id.item_distance_decrease:
+            case R.id.item_distance_decrease: // ToDo ACTION ITEM
                 mListlist.clear();
                 searchPresenter.sortDecrease();
                 showWaiting(View.VISIBLE);
                 Toast.makeText(this, "Sắp xếp theo khoảng cách giảm dần", Toast.LENGTH_SHORT).show();
                 return true;
-            case R.id.item_distance_increase:
+            case R.id.item_distance_increase: // ToDo ACTION ITEM
                 mListlist.clear();
                 searchPresenter.sortIncrease();
                 showWaiting(View.VISIBLE);
