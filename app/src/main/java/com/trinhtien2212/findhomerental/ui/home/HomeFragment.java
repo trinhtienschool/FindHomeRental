@@ -147,6 +147,6 @@ public class HomeFragment extends Fragment implements RoomsResult, RoomHomeAdapt
 
     @Override
     public void showSnackbar(String message) {
-        Util.setImage();
+//        Util.setImage();
     }
 }

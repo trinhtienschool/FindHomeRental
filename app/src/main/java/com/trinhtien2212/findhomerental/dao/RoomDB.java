@@ -80,7 +80,7 @@ public class RoomDB extends ConnectDB {
         List<Room>rooms = new ArrayList<Room>();
         db.collection("rooms")
                 .whereEqualTo("userCreatedId", userUid)
-//                .whereEqualTo("roomID", userUid)
+
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -90,7 +90,9 @@ public class RoomDB extends ConnectDB {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     Room room = new Room();
                                     room.setRoom(document);
-                                    rooms.add(room);
+                                    if(!room.isDeleted()) {
+                                        rooms.add(room);
+                                    }
                                     Log.e("Room", room.toString());
 
                                     Log.d("Room", document.getId() + " => " + document.getData());
@@ -110,9 +112,10 @@ public class RoomDB extends ConnectDB {
     public void getRandomRooms(RoomsResult roomsResult){
         List<Room>rooms = new ArrayList<Room>();
         db.collection("rooms")
+
                 .orderBy("cost")
-//                .whereEqualTo("roomID", userUid)
                 .limit(30)
+
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -121,7 +124,9 @@ public class RoomDB extends ConnectDB {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Room room = new Room();
                                 room.setRoom(document);
-                                rooms.add(room);
+                                if(!room.isDeleted()) {
+                                    rooms.add(room);
+                                }
                                 Log.e("Room",room.toString());
 
                                 Log.d("Room", document.getId() + " => " + document.getData());
