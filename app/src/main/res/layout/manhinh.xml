@@ -10,7 +10,7 @@
     xmlns:tool="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".MainActivity"
+    tools:context=".ui.home.RoomDetail"
     android:theme="@style/Theme.AppCompat.NoActionBar">
 
     <include

@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import com.denzcoskun.imageslider.ImageSlider;
-import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -31,9 +30,9 @@ import java.util.List;
 
 
 public class RoomDetail extends AppCompatActivity {
-    TextView text_dia_chi,text_sdt,text_chi_tiet;
-    TextView text_may_lanh,text_wc,text_xe_dap,text_wifi,text_tu_lanh,text_gac_lung,text_dung_gio,text_an_ninh,text_tivi;
-    ImageView hinh_yeu_thich, hinh_dat_coc,hinh_gia_dien,hinh_gia_nuoc,hinh_dien_tich,hinh_may_lanh,hinh_wc,hinh_xe_dap,hinh_wifi,hinh_tu_lanh,hinh_gac_lung,hinh_dung_gio,hinh_an_ninh,hinh_tivi;
+    TextView text_dia_chi, text_sdt, text_chi_tiet;
+    TextView text_may_lanh, text_wc, text_xe_dap, text_wifi, text_tu_lanh, text_gac_lung, text_dung_gio, text_an_ninh, text_tivi;
+    ImageView hinh_yeu_thich, hinh_dat_coc, hinh_gia_dien, hinh_gia_nuoc, hinh_dien_tich, hinh_may_lanh, hinh_wc, hinh_xe_dap, hinh_wifi, hinh_tu_lanh, hinh_gac_lung, hinh_dung_gio, hinh_an_ninh, hinh_tivi;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -46,11 +45,11 @@ public class RoomDetail extends AppCompatActivity {
         ImageSlider imageSlider = findViewById(R.id.slider);
         List<SlideModel> slideModel = new ArrayList<>();
 
-        slideModel.add(new SlideModel("https://kollersi.com/wp-content/uploads/2019/08/album_tam-9.jpg", ScaleTypes.FIT));
-        slideModel.add(new SlideModel("https://ss-images.saostar.vn/2018/10/30/3961121/dge.png",ScaleTypes.FIT));
-        slideModel.add(new SlideModel("https://giaitri.vn/wp-content/uploads/2018/12/q13-2.jpg",ScaleTypes.FIT));
-        slideModel.add(new SlideModel("https://topnlist.com/wp-content/uploads/2019/04/ca-si-my-tam.jpg",ScaleTypes.FIT));
-        imageSlider.setImageList(slideModel, ScaleTypes.FIT);
+        slideModel.add(new SlideModel("https://kollersi.com/wp-content/uploads/2019/08/album_tam-9.jpg"));
+        slideModel.add(new SlideModel("https://ss-images.saostar.vn/2018/10/30/3961121/dge.png"));
+        slideModel.add(new SlideModel("https://giaitri.vn/wp-content/uploads/2018/12/q13-2.jpg"));
+        slideModel.add(new SlideModel("https://topnlist.com/wp-content/uploads/2019/04/ca-si-my-tam.jpg"));
+        imageSlider.setImageList(slideModel, true);
         text_chi_tiet = findViewById(R.id.text_chitiet);
         text_sdt = findViewById(R.id.text_numberphone);
         text_dia_chi = findViewById(R.id.text_address);
@@ -69,15 +68,15 @@ public class RoomDetail extends AppCompatActivity {
         hinh_tivi = findViewById(R.id.image_tivi);
         hinh_yeu_thich = findViewById(R.id.image_yeu_thich);
 
-        text_an_ninh=findViewById(R.id.text_anninh);
-        text_dung_gio=findViewById(R.id.text_clock);
-        text_may_lanh=findViewById(R.id.text_cool_marchine);
-        text_xe_dap=findViewById(R.id.text_bike);
-        text_tu_lanh=findViewById(R.id.text_tulanh);
-        text_wc=findViewById(R.id.text_wc);
-        text_wifi=findViewById(R.id.text_wifi);
-        text_gac_lung=findViewById(R.id.text_gaclung);
-        text_tivi=findViewById(R.id.text_tivi);
+        text_an_ninh = findViewById(R.id.text_anninh);
+        text_dung_gio = findViewById(R.id.text_clock);
+        text_may_lanh = findViewById(R.id.text_cool_marchine);
+        text_xe_dap = findViewById(R.id.text_bike);
+        text_tu_lanh = findViewById(R.id.text_tulanh);
+        text_wc = findViewById(R.id.text_wc);
+        text_wifi = findViewById(R.id.text_wifi);
+        text_gac_lung = findViewById(R.id.text_gaclung);
+        text_tivi = findViewById(R.id.text_tivi);
         hinh_yeu_thich.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,37 +84,37 @@ public class RoomDetail extends AppCompatActivity {
             }
         });
 
-        if (Room.isAirCondition = true) {
-            hinh_may_lanh.setImageResource(R.drawable.cool_machin_yellow);
-            text_may_lanh.setTextColor(Color.YELLOW);
-        }
-        if (Room.isWifi = true) {
-            hinh_may_lanh.setImageResource(R.drawable.cool_machin_yellow);
-            text_may_lanh.setTextColor(Color.YELLOW);
-        }
-        if (Room.isAttic = true) {
-            hinh_gac_lung.setImageResource(R.drawable.gac_lung_yellow);
-            text_gac_lung.setTextColor(Color.YELLOW);
-        }
-        if (Room.isWC = true) {
-            hinh_wc.setImageResource(R.drawable.toilet_yellow);
-            text_wc.setTextColor(Color.YELLOW);
-        }
-        if (Room.isTivi = true) {
-            hinh_tivi.setImageResource(R.drawable.television_yellow);
-            text_may_lanh.setTextColor(Color.YELLOW);
-        }
-        if (Room.isWifi = true) {
-            hinh_wifi.setImageResource(R.drawable.wifi_yellow);
-            text_wifi.setTextColor(Color.YELLOW);
-        }
-        if (Room.isPark = true) {
-            hinh_xe_dap.setImageResource(R.drawable.bike_yellow);
-            text_xe_dap.setTextColor(Color.YELLOW);
-        }
-
-
-
-
+//        if (Room.isAirCondition = true) {
+//            hinh_may_lanh.setImageResource(R.drawable.cool_machin_yellow);
+//            text_may_lanh.setTextColor(Color.YELLOW);
     }
+//        if (Room.isWifi = true) {
+//            hinh_may_lanh.setImageResource(R.drawable.cool_machin_yellow);
+//            text_may_lanh.setTextColor(Color.YELLOW);
+//        }
+//        if (Room.isAttic = true) {
+//            hinh_gac_lung.setImageResource(R.drawable.gac_lung_yellow);
+//            text_gac_lung.setTextColor(Color.YELLOW);
+//        }
+//        if (Room.isWC = true) {
+//            hinh_wc.setImageResource(R.drawable.toilet_yellow);
+//            text_wc.setTextColor(Color.YELLOW);
+//        }
+//        if (Room.isTivi = true) {
+//            hinh_tivi.setImageResource(R.drawable.television_yellow);
+//            text_may_lanh.setTextColor(Color.YELLOW);
+//        }
+//        if (Room.isWifi = true) {
+//            hinh_wifi.setImageResource(R.drawable.wifi_yellow);
+//            text_wifi.setTextColor(Color.YELLOW);
+//        }
+//        if (Room.isPark = true) {
+//            hinh_xe_dap.setImageResource(R.drawable.bike_yellow);
+//            text_xe_dap.setTextColor(Color.YELLOW);
+//        }
+
+
+
+
+
 }
