@@ -119,6 +119,8 @@ public class MyRoomFragment extends Fragment implements RoomsResult,StatusResult
 //                removeItem(position);
                 Room room = mListRoom.get(position);
                 room_pending_delete = position;
+                //Todo
+
                 Log.e("RoomID",room.getRoomID());
                 roomPresenter.setRoom(room);
                 roomPresenter.deleteRoom();
