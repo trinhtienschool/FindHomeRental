@@ -430,8 +430,22 @@ public class Room implements Serializable {
         this.userDisplayName = userDisplayName;
     }
 
-    public void setUtilities(DocumentSnapshot document) {
-        this.roomID = (String) document.getId();
+    public void setRoom(DocumentSnapshot document) {
+        this.roomID = document.getId();
+        this.address = (String)document.get("address");
+        this.userCreatedId = (String)document.get("userCreatedId");
+        this.description = (String)document.get("description");
+
+        this.area = Float.parseFloat(document.get("area").toString());
+        Log.e("area",this.area+"");
+        this.phone = (String)document.get("phone");
+        this.cost = Integer.parseInt(document.get("cost").toString());
+        this.deposit = Integer.parseInt(document.get("deposit").toString());
+        this.eleCost = Integer.parseInt(document.get("eleCost").toString());
+        this.watCost = Integer.parseInt(document.get("watCost").toString());
+        this.userPhotoUrl = (String)document.get("userPhotoUrl");
+        this.userDisplayName = (String)document.get("userDisplayName");
+
         this.isDeleted = (boolean) document.get("isDeleted");
         this.isTivi = (boolean) document.get("isTivi");
         this.isWardrobe = (boolean) document.get("isWardrobe");

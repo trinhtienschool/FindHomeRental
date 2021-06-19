@@ -1,18 +1,38 @@
 package com.trinhtien2212.findhomerental.ui;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 import com.trinhtien2212.findhomerental.MainActivity;
 import com.trinhtien2212.findhomerental.R;
 import com.trinhtien2212.findhomerental.model.User;
+import com.trinhtien2212.findhomerental.ui.home.IGetMyLocation;
 
+import java.io.IOException;
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Locale;
 
 public class Util {
@@ -74,4 +94,69 @@ public class Util {
         }
         return null;
     }
+    public static void showSnackbar(View view, String message)
+    {
+        // Create snackbar
+        final Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE);
+
+        // Set an action on it, and a handler
+        snackbar.setAction("Ẩn", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                snackbar.dismiss();
+            }
+        });
+
+        snackbar.show();
+    }
+    public static boolean checkGPS(Context context, IGetMyLocation getMyLocation){
+        LocationManager lm = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+        boolean gps_enabled;
+        try {
+            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch(Exception ex) {
+            return false;
+        }
+        if(!gps_enabled) getMyLocation.showSnackbar("Không thể lấy vị trí hiện tại");
+        return gps_enabled;
+
+    }
+    public static boolean checkNetwork(Context context, IGetMyLocation getMyLocation) {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        boolean isConnect = activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        if(!isConnect) getMyLocation.showSnackbar("Không thể kết nối Internet");
+        return isConnect;
+    }
+    public static void getMyLocation(Context context, IGetMyLocation getMyLocation){
+        FusedLocationProviderClient fusedLocationProviderClient = new FusedLocationProviderClient(context);
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ) {
+            Log.e("Location","Location1");
+            fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+
+                @Override
+                public void onComplete(@NonNull Task<Location> task) {
+                    Location location = task.getResult();
+                    if (location != null) {
+                        try {
+                            //init geoCoder
+                            Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+
+                            //get address list
+                            List<Address> addresses = geocoder.getFromLocation(
+                                    location.getLatitude(), location.getLongitude(), 1
+                            );
+                            // Set Latitiude on text view
+                            Log.e("AddressLIne",addresses.get(0).getAddressLine(0));
+                            getMyLocation.returnMyLocation(addresses.get(0).getAddressLine(0));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+        }
+    }
+
 }

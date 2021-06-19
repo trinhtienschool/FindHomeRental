@@ -4,6 +4,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('G:\\Android_Workspace_Project\\HomeRentalUpdate20072021\\FindHomeRental\\app\\KeystoreRelease.jks')
+            storePassword '1234567890'
+            keyAlias 'key0'
+            keyPassword '1234567890'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
@@ -19,16 +27,24 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable true
+            jniDebuggable true
+            renderscriptDebuggable true
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    dataBinding {
-        enabled = true
+    buildFeatures {
+
+        dataBinding true
+
+        // for view binding:
+        viewBinding true
     }
 
 }
@@ -92,8 +108,15 @@ dependencies {
     //picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+
     //image slideshow
     implementation 'com.github.denzcoskun:ImageSlideshow:0.0.6'
 
+    //get current location
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
+
+
+    //DSL
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
 }

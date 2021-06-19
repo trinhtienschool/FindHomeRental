@@ -28,11 +28,13 @@ import com.trinhtien2212.findhomerental.dao.RoomDB;
 import com.trinhtien2212.findhomerental.model.Room;
 import com.trinhtien2212.findhomerental.presenter.RoomPresenter;
 import com.trinhtien2212.findhomerental.presenter.RoomsResult;
+import com.trinhtien2212.findhomerental.presenter.StatusResult;
+import com.trinhtien2212.findhomerental.ui.add_room.AddRoomActivity;
 
 import java.util.List;
 
 
-public class MyRoomFragment extends Fragment implements RoomsResult {
+public class MyRoomFragment extends Fragment implements RoomsResult,StatusResult {
 
     private RecyclerView recyclerView;
     private MyRoomAdapter adapter;
@@ -44,6 +46,7 @@ public class MyRoomFragment extends Fragment implements RoomsResult {
     private RealtimeBlurView realtimeBlurView;
     private ProgressBar progressBar;
     private RoomPresenter roomPresenter;
+    private int room_pending_delete;
     public MyRoomFragment(){
     }
 
@@ -96,7 +99,7 @@ public class MyRoomFragment extends Fragment implements RoomsResult {
 
     private void buildRecyclerView(){
         adapter = new MyRoomAdapter();
-        roomPresenter = new RoomPresenter(this);
+        roomPresenter = new RoomPresenter(this,this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mainActivity);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -113,14 +116,41 @@ public class MyRoomFragment extends Fragment implements RoomsResult {
             @Override
             public void onDeleteClick(int position) {
                 // ToDo button DELETE
-                removeItem(position);
+//                removeItem(position);
+                Room room = mListRoom.get(position);
+                room_pending_delete = position;
+                //Todo
+
+                Log.e("RoomID",room.getRoomID());
+                roomPresenter.setRoom(room);
+                roomPresenter.deleteRoom();
+
             }
 
             @Override
             public void onEditClick(int position) {
                 // Todo Button EDIT
+                Room room = mListRoom.get(position);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("room",room);
+                Intent intent = new Intent(mainActivity, AddRoomActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
 
         });
+    }
+
+    @Override
+    public void onFail() {
+        Toast.makeText(mainActivity,"Thất bại",Toast.LENGTH_LONG).show();
+
+    }
+
+    @Override
+    public void onSuccess() {
+        Toast.makeText(mainActivity,"Thành công",Toast.LENGTH_LONG).show();
+        mListRoom.remove(room_pending_delete);
+        adapter.notifyDataSetChanged();
     }
 }

@@ -150,24 +150,34 @@ public class AddRoomActivity extends AppCompatActivity implements StatusResult {
                     break;
                 case "Tủ đồ":
                     room.setIsWardrobe(true);
+                    break;
                 case "Wifi":
                     room.setIsWifi(true);
+                    break;
                 case "Tủ lạnh":
                     room.setIsFre(true);
+                    break;
                 case "Máy lạnh":
                     room.setIsAirCondition(true);
+                    break;
                 case "Gác lủng":
                     room.setIsAttic(true);
+                    break;
                 case "Máy nước nóng":
                     room.setIsHotWater(true);
+                    break;
                 case  "Nhà vệ sinh riêng":
                     room.setIsWC(true);
+                    break;
                 case "Tự do giờ giấc":
                     room.setFreeTime(true);
+                    break;
                 case "An ninh":
                     room.setIsFence(true);
+                    break;
                 case "Chỗ để xe riêng":
                     room.setIsPark(true);
+                    break;
             }
         }
         roomPresenter = new RoomPresenter(this,room);

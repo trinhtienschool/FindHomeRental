@@ -80,7 +80,7 @@ public class RoomDB extends ConnectDB {
         List<Room>rooms = new ArrayList<Room>();
         db.collection("rooms")
                 .whereEqualTo("userCreatedId", userUid)
-//                .whereEqualTo("roomID", userUid)
+
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -88,9 +88,11 @@ public class RoomDB extends ConnectDB {
                         if (task.isSuccessful()) {
                             if(!task.getResult().isEmpty()) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
-                                    Room room = document.toObject(Room.class);
-                                    room.setUtilities(document);
-                                    rooms.add(room);
+                                    Room room = new Room();
+                                    room.setRoom(document);
+                                    if(!room.isDeleted()) {
+                                        rooms.add(room);
+                                    }
                                     Log.e("Room", room.toString());
 
                                     Log.d("Room", document.getId() + " => " + document.getData());
@@ -110,18 +112,21 @@ public class RoomDB extends ConnectDB {
     public void getRandomRooms(RoomsResult roomsResult){
         List<Room>rooms = new ArrayList<Room>();
         db.collection("rooms")
+
                 .orderBy("cost")
-//                .whereEqualTo("roomID", userUid)
                 .limit(30)
+
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Room room = document.toObject(Room.class);
-                                room.setUtilities(document);
-                                rooms.add(room);
+                                Room room = new Room();
+                                room.setRoom(document);
+                                if(!room.isDeleted()) {
+                                    rooms.add(room);
+                                }
                                 Log.e("Room",room.toString());
 
                                 Log.d("Room", document.getId() + " => " + document.getData());
@@ -144,8 +149,8 @@ public class RoomDB extends ConnectDB {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         Log.e("field",document.get("area")+"");
-                       Room room = document.toObject(Room.class);
-                       room.setUtilities(document);
+                       Room room = new Room();
+                       room.setRoom(document);
                        Log.e("Room: ",room.toString());
                        getRoomByListRoomIds.addRoom(room);
                     } else {
@@ -183,12 +188,14 @@ public class RoomDB extends ConnectDB {
                         room.setImagesMap(document.getData());
                        getImagesOfRoom(rooms,index2, roomsResult);
                     } else {
-                        Log.d("Error", "No such document");
+                        room.setImages(null);
+                        Log.d("Error", "No such document getImageOfRooms" +room.getRoomID());
                         getImagesOfRoom(rooms,index2,roomsResult);
                     }
                 } else {
-                    Log.d("Error", "get failed with ", task.getException());
-
+                    Log.d("Error", "get failed with "+ task.getException().toString()+";"+room.getRoomID());
+                    room.setImages(null);
+                    getImagesOfRoom(rooms,index2,roomsResult);
                 }
             }
         });
@@ -210,12 +217,15 @@ public class RoomDB extends ConnectDB {
                         room.setImagesMap(document.getData());
                         getRoomByListRoomIds.getRoom();
                     } else {
-                        Log.d("Error", "No such document");
+                        room.setImages(null);
+                        Log.d("Error", "No such document getImages"+room.getRoomID());
                         getRoomByListRoomIds.getRoom();
                     }
                 } else {
                     Log.d("Error", "get failed with ", task.getException());
-
+                    room.setImages(null);
+                    Log.d("Error", "No such document "+room.getRoomID());
+                    getRoomByListRoomIds.getRoom();
                 }
             }
         });
@@ -234,6 +244,8 @@ public class RoomDB extends ConnectDB {
             @Override
             public void onFailure(@NonNull Exception e) {
                 //ToDo
+                Log.e("UpdateRoom fail","fail");
+                roomPresenter.onFail();
             }
         });
 
@@ -246,6 +258,7 @@ public class RoomDB extends ConnectDB {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        Log.e("RoomDeleted","Da deleted");
                         roomPresenter.deleteLocation();
                     }
                 }).addOnFailureListener(new OnFailureListener() {

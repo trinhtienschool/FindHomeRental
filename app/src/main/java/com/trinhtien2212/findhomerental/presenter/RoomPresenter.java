@@ -23,8 +23,23 @@ public class RoomPresenter implements StatusResult, RoomsResult {
         this.connectServer = new SaveLocationBehavior(this);
         this.roomDB = RoomDB.getInstance();
     }
+    public RoomPresenter(StatusResult statusResult) {
+//        this.addRoomActivity = addRoomActivity;
+        this.statusResult = statusResult;
+
+        this.connectServer = new SaveLocationBehavior(this);
+        this.roomDB = RoomDB.getInstance();
+    }
+    public RoomPresenter(RoomsResult roomsResult,StatusResult statusResult) {
+//        this.addRoomActivity = addRoomActivity;
+        this.statusResult = statusResult;
+        this.roomsResult = roomsResult;
+        this.connectServer = new SaveLocationBehavior(this);
+        this.roomDB = RoomDB.getInstance();
+    }
     public RoomPresenter(StatusResult statusResult,Room room) {
 //        this.addRoomActivity = addRoomActivity;
+        this.roomsResult = roomsResult;
         this.statusResult = statusResult;
         this.room = room;
         this.connectServer = new SaveLocationBehavior(this);
@@ -76,6 +91,22 @@ public class RoomPresenter implements StatusResult, RoomsResult {
     public void deleteLocation() {
         Location location = new Location(this.room.getAddress(), true, this.room.getRoomID());
         connectServer.connectServer(location, ConnectServer.DELETEROOM);
+    }
+
+    public RoomsResult getRoomsResult() {
+        return roomsResult;
+    }
+
+    public void setRoomsResult(RoomsResult roomsResult) {
+        this.roomsResult = roomsResult;
+    }
+
+    public StatusResult getStatusResult() {
+        return statusResult;
+    }
+
+    public void setStatusResult(StatusResult statusResult) {
+        this.statusResult = statusResult;
     }
 
     @Override
