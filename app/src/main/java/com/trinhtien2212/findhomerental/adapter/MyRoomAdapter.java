@@ -49,8 +49,10 @@ public class MyRoomAdapter extends RecyclerView.Adapter<MyRoomAdapter.RoomViewHo
         if(room == null){
             return;
         }
-
-        Util.setImage(holder.imgHome,room.getImages().get(0));
+        if(room.getImages() == null || room.getImages().isEmpty()){
+            holder.imgHome.setImageResource(R.drawable.image_holder);
+        }
+        else Util.setImage(holder.imgHome,room.getImages().get(0));
 
         holder.txtPrice.setText(Util.formatCurrency(room.getCost()));
         holder.txtAddress.setText(room.getAddress());

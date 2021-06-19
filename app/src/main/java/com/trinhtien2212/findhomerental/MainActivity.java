@@ -28,9 +28,11 @@ import com.trinhtien2212.findhomerental.dao.RoomDB_Test;
 import com.trinhtien2212.findhomerental.model.Notification;
 import com.trinhtien2212.findhomerental.model.Room;
 import com.trinhtien2212.findhomerental.model.User;
+import com.trinhtien2212.findhomerental.presenter.BookmarkPresenter;
 import com.trinhtien2212.findhomerental.presenter.IUserResult;
 import com.trinhtien2212.findhomerental.presenter.NotificationPresenter;
 import com.trinhtien2212.findhomerental.presenter.NotificationResult;
+import com.trinhtien2212.findhomerental.presenter.RoomPresenter;
 import com.trinhtien2212.findhomerental.presenter.StatusResult;
 import com.trinhtien2212.findhomerental.presenter.UserManagerPresenter;
 import com.trinhtien2212.findhomerental.ui.Util;
@@ -77,9 +79,9 @@ public class MainActivity extends AppCompatActivity implements IUserResult, Stat
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
                 Log.e("Co", "Co vo dang nahp");
-                if(currentUser !=null){
-                    startActivity(new Intent(MainActivity.this,AddRoomActivity.class));
-                }else Toast.makeText(MainActivity.this,"Bạn phải đăng nhập để đăng phòng trọ",Toast.LENGTH_LONG).show();
+//                if(currentUser !=null){
+//                    startActivity(new Intent(MainActivity.this,AddRoomActivity.class));
+//                }else Toast.makeText(MainActivity.this,"Bạn phải đăng nhập để đăng phòng trọ",Toast.LENGTH_LONG).show();
                 //Test
 //                if(currentUser !=null) {
 //                    Room room = new Room("12345","84 Lê Văn Chí, Linh Trung, Thủ Đức, Tp. Hồ Chí Minh","03333",null,"Tien",new Date(),false,true,true,true,true,true,true,true,true,true,true,53.3f,435345,2345324,42334,23423,false);
@@ -90,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements IUserResult, Stat
 //                    locations.add("https://angcovat.vn/imagesdata/KN208117/thiet-ke-phong-tro-khep-kin-dep.jpg");
 //                    locations.add("https://angcovat.vn/imagesdata/KN208117/thiet-ke-phong-tro-khep-kin-1.jpg");
 //                    room.setImages(locations);
-//                    room.setRoomID("04IWhukLbUut4sdMIAPS");
+//                    room.setRoomID("0Gfbjblv9QYMYnUfNgqW");
 //                    Intent intent = new Intent(MainActivity.this,AddRoomActivity.class);
 //                    Bundle bundle = new Bundle();
 //                    bundle.putSerializable("room",room);
@@ -101,22 +103,28 @@ public class MainActivity extends AppCompatActivity implements IUserResult, Stat
 //                    Toast.makeText(MainActivity.this,"Bạn phải đăng để đăng phòng trọ",Toast.LENGTH_LONG).show();
 //                }
 //                startActivity(new Intent(MainActivity.this, GoogleSignIn.class));
-//                BookmarkPresenter bookmarkPresenter = new BookmarkPresenter(null);
-////                bookmarkPresenter.addBookmark("01UWtdl8llR8uz883LbF","At137YkMB7OXy99UzZINGbVExY72");
+                //Test delete room
+//                Room room = new Room();
+//                room.setRoomID("0Gfbjblv9QYMYnUfNgqW");
+//                RoomPresenter roomPresenter = new RoomPresenter(null,room);
+//                roomPresenter.deleteRoom();
 
+//                BookmarkPresenter bookmarkPresenter = new BookmarkPresenter(null);
+////                bookmarkPresenter.addBookmark("0aKAzRCirqYW44OFJg4S","At137YkMB7OXy99UzZINGbVExY72");
+//                bookmarkPresenter.getAllBookmarks("At137YkMB7OXy99UzZINGbVExY72");
 
 
             }
         });
         //Test note
 //        NotificationPresenter notificationPresenter = new NotificationPresenter(MainActivity.this);
-////        Notification notification = new Notification("84 Lê Văn Chí, Linh Trung","Phòng trọ sai thông tin chi tiết, sai quy định","h1PykH8RBNbaYi18K6jfnfaNV2x1");
+//        Notification notification = new Notification("84 Lê Văn Chí, Linh Trung","Phòng trọ sai thông tin chi tiết, sai quy định","1234567890");
 ////        notificationPresenter.addNotification(notification);
-//        notificationPresenter.getNotifications("1231654");
+//        notificationPresenter.getNotifications("1234567890");
 
         //Test user
-//        UserManagerPresenter userManagerPresenter = new UserManagerPresenter(this,this);
-//        userManagerPresenter.getAllUsers();
+        UserManagerPresenter userManagerPresenter = new UserManagerPresenter(this,this);
+        userManagerPresenter.getAllUsers();
 //        User user = new User();
 //        user.setUserUid("At137YkMB7OXy99UzZINGbVExY72");
 //        userManagerPresenter.deleteUser(user);
