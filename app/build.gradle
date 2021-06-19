@@ -104,6 +104,10 @@ dependencies {
     //picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    //get current location
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
 
+    //DSL
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
 }

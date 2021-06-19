@@ -37,6 +37,7 @@ import com.trinhtien2212.findhomerental.presenter.StatusResult;
 import com.trinhtien2212.findhomerental.presenter.UserManagerPresenter;
 import com.trinhtien2212.findhomerental.ui.Util;
 import com.trinhtien2212.findhomerental.ui.add_room.AddRoomActivity;
+import com.trinhtien2212.findhomerental.ui.home.IGetMyLocation;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
@@ -51,7 +52,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements IUserResult, StatusResult {
+public class MainActivity extends AppCompatActivity implements IUserResult, StatusResult, IGetMyLocation {
     //Google sign in
     private GoogleSignInClient mGoogleSignInClient;
     private final int RC_SIGN_IN = 12345;
@@ -323,6 +324,16 @@ public class MainActivity extends AppCompatActivity implements IUserResult, Stat
 
     @Override
     public void onSuccess() {
+
+    }
+
+    @Override
+    public void returnMyLocation(String location) {
+
+    }
+
+    @Override
+    public void showSnackbar(String message) {
 
     }
 }
