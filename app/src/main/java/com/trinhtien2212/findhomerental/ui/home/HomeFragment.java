@@ -82,9 +82,9 @@ public class HomeFragment extends Fragment implements RoomsResult, RoomHomeAdapt
     }
 
     private void buildRecyclerView() {
-        adapter = new RoomHomeAdapter(mListRoom, this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mainActivity, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
+        adapter = new RoomHomeAdapter(mListRoom, this);
         recyclerView.setAdapter(adapter);
         roomPresenter = new RoomPresenter(this);
         recyclerView.addOnScrollListener(new PaginationScrollListener(gridLayoutManager) {

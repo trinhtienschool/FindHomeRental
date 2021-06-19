@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -44,11 +45,12 @@ public class RoomDetail extends AppCompatActivity {
         setContentView(R.layout.manhinh);
         ImageSlider imageSlider = findViewById(R.id.slider);
         List<SlideModel> slideModel = new ArrayList<>();
-        slideModel.add(new SlideModel("https://kollersi.com/wp-content/uploads/2019/08/album_tam-9.jpg"));
-        slideModel.add(new SlideModel("https://ss-images.saostar.vn/2018/10/30/3961121/dge.png"));
-        slideModel.add(new SlideModel("https://giaitri.vn/wp-content/uploads/2018/12/q13-2.jpg"));
-        slideModel.add(new SlideModel("https://topnlist.com/wp-content/uploads/2019/04/ca-si-my-tam.jpg"));
-        imageSlider.setImageList(slideModel, true);
+
+        slideModel.add(new SlideModel("https://kollersi.com/wp-content/uploads/2019/08/album_tam-9.jpg", ScaleTypes.FIT));
+        slideModel.add(new SlideModel("https://ss-images.saostar.vn/2018/10/30/3961121/dge.png",ScaleTypes.FIT));
+        slideModel.add(new SlideModel("https://giaitri.vn/wp-content/uploads/2018/12/q13-2.jpg",ScaleTypes.FIT));
+        slideModel.add(new SlideModel("https://topnlist.com/wp-content/uploads/2019/04/ca-si-my-tam.jpg",ScaleTypes.FIT));
+        imageSlider.setImageList(slideModel, ScaleTypes.FIT);
         text_chi_tiet = findViewById(R.id.text_chitiet);
         text_sdt = findViewById(R.id.text_numberphone);
         text_dia_chi = findViewById(R.id.text_address);
