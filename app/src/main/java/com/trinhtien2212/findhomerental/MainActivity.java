@@ -80,9 +80,9 @@ public class MainActivity extends AppCompatActivity implements IUserResult, Stat
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
                 Log.e("Co", "Co vo dang nahp");
-//                if(currentUser !=null){
-//                    startActivity(new Intent(MainActivity.this,AddRoomActivity.class));
-//                }else Toast.makeText(MainActivity.this,"Bạn phải đăng nhập để đăng phòng trọ",Toast.LENGTH_LONG).show();
+                if(currentUser !=null){
+                    startActivity(new Intent(MainActivity.this,AddRoomActivity.class));
+                }else Toast.makeText(MainActivity.this,"Bạn phải đăng nhập để đăng phòng trọ",Toast.LENGTH_LONG).show();
                 //Test
 //                if(currentUser !=null) {
 //                    Room room = new Room("12345","84 Lê Văn Chí, Linh Trung, Thủ Đức, Tp. Hồ Chí Minh","03333",null,"Tien",new Date(),false,true,true,true,true,true,true,true,true,true,true,53.3f,435345,2345324,42334,23423,false);
