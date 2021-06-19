@@ -29,10 +29,11 @@ import com.trinhtien2212.findhomerental.presenter.RoomPresenter;
 import com.trinhtien2212.findhomerental.presenter.RoomsResult;
 import com.trinhtien2212.findhomerental.presenter.SearchPresenter;
 import com.trinhtien2212.findhomerental.ui.PaginationScrollListener;
+import com.trinhtien2212.findhomerental.ui.Util;
 
 import java.util.List;
 
-public class HomeFragment extends Fragment implements RoomsResult, RoomHomeAdapter.ItemClickListener {
+public class HomeFragment extends Fragment implements RoomsResult, RoomHomeAdapter.ItemClickListener, IGetMyLocation {
 
     private ImageButton btnSearch;
     private EditText edtSearch;
@@ -137,5 +138,15 @@ public class HomeFragment extends Fragment implements RoomsResult, RoomHomeAdapt
         Log.d("Home", "itemClick: clicked" + position);
         Intent intent = new Intent(mainActivity, MainAdminActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void returnMyLocation(String location) {
+
+    }
+
+    @Override
+    public void showSnackbar(String message) {
+        Util.setImage();
     }
 }
