@@ -1,5 +1,7 @@
 package com.trinhtien2212.findhomerental.model;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -94,7 +96,14 @@ public class Location{
         map.put("isDeleted",this.isDeleted);
         return map;
     }
-
+    public String getJson() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("address", this.getAddress());
+        jsonObject.put("roomID", this.getRoomID());
+        jsonObject.put("isDeleted", false);
+        Log.e("String", jsonObject.toString());
+        return jsonObject.toString();
+    }
     @Override
     public String toString() {
         return "Location{" +

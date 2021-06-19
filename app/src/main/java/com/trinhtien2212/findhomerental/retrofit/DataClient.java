@@ -6,17 +6,21 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 public interface DataClient {
 
-//    @Headers("Content-Type: application/json")
+    @Headers("Content-Type: application/json")
     @POST("api/add-location/")
-    Call<String> insertData(@Body Location location);
+    Call<String> insertData(@Body String location);
+
+    @Headers("Content-Type:application/json")
     @PUT("api/update-location")
-    Call<String> updateData(@Query("roomID") String roomID, @Body Location location);
+    Call<String> updateData(@Query("roomID") String roomID, @Body String location);
+
     @DELETE("api/delete-location")
     Call<String> deleteData(@Query("roomID") String roomID);
     @GET("api/search-room")

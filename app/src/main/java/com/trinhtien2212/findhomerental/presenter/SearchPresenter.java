@@ -24,6 +24,7 @@ public class SearchPresenter implements StatusResult, RoomsResult {
         this.roomsResult = roomsResult;
     }
     public void searchLocation(String address){
+        locations = new ArrayList<Location>();
         SearchLocationBehavior searchLocationBehavior = new SearchLocationBehavior(this);
         searchLocationBehavior.connectServer(new Location(address),10);
         getRoomByListRoomIds = new GetRoomByListRoomIds(this);

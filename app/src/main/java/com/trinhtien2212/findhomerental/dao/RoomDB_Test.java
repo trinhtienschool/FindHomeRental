@@ -92,8 +92,8 @@ public class RoomDB_Test extends ConnectDB {
                         if (task.isSuccessful()) {
                             if(!task.getResult().isEmpty()) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
-                                    Room room = document.toObject(Room.class);
-                                    room.setUtilities(document);
+                                    Room room = new Room();
+                                    room.setRoom(document);
                                     rooms.add(room);
                                     Log.e("Room", room.toString());
 
@@ -193,8 +193,8 @@ public class RoomDB_Test extends ConnectDB {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         Log.e("field",document.get("area")+"");
-                       Room room = document.toObject(Room.class);
-                       room.setUtilities(document);
+                       Room room = new Room();
+                       room.setRoom(document);
                        Log.e("Room: ",room.toString());
                        getRoomByListRoomIds.addRoom(room);
                     } else {
