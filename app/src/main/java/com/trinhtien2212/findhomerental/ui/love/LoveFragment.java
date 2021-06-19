@@ -56,7 +56,7 @@ public class LoveFragment extends Fragment implements RoomsResult {
         actionItemRecyclerView();
 
 //        bookmarkPresenter.("0b4oSVQ6aB6fpmvbkVvo",FirebaseAuth.getInstance().getCurrentUser().getUid());
-
+//
         setFirstData();
         return root;
     }

@@ -11,14 +11,14 @@
 
     <RelativeLayout
         android:padding="10dp"
-        android:id="@+id/left_icon"
+        android:id="@+id/left_icon_relative"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
 
         <ImageView
-            android:id="@+id/left_icon"
+            android:id="@+id/left_icon_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -33,7 +33,7 @@
             android:text="my app "
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/left_icon"
+            android:layout_toRightOf="@+id/left_icon_arrow"
             tools:ignore="NotSibling"
             android:layout_marginLeft="50dp">
 

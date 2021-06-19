@@ -135,8 +135,13 @@ public class HomeFragment extends Fragment implements RoomsResult, RoomHomeAdapt
     @Override
     public void onItemClick(int position) {
         // Todo ITEM
-        Log.d("Home", "itemClick: clicked" + position);
-        Intent intent = new Intent(mainActivity, MainAdminActivity.class);
+        Log.e("Home", "itemClick: clicked" + position);
+        Room room = mListRoom.get(position);
+        Log.e("room",room.toString());
+        Intent intent = new Intent(mainActivity, RoomDetail.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("room",room);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 
