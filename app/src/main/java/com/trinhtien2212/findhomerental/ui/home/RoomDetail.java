@@ -115,7 +115,7 @@ public class RoomDetail extends AppCompatActivity {
             text_may_lanh.setTextColor(Color.YELLOW);
         }
         if (room.isWifi() == true) {
-            hinh_may_lanh.setImageResource(R.drawable.cool_machin_yellow);
+            hinh_may_lanh.setImageResource(R.drawable.wifi_yellow);
             text_may_lanh.setTextColor(Color.YELLOW);
         }
         if (room.isAttic() == true) {
