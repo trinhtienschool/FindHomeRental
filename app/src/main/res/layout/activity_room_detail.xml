@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
 
     android:layout_height="match_parent">
@@ -8,7 +10,7 @@
         android:id="@+id/include"
         layout="@layout/toolbar_room_detail"></include>
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView
         android:layout_width="match_parent"
 
         android:paddingTop="60dp"
@@ -17,10 +19,7 @@
 
         android:layout_height="wrap_content">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tool="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -40,10 +39,10 @@
 
                 app:period="1000"
 
-                tool:layout_constraintBottom_toBottomOf="parent"
-                tool:layout_constraintStart_toStartOf="parent"
-                tool:layout_constraintTop_toBottomOf="@+id/include"
-                tool:layout_constraintVertical_bias="0.0"></com.denzcoskun.imageslider.ImageSlider>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/include"
+                app:layout_constraintVertical_bias="0.0"></com.denzcoskun.imageslider.ImageSlider>
 
             <TextView
                 android:id="@+id/text_address"
@@ -208,6 +207,7 @@
                         android:textSize="16dp">
                         ></TextView>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_marginLeft="25dp"
 
@@ -249,6 +249,7 @@
                         android:textSize="16dp"></TextView>
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_marginLeft="25dp"
 
@@ -286,151 +287,157 @@
                 </LinearLayout>
 
             </RelativeLayout>
-
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    >
-
-
-
-
-
-
-
-                </LinearLayout>
-            </RelativeLayout>
-
             <TextView
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="0dp"
                 android:text="Tiện ích"
                 android:textColor="@color/black"
                 android:textSize="18dp"></TextView>
-
             <RelativeLayout
+                android:layout_marginLeft="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <LinearLayout
-
+                    android:id="@+id/five"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
+                    android:orientation="vertical"
                     >
-
                     <ImageView
+                        android:layout_gravity="center"
+
                         android:id="@+id/image_cool_machine"
                         android:layout_width="wrap_content"
 
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
+
                         android:src="@drawable/coolmachine"></ImageView>
+                    <TextView
+                        android:layout_gravity="center"
+
+                        android:id="@+id/text_cool_marchine"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+
+                        android:text="Máy lạnh"
+                        android:textColor="@color/black"
+                        android:textSize="14dp"></TextView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_gravity="center"
+
+                    android:layout_marginLeft="30dp"
+                    android:id="@+id/six"
+                    android:layout_toRightOf="@+id/five"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
 
                     <ImageView
                         android:id="@+id/image_wc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="60dp"
+
                         android:src="@drawable/wc"></ImageView>
-
-                    <ImageView
-                        android:id="@+id/image_bike"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="60dp"
-                        android:src="@drawable/bike"></ImageView>
-
-                    <ImageView
-                        android:id="@+id/image_wifi"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="60dp"
-                        android:src="@drawable/wifi"></ImageView>
-                </LinearLayout>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    >
-
                     <TextView
-                        android:id="@+id/text_cool_marchine"
-                        android:layout_width="wrap_content"
-
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
-                        android:text="Máy lạnh"
-                        android:textColor="@color/black"
-                        android:textSize="14dp"></TextView>
-
-                    <TextView
+                        android:paddingLeft="10dp"
                         android:id="@+id/text_wc"
                         android:layout_width="wrap_content"
 
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="70dp"
+
+
                         android:text="WC"
                         android:textColor="@color/black"
                         android:textSize="14dp"
 
                         ></TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_gravity="center"
+
+                    android:layout_marginLeft="30dp"
+                    android:id="@+id/seven"
+                    android:layout_toRightOf="@+id/six"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+
+                    <ImageView
+                        android:id="@+id/image_bike"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:src="@drawable/bike"></ImageView>
+
 
                     <TextView
                         android:id="@+id/text_bike"
                         android:layout_width="wrap_content"
 
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="70dp"
+
                         android:text="Chỗ để xe"
                         android:textColor="@color/black"
                         android:textSize="14dp"
 
                         ></TextView>
 
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_gravity="center"
+
+                    android:layout_marginLeft="30dp"
+
+                    android:id="@+id/eight"
+                    android:layout_toRightOf="@+id/seven"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+
+                    <ImageView
+                        android:layout_gravity="center"
+
+                        android:id="@+id/image_wifi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:src="@drawable/wifi"></ImageView>
+
                     <TextView
+                        android:layout_gravity="center"
 
                         android:id="@+id/text_wifi"
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="75dp"
+
                         android:text="Wifi"
                         android:textColor="@color/black"
                         android:textSize="14dp"
 
                         ></TextView>
                 </LinearLayout>
+
             </RelativeLayout>
 
             <RelativeLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <LinearLayout
+                    android:id="@+id/nine"
                     android:layout_width="wrap_content"
-
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-
+                    android:orientation="vertical"
                     >
-
                     <ImageView
                         android:id="@+id/image_cool_tu"
                         android:layout_width="wrap_content"
@@ -438,40 +445,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
                         android:src="@drawable/fridge"></ImageView>
-
-                    <ImageView
-                        android:id="@+id/image_gaclung"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="60dp"
-                        android:src="@drawable/gaclung"></ImageView>
-
-                    <ImageView
-                        android:id="@+id/image_clock"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="60dp"
-                        android:src="@drawable/clock"></ImageView>
-
-                    <ImageView
-                        android:id="@+id/image_security"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="60dp"
-                        android:src="@drawable/security"></ImageView>
-                </LinearLayout>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    >
 
                     <TextView
                         android:id="@+id/text_tulanh"
@@ -482,44 +455,193 @@
                         android:text="Tủ lạnh"
                         android:textColor="@color/black"
                         android:textSize="14dp"></TextView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginLeft="30dp"
+                    android:id="@+id/ten"
+                    android:layout_toRightOf="@+id/nine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+
+                    <ImageView
+                        android:id="@+id/image_gaclung"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:src="@drawable/gaclung"></ImageView>
+
 
                     <TextView
                         android:id="@+id/text_gaclung"
                         android:layout_width="wrap_content"
 
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="70dp"
+
                         android:text="Gác lửng"
                         android:textColor="@color/black"
                         android:textSize="14dp"
 
                         ></TextView>
 
-                    <TextView
-                        android:id="@+id/text_anninh"
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginLeft="30dp"
+                    android:id="@+id/eleven"
+                    android:layout_toRightOf="@+id/ten"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+
+
+                    <ImageView
+                        android:id="@+id/image_clock"
                         android:layout_width="wrap_content"
-
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="70dp"
-                        android:src="@drawable/security"
-                        android:text="An ninh"
-                        android:textColor="@color/black"
-                        android:textSize="10dp"></TextView>
 
+                        android:src="@drawable/clock"></ImageView>
                     <TextView
                         android:id="@+id/text_clock"
                         android:layout_width="wrap_content"
 
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="60dp"
+
                         android:text="Đúng giờ"
 
                         android:textColor="@color/black"
                         android:textSize="14dp"
 
                         ></TextView>
+
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_marginLeft="30dp"
+
+                    android:id="@+id/tweith"
+                    android:layout_toRightOf="@+id/eleven"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+
+                    <ImageView
+                        android:id="@+id/image_security"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:src="@drawable/security"></ImageView>
+                    <TextView
+                        android:id="@+id/text_anninh"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+
+                        android:src="@drawable/security"
+                        android:text="An ninh"
+                        android:textColor="@color/black"
+                        android:textSize="10dp"></TextView>
+
+
+                </LinearLayout>
+
             </RelativeLayout>
+
+            <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:id="@+id/thir"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+                    <ImageView
+                        android:id="@+id/image_tivi"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:src="@drawable/telephone"></ImageView>
+
+
+                    <TextView
+                        android:id="@+id/text_tivi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="40dp"
+                        android:text="Tivi"
+                        android:textColor="@color/black"
+                        android:textSize="14dp"></TextView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginLeft="30dp"
+                    android:id="@+id/fort"
+                    android:layout_toRightOf="@+id/thir"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:id="@+id/image_hotwater"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+
+                        android:src="@drawable/hot_water"></ImageView>
+
+
+                    <TextView
+                        android:id="@+id/text_hotwater"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="Máy nước nóng"
+                        android:textColor="@color/black"
+                        android:textSize="14dp"></TextView>
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/fivet"
+                    android:layout_toRightOf="@+id/fort"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+
+
+                    <ImageView
+                        android:id="@+id/image_closet"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+
+                        android:src="@drawable/closet"></ImageView>
+
+                    <TextView
+                        android:id="@+id/text_closet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="Tủ đồ"
+                        android:textColor="@color/black"
+                        android:textSize="14dp"></TextView>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+
+
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -533,29 +655,8 @@
 
                     >
 
-                    <ImageView
-                        android:id="@+id/image_tivi"
-                        android:layout_width="wrap_content"
 
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
-                        android:src="@drawable/telephone"></ImageView>
 
-                    <ImageView
-                        android:id="@+id/image_hotwater"
-                        android:layout_width="wrap_content"
-
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="60dp"
-                        android:src="@drawable/hot_water"></ImageView>
-
-                    <ImageView
-                        android:id="@+id/image_closet"
-                        android:layout_width="wrap_content"
-
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="60dp"
-                        android:src="@drawable/closet"></ImageView>
 
                 </LinearLayout>
             </RelativeLayout>
@@ -571,32 +672,10 @@
 
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/text_tivi"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="40dp"
-                        android:text="Tivi"
-                        android:textColor="@color/black"
-                        android:textSize="14dp"></TextView>
 
-                    <TextView
-                        android:id="@+id/text_hotwater"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="60dp"
-                        android:text="Máy nước nóng"
-                        android:textColor="@color/black"
-                        android:textSize="14dp"></TextView>
 
-                    <TextView
-                        android:id="@+id/text_closet"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="55dp"
-                        android:text="Tủ đồ"
-                        android:textColor="@color/black"
-                        android:textSize="14dp"></TextView>
+
+
                 </LinearLayout>
             </RelativeLayout>
 
