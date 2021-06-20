@@ -114,38 +114,55 @@ public class RoomDetail extends AppCompatActivity {
             hinh_may_lanh.setImageResource(R.drawable.cool_machin_yellow);
             text_may_lanh.setTextColor(Color.YELLOW);
         }
-        if (room.isWifi() == true) {
-            hinh_may_lanh.setImageResource(R.drawable.cool_machin_yellow);
-            text_may_lanh.setTextColor(Color.YELLOW);
-        }
+
         if (room.isAttic() == true) {
             hinh_gac_lung.setImageResource(R.drawable.gac_lung_yellow);
             text_gac_lung.setTextColor(Color.YELLOW);
-        }
+        }else setVisibleGone(hinh_gac_lung,text_gac_lung);
         if (room.isWC() == true) {
             hinh_wc.setImageResource(R.drawable.toilet_yellow);
             text_wc.setTextColor(Color.YELLOW);
-        }
+        }else setVisibleGone(hinh_wc,text_wc);
         if (room.isTivi() == true) {
             hinh_tivi.setImageResource(R.drawable.television_yellow);
             text_may_lanh.setTextColor(Color.YELLOW);
-        }
+        }else setVisibleGone(hinh_tivi,text_tivi);
         if (room.isWifi() == true) {
             hinh_wifi.setImageResource(R.drawable.wifi_yellow);
             text_wifi.setTextColor(Color.YELLOW);
-        }
+        }else setVisibleGone(hinh_wifi,text_wifi);
         if (room.isPark() == true) {
             hinh_xe_dap.setImageResource(R.drawable.bike_yellow);
             text_xe_dap.setTextColor(Color.YELLOW);
-        }
+        }else setVisibleGone(hinh_xe_dap,text_xe_dap);
         if (room.isHotWater() == true) {
             hinh_may_nuoc_nong.setImageResource(R.drawable.hot_water_yellow);
             text_may_nuoc_nong.setTextColor(Color.YELLOW);
+        }else setVisibleGone(hinh_may_nuoc_nong,text_may_nuoc_nong);
+        if(room.isFre()==true){
+            hinh_tu_lanh.setImageResource(R.drawable.fridge_yellow);
+            text_tu_lanh.setTextColor(Color.YELLOW);
         }
+        else setVisibleGone(hinh_tu_lanh,text_tu_lanh);
+
+
         if (room.isWardrobe() == true) {
             hinh_tu_do.setImageResource(R.drawable.closet_yellow);
             text_tu_do.setTextColor(Color.YELLOW);
         }else setVisibleGone(hinh_tu_do,text_tu_do);
+
+        if (room.isFence()== true) {
+            hinh_an_ninh.setImageResource(R.drawable.security_yellow);
+           text_an_ninh.setTextColor(Color.YELLOW);
+        }else setVisibleGone(hinh_an_ninh,text_an_ninh);
+
+        if (room.isFreeTime()== true) {
+            hinh_dung_gio.setImageResource(R.drawable.clock_yellow);
+            text_dung_gio.setTextColor(Color.YELLOW);
+        }else setVisibleGone(hinh_dung_gio,text_dung_gio);
+
+        //thêm ổ khóa, tủ lạnh
+
         Log.e("Da vao 20","20");
         text_dia_chi.setText(room.getAddress());
         text_sdt.setText(room.getPhone());
