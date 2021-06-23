@@ -3,45 +3,46 @@ package com.trinhtien2212.findhomerental.ui.home;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
-
-import com.denzcoskun.imageslider.ImageSlider;
-import com.denzcoskun.imageslider.models.SlideModel;
-
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.text.Html;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.models.SlideModel;
 import com.trinhtien2212.findhomerental.R;
 import com.trinhtien2212.findhomerental.model.Room;
 import com.trinhtien2212.findhomerental.ui.Util;
 
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 
 public class RoomDetail extends AppCompatActivity {
     TextView text_dia_chi, text_sdt,  text_giaphong,text_deposit,text_electronic,text_water,text_area,text_detail;
-    TextView text_tu_do,text_may_nuoc_nong,text_may_lanh, text_wc, text_xe_dap, text_wifi, text_tu_lanh, text_gac_lung, text_dung_gio, text_an_ninh, text_tivi;
-    ImageView hinh_tu_do,hinh_may_nuoc_nong, hinh_yeu_thich, hinh_dat_coc, hinh_gia_dien, hinh_gia_nuoc, hinh_dien_tich, hinh_may_lanh, hinh_wc, hinh_xe_dap, hinh_wifi, hinh_tu_lanh, hinh_gac_lung, hinh_dung_gio, hinh_an_ninh, hinh_tivi;
+    TextView txt_author_name, text_tu_do,text_may_nuoc_nong,text_may_lanh, text_wc, text_xe_dap, text_wifi, text_tu_lanh, text_gac_lung, text_dung_gio, text_an_ninh, text_tivi;
+    ImageView author_img,hinh_tu_do,hinh_may_nuoc_nong, hinh_dat_coc, hinh_gia_dien, hinh_gia_nuoc, hinh_dien_tich, hinh_may_lanh, hinh_wc, hinh_xe_dap, hinh_wifi, hinh_tu_lanh, hinh_gac_lung, hinh_dung_gio, hinh_an_ninh, hinh_tivi;
 
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Log.e("OnCreateRoomDetail","Dang vao");
 
         setContentView(R.layout.activity_room_detail);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_detail);
+        assign();
+    }
+    private void assign(){
         Log.e("OnCreateRoomDetail","Dang vao 2");
         ImageSlider imageSlider = findViewById(R.id.slider);
         List<SlideModel> slideModel = new ArrayList<>();
 
-
+        author_img = findViewById(R.id.author_img);
+        txt_author_name = findViewById(R.id.author_name);
         hinh_tu_do = findViewById(R.id.image_closet);
         text_tu_do = findViewById(R.id.text_closet);
         hinh_may_nuoc_nong = findViewById(R.id.image_hotwater);
@@ -75,7 +76,7 @@ public class RoomDetail extends AppCompatActivity {
         hinh_dung_gio = findViewById(R.id.image_clock);
         hinh_an_ninh = findViewById(R.id.image_security);
         hinh_tivi = findViewById(R.id.image_tivi);
-        hinh_yeu_thich = findViewById(R.id.image_yeu_thich);
+
         Log.e("OnCreateRoomDetail","Dang vao 8");
         text_an_ninh = findViewById(R.id.text_anninh);
         text_dung_gio = findViewById(R.id.text_clock);
@@ -88,12 +89,7 @@ public class RoomDetail extends AppCompatActivity {
         text_gac_lung = findViewById(R.id.text_gaclung);
         text_tivi = findViewById(R.id.text_tivi);
         Log.e("OnCreateRoomDetail","Dang vao 3");
-        hinh_yeu_thich.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
         Bundle bundle = getIntent().getExtras();
         Room room = (Room) bundle.getSerializable("room");
         Log.e("imageRoom",room.getImages().toString());
@@ -112,40 +108,56 @@ public class RoomDetail extends AppCompatActivity {
 
         if (room.isAirCondition() == true) {
             hinh_may_lanh.setImageResource(R.drawable.cool_machin_yellow);
-            text_may_lanh.setTextColor(Color.YELLOW);
-        }
-        if (room.isWifi() == true) {
-            hinh_may_lanh.setImageResource(R.drawable.wifi_yellow);
-            text_may_lanh.setTextColor(Color.YELLOW);
-        }
+            text_may_lanh.setTextColor(Color.parseColor("#D2B633"));
+        }else setVisibleGone(hinh_may_lanh,text_may_lanh);
         if (room.isAttic() == true) {
             hinh_gac_lung.setImageResource(R.drawable.gac_lung_yellow);
-            text_gac_lung.setTextColor(Color.YELLOW);
-        }
+            text_gac_lung.setTextColor(Color.parseColor("#D2B633"));
+        }else setVisibleGone(hinh_gac_lung,text_gac_lung);
         if (room.isWC() == true) {
             hinh_wc.setImageResource(R.drawable.toilet_yellow);
-            text_wc.setTextColor(Color.YELLOW);
-        }
+            text_wc.setTextColor(Color.parseColor("#D2B633"));
+        }else setVisibleGone(hinh_wc,text_wc);
         if (room.isTivi() == true) {
             hinh_tivi.setImageResource(R.drawable.television_yellow);
-            text_may_lanh.setTextColor(Color.YELLOW);
-        }
+            text_tivi.setTextColor(Color.parseColor("#D2B633"));
+        }else setVisibleGone(hinh_tivi,text_tivi);
         if (room.isWifi() == true) {
             hinh_wifi.setImageResource(R.drawable.wifi_yellow);
-            text_wifi.setTextColor(Color.YELLOW);
-        }
+            text_wifi.setTextColor(Color.parseColor("#D2B633"));
+        }else setVisibleGone(hinh_wifi,text_wifi);
         if (room.isPark() == true) {
             hinh_xe_dap.setImageResource(R.drawable.bike_yellow);
-            text_xe_dap.setTextColor(Color.YELLOW);
-        }
+            text_xe_dap.setTextColor(Color.parseColor("#D2B633"));
+        }else setVisibleGone(hinh_xe_dap,text_xe_dap);
         if (room.isHotWater() == true) {
             hinh_may_nuoc_nong.setImageResource(R.drawable.hot_water_yellow);
-            text_may_nuoc_nong.setTextColor(Color.YELLOW);
+            text_may_nuoc_nong.setTextColor(Color.parseColor("#D2B633"));
+        }else setVisibleGone(hinh_may_nuoc_nong,text_may_nuoc_nong);
+        if(room.isFre()==true){
+            hinh_tu_lanh.setImageResource(R.drawable.fridge_yellow);
+            text_tu_lanh.setTextColor(Color.parseColor("#D2B633"));
         }
+        else setVisibleGone(hinh_tu_lanh,text_tu_lanh);
+
+
         if (room.isWardrobe() == true) {
             hinh_tu_do.setImageResource(R.drawable.closet_yellow);
-            text_tu_do.setTextColor(Color.YELLOW);
+            text_tu_do.setTextColor(Color.parseColor("#D2B633"));
         }else setVisibleGone(hinh_tu_do,text_tu_do);
+
+        if (room.isFence()== true) {
+            hinh_an_ninh.setImageResource(R.drawable.security_yellow);
+            text_an_ninh.setTextColor(Color.parseColor("#D2B633"));
+        }else setVisibleGone(hinh_an_ninh,text_an_ninh);
+
+        if (room.isFreeTime()== true) {
+            hinh_dung_gio.setImageResource(R.drawable.clock_yellow);
+            text_dung_gio.setTextColor(Color.parseColor("#D2B633"));
+        }else setVisibleGone(hinh_dung_gio,text_dung_gio);
+
+        //thêm ổ khóa, tủ lạnh
+
         Log.e("Da vao 20","20");
         text_dia_chi.setText(room.getAddress());
         text_sdt.setText(room.getPhone());
@@ -153,14 +165,19 @@ public class RoomDetail extends AppCompatActivity {
         text_deposit.setText(Util.formatCurrency(room.getDeposit()));
         text_electronic.setText(Util.formatCurrency(room.getEleCost()));
         text_water.setText(Util.formatCurrency(room.getWatCost()));
-        text_area.setText(room.getArea()+"");
+        text_area.setText(Html.fromHtml(room.getArea()+" m<sup><small>2</small></sup>"));
         text_detail.setText(room.getDescription());
-
-
+        txt_author_name.setText(room.getUserDisplayName());
+        Util.setImage(author_img,room.getUserPhotoUrl());
     }
 
-   private void setVisibleGone(ImageView imageView,TextView textView){
-        imageView.setVisibility(View.GONE);
-        textView.setVisibility(View.GONE);
-   }
+    private void setVisibleGone(ImageView imageView,TextView textView){
+//        imageView.setVisibility(View.GONE);
+//        textView.setVisibility(View.GONE);
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
 }

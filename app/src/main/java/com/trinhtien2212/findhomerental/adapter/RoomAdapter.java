@@ -21,20 +21,26 @@ import java.util.List;
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder> implements Filterable {
     private List<Room> mListroom;
     private List<Room> mListroomOld;
-
+    private RoomAdapter.ItemClickListener mItemClickListener;
+    public RoomAdapter( RoomAdapter.ItemClickListener itemClickListener){
+        this.mItemClickListener = itemClickListener;
+    }
 
     public void setData(List<Room> list){
         this.mListroom = list;
         this.mListroomOld = list;
         notifyDataSetChanged();
+
     }
     @NonNull
     @Override
     public RoomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_row_item, parent,false);
-        return new RoomViewHolder(view);
+        return new RoomViewHolder(view,mItemClickListener);
     }
-
+    public interface ItemClickListener{
+        void onItemClick(int position);
+    }
     @Override
     public void onBindViewHolder(@NonNull RoomViewHolder holder, int position) {
         Room room = mListroom.get(position);
@@ -45,8 +51,6 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         holder.tv_address.setText(room.getAddress());
         holder.tv_cost.setText("Giá thuê 1 tháng: "+Util.formatCurrency(room.getCost()));
         holder.tv_distance.setText("Khoảng cách: "+Util.formatDistance(room.getLocation().getDistance()));
-//        ToDo
-//        holder.imgHome.setImageResource(room.getImages(0));
     }
 
     @Override
@@ -58,12 +62,19 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         private TextView tv_address,tv_cost,tv_distance;
         private ImageView imgHome;
 
-        public RoomViewHolder(@NonNull View itemView) {
+        public RoomViewHolder(@NonNull View itemView, RoomAdapter.ItemClickListener itemClickListener) {
             super(itemView);
            imgHome = itemView.findViewById(R.id.imageHome);
             tv_address = itemView.findViewById(R.id.tv_address);
             tv_cost = itemView.findViewById(R.id.tv_cost);
             tv_distance = itemView.findViewById(R.id.tv_distance);
+            // ToDo set action for item
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    itemClickListener.onItemClick(getAdapterPosition());
+                }
+            });
         }
     }
 
