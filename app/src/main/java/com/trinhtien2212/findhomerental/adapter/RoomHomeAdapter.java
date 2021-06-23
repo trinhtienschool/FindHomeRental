@@ -58,7 +58,7 @@ public class RoomHomeAdapter extends RecyclerView.Adapter<RoomHomeAdapter.RoomVi
         void onItemClick(int position);
     }
 
-    public class RoomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class RoomViewHolder extends RecyclerView.ViewHolder {
         private TextView  txtPrice, txtAddress;
         private ImageView imgHome;
 
@@ -71,12 +71,13 @@ public class RoomHomeAdapter extends RecyclerView.Adapter<RoomHomeAdapter.RoomVi
             imgHome = itemView.findViewById(R.id.imageHome2);
 
             // ToDo set action for item
-            itemView.setOnClickListener(this);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    itemClickListener.onItemClick(getAdapterPosition());
+                }
+            });
         }
 
-        @Override
-        public void onClick(View v) {
-            mItemClickListener.onItemClick(getAdapterPosition());
-        }
     }
 }

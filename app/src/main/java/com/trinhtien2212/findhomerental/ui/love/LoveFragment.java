@@ -56,7 +56,7 @@ public class LoveFragment extends Fragment implements RoomsResult {
         actionItemRecyclerView();
 
 //        bookmarkPresenter.("0b4oSVQ6aB6fpmvbkVvo",FirebaseAuth.getInstance().getCurrentUser().getUid());
-
+//
         setFirstData();
         return root;
     }
@@ -67,7 +67,8 @@ public class LoveFragment extends Fragment implements RoomsResult {
     }
     //Load data
     private void setFirstData(){
-        bookmarkPresenter.getAllBookmarks(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        //Todo FirebaseAuth.getInstance().getCurrentUser().getUid()
+        bookmarkPresenter.getAllBookmarks("At137YkMB7OXy99UzZINGbVExY72");
         //ToDo
 //        bookmarkPresenter.getAllBookmarks();
 //        RoomDB roomDB = RoomDB.getInstance();
