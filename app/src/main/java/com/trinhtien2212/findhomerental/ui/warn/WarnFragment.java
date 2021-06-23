@@ -3,64 +3,148 @@ package com.trinhtien2212.findhomerental.ui.warn;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.github.mmin18.widget.RealtimeBlurView;
+import com.trinhtien2212.findhomerental.MainActivity;
 import com.trinhtien2212.findhomerental.R;
+import com.trinhtien2212.findhomerental.adapter.WarnAdapter;
+import com.trinhtien2212.findhomerental.model.Notification;
+import com.trinhtien2212.findhomerental.presenter.NotificationPresenter;
+import com.trinhtien2212.findhomerental.ui.PaginationScrollListener;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link WarnFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class WarnFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private RecyclerView recyclerView;
+    private WarnAdapter adapter;
+    private List<Notification> mListNoti;
+    private MainActivity mainActivity;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private View root;
+    private boolean isLoading, isLastPage;
+    private int currentPage=1, totalPage=2;
+    private RealtimeBlurView realtimeBlurView;
+    private ProgressBar progressBar;
+    private NotificationPresenter notificationPresenter;
 
-    public WarnFragment() {
-        // Required empty public constructor
+    public WarnFragment(){
+
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment WarnFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static WarnFragment newInstance(String param1, String param2) {
-        WarnFragment fragment = new WarnFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_warn, container, false);
+        mainActivity = (MainActivity) getActivity();
+        mListNoti = new ArrayList<Notification>();
+        root = inflater.inflate(R.layout.fragment_warn, container, false);
+        assign();
+
+        buildRecyclerView();
+
+        actionItemRecyclerView();
+
+//        bookmarkPresenter.("0b4oSVQ6aB6fpmvbkVvo",FirebaseAuth.getInstance().getCurrentUser().getUid());
+//
+        setFirstData();
+        return root;
+    }
+
+    private void assign(){
+        realtimeBlurView = root.findViewById(R.id.realtimeBlurView5);
+        progressBar = root.findViewById(R.id.pb_saving5);
+        recyclerView = root.findViewById(R.id.recycler_home5);
+    }
+    //Load data
+    private void setFirstData(){
+        //ToDo
+        notificationPresenter.getNotifications("At137YkMB7OXy99UzZINGbVExY72");
+//        bookmarkPresenter.getAllBookmarks();
+//        RoomDB roomDB = RoomDB.getInstance();
+//        roomDB.getRandomRooms(this);
+//
+//        Toast.makeText(mainActivity, "Load data page", Toast.LENGTH_SHORT).show();
+    }
+    private void getListNoti(){
+
+    }
+    public void returnRooms(List<Notification> notifications) {
+        if(notifications!=null){
+            mListNoti.addAll(notifications);
+            adapter.setData(mListNoti);
+//            totalPage = bookmarkPresenter.getTotalPage();
+//            txtTotalResults.setText(searchPresenter.getTotalResults()+"");
+            if(currentPage == totalPage){
+                isLastPage = true;
+            }
+            recyclerView.post(new Runnable() {
+                public void run() {
+                    // There is no need to use notifyDataSetChanged()
+                    adapter.notifyDataSetChanged();
+                }
+            });
+            isLoading = false;
+//            bookmarkPresenter.removeRoom("0b4oSVQ6aB6fpmvbkVvo",FirebaseAuth.getInstance().getCurrentUser().getUid());
+        }else Toast.makeText(mainActivity,"Chưa có cảnh báo nào",Toast.LENGTH_LONG).show();
+
+        progressBar.setVisibility(View.GONE);
+        showWaiting(View.INVISIBLE);
+    }
+    private void showWaiting(int waiting){
+        realtimeBlurView.setVisibility(waiting);
+        progressBar.setVisibility(waiting);
+    }
+    private void buildRecyclerView(){
+        adapter = new WarnAdapter();
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mainActivity);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
+
+        recyclerView.addOnScrollListener(new PaginationScrollListener(linearLayoutManager) {
+            @Override
+            public void loadMoreItems() {
+                isLoading = true;
+//                loadNextPage();
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+
+            @Override
+            public boolean isLastPage() {
+                return isLastPage;
+            }
+        });
+    }
+    public void actionItemRecyclerView() {
+        adapter.setOnItemClickListener(new WarnAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int positon) {
+                // Todo item
+                Log.e("Notification", mListNoti.get(positon).toString());
+            }
+        });
+
+    }
+    public void showStatus(String s) {
+        Toast.makeText(mainActivity,s,Toast.LENGTH_SHORT).show();
     }
 }
