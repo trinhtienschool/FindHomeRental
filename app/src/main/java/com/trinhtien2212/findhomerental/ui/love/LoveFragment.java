@@ -1,11 +1,18 @@
 package com.trinhtien2212.findhomerental.ui.love;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -43,6 +50,8 @@ public class LoveFragment extends Fragment implements RoomsResult, StatusResult 
     private int currentPage=1, totalPage=2;
     private RealtimeBlurView realtimeBlurView;
     private ProgressBar progressBar;
+    private Button btnThoat;
+    private Button btnXoa;
     private BookmarkPresenter bookmarkPresenter;
     public LoveFragment(){
     }
@@ -154,8 +163,40 @@ public class LoveFragment extends Fragment implements RoomsResult, StatusResult 
                 // ToDo button DELETE
 
                 Log.e("Dang vao Delete Love",position+"");
-                room_pending_delete = position;
-                bookmarkPresenter.removeRoom(mListRoom.get(position).getRoomID(),"At137YkMB7OXy99UzZINGbVExY72");
+                //startdialog
+                Dialog dialog = new Dialog(getContext());
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.warning);
+                Window window=dialog.getWindow();
+                if(window==null){
+                    return;
+                }
+                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
+                window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams windowatribute=window.getAttributes();
+                windowatribute.gravity= Gravity.CENTER;
+                window.setAttributes(windowatribute);
+                btnThoat=dialog.findViewById(R.id.btnthoatid);
+                btnXoa=dialog.findViewById(R.id.btnxoaid);
+                btnThoat.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                btnXoa.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        room_pending_delete = position;
+                        bookmarkPresenter.removeRoom(mListRoom.get(position).getRoomID(),"At137YkMB7OXy99UzZINGbVExY72");
+
+                    }
+                });
+
+                dialog.show();
+                //enddialog
+
 
             }
 
