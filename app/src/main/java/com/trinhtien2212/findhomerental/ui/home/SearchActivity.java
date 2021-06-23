@@ -29,7 +29,7 @@ import com.trinhtien2212.findhomerental.ui.PaginationScrollListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchActivity extends AppCompatActivity implements RoomsResult, PopupMenu.OnMenuItemClickListener, androidx.appcompat.widget.PopupMenu.OnMenuItemClickListener {
+public class SearchActivity extends AppCompatActivity implements RoomAdapter.ItemClickListener, RoomsResult, PopupMenu.OnMenuItemClickListener, androidx.appcompat.widget.PopupMenu.OnMenuItemClickListener {
     private RecyclerView recyclerView;
     private RoomAdapter roomAdapter;
     private List<Room> mListlist;
@@ -52,7 +52,7 @@ public class SearchActivity extends AppCompatActivity implements RoomsResult, Po
         btnFilter = findViewById(R.id.ImgButtonFilter);
         btnSort = findViewById(R.id.ImgButtonSort);
         txtTotalResults = findViewById(R.id.TextViewTotalResult);
-        roomAdapter = new RoomAdapter();
+        roomAdapter = new RoomAdapter(this);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mListlist = new ArrayList<Room>();
@@ -215,5 +215,10 @@ public class SearchActivity extends AppCompatActivity implements RoomsResult, Po
 
         progressBar.setVisibility(View.GONE);
         showWaiting(View.INVISIBLE);
+    }
+
+    @Override
+    public void onItemClick(int position) {
+
     }
 }

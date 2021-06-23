@@ -1,5 +1,6 @@
 package com.trinhtien2212.findhomerental.dao;
 
+import android.content.Intent;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -40,7 +41,7 @@ public class BookmarkDB extends ConnectDB{
 //                                List<String> roomIds = bookmark.convertToRoomId(documentSnapshot.getData());
                                 Map<String,Object> roomIds = documentSnapshot.getData();
                                 Log.e("RoomIds",roomIds.size()+"");
-                                roomIds.put(roomIds.size()+"",roomId);
+                                roomIds.put(getNextKey(roomIds)+"",roomId);
 //                                roomIds.add(roomId);
                                 saveBookmark(roomIds,userUid,bookmarkPresenter);
                             }else{
@@ -51,6 +52,16 @@ public class BookmarkDB extends ConnectDB{
                         }
                     }
                 });
+    }
+    private String getNextKey(Map<String,Object>roomIds){
+        int max = -1;
+        for(String key: roomIds.keySet()){
+            int key_num = Integer.parseInt(key);
+            max = Math.max(max,key_num);
+        }
+        String keyReturn = String.valueOf(max+1);
+        Log.e("Max",keyReturn);
+        return keyReturn;
     }
     public void saveBookmark(Map<String,Object>bookmarks,String userUid,BookmarkPresenter bookmarkPresenter){
         this.db.collection("bookmarks").document(userUid).set(bookmarks).
@@ -69,17 +80,22 @@ public class BookmarkDB extends ConnectDB{
     public void removeRoomOfBookmark(String key,BookmarkPresenter bookmarkPresenter,String userUid) {
         Map<String, Object> updates = new HashMap<>();
         updates.put(key, FieldValue.delete());
-        DocumentReference docRef = db.collection("bookmarks").document(userUid);
-        docRef.update(updates).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    bookmarkPresenter.onSuccess();
-                }else{
-                    bookmarkPresenter.onFail();
+        Log.e("Map",key+":"+FieldValue.delete().toString());
+        try {
+            DocumentReference docRef = db.collection("bookmarks").document(userUid);
+            docRef.update(updates).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        bookmarkPresenter.onSuccess();
+                    } else {
+                        bookmarkPresenter.onFail();
+                    }
                 }
-            }
-        });
+            });
+        }catch (Exception e){
+            bookmarkPresenter.onFail();
+        }
     }
     public void getAllBookmarks(Bookmark bookmark,String userUid, BookmarkPresenter bookmarkPresenter){
         DocumentReference docRef = db.collection("bookmarks").document(userUid);
