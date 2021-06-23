@@ -2,8 +2,10 @@ package com.trinhtien2212.findhomerental.ui.home;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -219,6 +221,11 @@ public class SearchActivity extends AppCompatActivity implements RoomAdapter.Ite
 
     @Override
     public void onItemClick(int position) {
-
+        Log.e("Room", mListlist.get(position).toString());
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("room",mListlist.get(position));
+        Intent intent = new Intent(this, RoomDetail.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

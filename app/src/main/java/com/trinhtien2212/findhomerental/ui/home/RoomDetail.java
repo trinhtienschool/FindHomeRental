@@ -5,26 +5,36 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.google.firebase.auth.FirebaseAuth;
 import com.trinhtien2212.findhomerental.R;
 import com.trinhtien2212.findhomerental.model.Room;
+import com.trinhtien2212.findhomerental.presenter.BookmarkPresenter;
+import com.trinhtien2212.findhomerental.presenter.RoomsResult;
+import com.trinhtien2212.findhomerental.presenter.StatusResult;
 import com.trinhtien2212.findhomerental.ui.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class RoomDetail extends AppCompatActivity {
-    TextView text_dia_chi, text_sdt,  text_giaphong,text_deposit,text_electronic,text_water,text_area,text_detail;
-    TextView txt_author_name, text_tu_do,text_may_nuoc_nong,text_may_lanh, text_wc, text_xe_dap, text_wifi, text_tu_lanh, text_gac_lung, text_dung_gio, text_an_ninh, text_tivi;
-    ImageView author_img,hinh_tu_do,hinh_may_nuoc_nong, hinh_dat_coc, hinh_gia_dien, hinh_gia_nuoc, hinh_dien_tich, hinh_may_lanh, hinh_wc, hinh_xe_dap, hinh_wifi, hinh_tu_lanh, hinh_gac_lung, hinh_dung_gio, hinh_an_ninh, hinh_tivi;
-
+public class RoomDetail extends AppCompatActivity implements StatusResult, RoomsResult {
+    private ImageView iv_love;
+    private boolean isLove = false;
+    private Room room;
+    private TextView text_dia_chi, text_sdt,  text_giaphong,text_deposit,text_electronic,text_water,text_area,text_detail;
+    private TextView txt_author_name, text_tu_do,text_may_nuoc_nong,text_may_lanh, text_wc, text_xe_dap, text_wifi, text_tu_lanh, text_gac_lung, text_dung_gio, text_an_ninh, text_tivi;
+    private ImageView author_img,hinh_tu_do,hinh_may_nuoc_nong, hinh_dat_coc, hinh_gia_dien, hinh_gia_nuoc, hinh_dien_tich, hinh_may_lanh, hinh_wc, hinh_xe_dap, hinh_wifi, hinh_tu_lanh, hinh_gac_lung, hinh_dung_gio, hinh_an_ninh, hinh_tivi;
+    private BookmarkPresenter bookmarkPresenter;
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +47,7 @@ public class RoomDetail extends AppCompatActivity {
         assign();
     }
     private void assign(){
+
         Log.e("OnCreateRoomDetail","Dang vao 2");
         ImageSlider imageSlider = findViewById(R.id.slider);
         List<SlideModel> slideModel = new ArrayList<>();
@@ -91,7 +102,7 @@ public class RoomDetail extends AppCompatActivity {
         Log.e("OnCreateRoomDetail","Dang vao 3");
 
         Bundle bundle = getIntent().getExtras();
-        Room room = (Room) bundle.getSerializable("room");
+        room = (Room) bundle.getSerializable("room");
         Log.e("imageRoom",room.getImages().toString());
         //slide show
         for(String imageUrl: room.getImages()){
@@ -104,6 +115,26 @@ public class RoomDetail extends AppCompatActivity {
 //        if (isLove == true) {
 //            hinh_yeu_thich.setImageResource(R.drawable.heart_red);
 //        }
+
+        bookmarkPresenter = new BookmarkPresenter(this,this);
+        iv_love = findViewById(R.id.image_yeu_thich);
+        iv_love.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(FirebaseAuth.getInstance().getCurrentUser() ==null){
+
+                    Toast.makeText(RoomDetail.this,"Bạn phải đăng nhập để thêm yêu thích",Toast.LENGTH_LONG).show();
+                }else if(isLove){
+
+                    bookmarkPresenter.removeRoom(room.getRoomID(),FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+                }
+                else if(!isLove){
+
+                    bookmarkPresenter.addBookmark(room.getRoomID(), FirebaseAuth.getInstance().getCurrentUser().getUid());
+                }
+            }
+        });
 
 
         if (room.isAirCondition() == true) {
@@ -171,7 +202,15 @@ public class RoomDetail extends AppCompatActivity {
         Util.setImage(author_img,room.getUserPhotoUrl());
     }
 
-    private void setVisibleGone(ImageView imageView,TextView textView){
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(FirebaseAuth.getInstance().getCurrentUser() !=null){
+            bookmarkPresenter.getAllBookmarks(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        }
+    }
+
+    private void setVisibleGone(ImageView imageView, TextView textView){
 //        imageView.setVisibility(View.GONE);
 //        textView.setVisibility(View.GONE);
     }
@@ -179,5 +218,35 @@ public class RoomDetail extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    @Override
+    public void returnRooms(List<Room> rooms) {
+        for(Room r : rooms){
+            if(r.getRoomID().equalsIgnoreCase(this.room.getRoomID())){
+                iv_love.setImageResource(R.drawable.heart_red);
+                isLove = true;
+                return;
+            }
+        }
+    }
+
+    @Override
+    public void onFail() {
+        Toast.makeText(this,"Thất bại",Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onSuccess() {
+        Log.e("Success roomdetail","Succc");
+        if(!isLove) {
+            isLove = true;
+            iv_love.setImageResource(R.drawable.heart_red);
+
+        }else if(isLove){
+            isLove = false;
+            iv_love.setImageResource(R.drawable.traitim);
+        }
+//        Toast.makeText(this,"Thành công",Toast.LENGTH_LONG).show();
     }
 }

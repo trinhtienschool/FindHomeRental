@@ -155,6 +155,9 @@ public class LoveFragment extends Fragment implements RoomsResult, StatusResult 
 
                 Log.e("Dang vao Delete Love",position+"");
                 room_pending_delete = position;
+
+
+                //ToDo
                 bookmarkPresenter.removeRoom(mListRoom.get(position).getRoomID(),"At137YkMB7OXy99UzZINGbVExY72");
 
             }
