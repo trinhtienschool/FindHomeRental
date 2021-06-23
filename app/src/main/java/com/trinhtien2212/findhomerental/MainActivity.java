@@ -301,7 +301,7 @@ public class MainActivity extends AppCompatActivity implements IUserResult, Stat
         } else {
             showItemAdmin(false);
             menuItem.setTitle("Đăng nhập");
-            iv_header_avatar.setImageResource(R.drawable.home);
+            iv_header_avatar.setImageResource(R.drawable.house);
             tv_header_name.setText("Trang chủ");
             tv_header_email.setText("");
         }
