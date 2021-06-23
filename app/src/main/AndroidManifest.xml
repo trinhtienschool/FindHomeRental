@@ -18,6 +18,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FindHomeRental">
+        <activity android:name=".ui.home.RoomDetail" />
         <activity android:name=".ui.home.GoogleSignIn" />
         <activity android:name=".ui.home.SearchActivity" />
         <activity android:name=".MainAdminActivity" />
