@@ -1,6 +1,9 @@
 package com.trinhtien2212.findhomerental.ui.myroom;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,9 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -47,6 +54,8 @@ public class MyRoomFragment extends Fragment implements RoomsResult,StatusResult
     private ProgressBar progressBar;
     private RoomPresenter roomPresenter;
     private int room_pending_delete;
+    private Button btnThoat;
+    private Button btnXoa;
     public MyRoomFragment(){
     }
 
@@ -120,10 +129,41 @@ public class MyRoomFragment extends Fragment implements RoomsResult,StatusResult
                 Room room = mListRoom.get(position);
                 room_pending_delete = position;
                 //Todo
+                //startdialog
+                Dialog dialog = new Dialog(getContext());
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.warning);
+                Window window=dialog.getWindow();
+                if(window==null){
+                    return;
+                }
+                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
+                window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams windowatribute=window.getAttributes();
+                windowatribute.gravity= Gravity.CENTER;
+                window.setAttributes(windowatribute);
+                btnThoat=dialog.findViewById(R.id.btnthoatid);
+                btnXoa=dialog.findViewById(R.id.btnxoaid);
+                btnThoat.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                btnXoa.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        roomPresenter.setRoom(room);
+                        roomPresenter.deleteRoom();
 
+                    }
+                });
+
+                dialog.show();
+                //enddialog
                 Log.e("RoomID",room.getRoomID());
-                roomPresenter.setRoom(room);
-                roomPresenter.deleteRoom();
+
 
             }
 
