@@ -37,6 +37,7 @@ import com.trinhtien2212.findhomerental.presenter.RoomPresenter;
 import com.trinhtien2212.findhomerental.presenter.RoomsResult;
 import com.trinhtien2212.findhomerental.presenter.StatusResult;
 import com.trinhtien2212.findhomerental.ui.add_room.AddRoomActivity;
+import com.trinhtien2212.findhomerental.ui.home.RoomDetail;
 
 import java.util.List;
 
@@ -120,6 +121,12 @@ public class MyRoomFragment extends Fragment implements RoomsResult,StatusResult
             public void onItemClick(int positon) {
                 // Todo item
                 Log.e("Room", mListRoom.get(positon).toString());
+                Log.e("Room", mListRoom.get(positon).toString());
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("room",mListRoom.get(positon));
+                Intent intent = new Intent(mainActivity, RoomDetail.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
 
             @Override

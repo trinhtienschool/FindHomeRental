@@ -159,7 +159,7 @@ public class RoomDB extends ConnectDB {
                     }
                 } else {
                     Log.d("Error", "get failed with ", task.getException());
-
+                    getRoomByListRoomIds.addRoom(null);
                 }
             }
         });

@@ -25,4 +25,9 @@
         android:name="com.trinhtien2212.findhomerental.ui.warn.WarnFragment"
         android:label="Cảnh báo"
         tools:layout="@layout/fragment_warn" />
+    <fragment
+        android:id="@+id/nav_admin"
+        android:name="com.trinhtien2212.findhomerental.MainAdminActivity"
+        android:label="@string/menu_admin"
+        tools:layout="@layout/activity_main_admin" />
 </navigation>

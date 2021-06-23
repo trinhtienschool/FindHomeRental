@@ -1,10 +1,18 @@
 package com.trinhtien2212.findhomerental.ui.love;
 
+import android.app.Dialog;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -21,25 +29,29 @@ import com.trinhtien2212.findhomerental.adapter.LoveAdapter;
 import com.trinhtien2212.findhomerental.model.Room;
 import com.trinhtien2212.findhomerental.presenter.BookmarkPresenter;
 import com.trinhtien2212.findhomerental.presenter.RoomsResult;
+import com.trinhtien2212.findhomerental.presenter.StatusResult;
 import com.trinhtien2212.findhomerental.ui.PaginationScrollListener;
+import com.trinhtien2212.findhomerental.ui.home.RoomDetail;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class LoveFragment extends Fragment implements RoomsResult {
+public class LoveFragment extends Fragment implements RoomsResult, StatusResult {
 
     private RecyclerView recyclerView;
     private LoveAdapter adapter;
     private List<Room> mListRoom;
     private MainActivity mainActivity;
-
+    private int room_pending_delete;
     private View root;
     private boolean isLoading, isLastPage;
     private int currentPage=1, totalPage=2;
     private RealtimeBlurView realtimeBlurView;
     private ProgressBar progressBar;
+    private Button btnThoat;
+    private Button btnXoa;
     private BookmarkPresenter bookmarkPresenter;
     public LoveFragment(){
     }
@@ -49,6 +61,7 @@ public class LoveFragment extends Fragment implements RoomsResult {
         mainActivity = (MainActivity) getActivity();
         mListRoom = new ArrayList<Room>();
         root = inflater.inflate(R.layout.fragment_love, container, false);
+        bookmarkPresenter = new BookmarkPresenter(this,this);
         assign();
 
         buildRecyclerView();
@@ -138,11 +151,52 @@ public class LoveFragment extends Fragment implements RoomsResult {
             public void onItemClick(int positon) {
                 // Todo item
                 Log.e("Room", mListRoom.get(positon).toString());
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("room",mListRoom.get(positon));
+                Intent intent = new Intent(mainActivity, RoomDetail.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
 
             @Override
             public void onDeleteClick(int position) {
                 // ToDo button DELETE
+
+                Log.e("Dang vao Delete Love",position+"");
+                //startdialog
+                Dialog dialog = new Dialog(getContext());
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.warning);
+                Window window=dialog.getWindow();
+                if(window==null){
+                    return;
+                }
+                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
+                window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams windowatribute=window.getAttributes();
+                windowatribute.gravity= Gravity.CENTER;
+                window.setAttributes(windowatribute);
+                btnThoat=dialog.findViewById(R.id.btnthoatid);
+                btnXoa=dialog.findViewById(R.id.btnxoaid);
+                btnThoat.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                btnXoa.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        room_pending_delete = position;
+                        bookmarkPresenter.removeRoom(mListRoom.get(position).getRoomID(),"At137YkMB7OXy99UzZINGbVExY72");
+
+                    }
+                });
+
+                dialog.show();
+                //enddialog
+
 
             }
 
@@ -150,7 +204,18 @@ public class LoveFragment extends Fragment implements RoomsResult {
         });
 
     }
-    public void showStatus(String s) {
-        Toast.makeText(mainActivity,s,Toast.LENGTH_SHORT).show();
+
+
+    @Override
+    public void onFail() {
+        Toast.makeText(mainActivity,"Thất bại",Toast.LENGTH_LONG).show();
+
+    }
+
+    @Override
+    public void onSuccess() {
+        Toast.makeText(mainActivity,"Thành công",Toast.LENGTH_LONG).show();
+        mListRoom.remove(room_pending_delete);
+        adapter.notifyDataSetChanged();
     }
 }

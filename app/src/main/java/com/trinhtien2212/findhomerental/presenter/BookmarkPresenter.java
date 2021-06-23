@@ -12,10 +12,13 @@ import java.util.List;
 public class BookmarkPresenter implements StatusResult,RoomsResult {
     private BookmarkDB bookmarkDB;
     private GetRoomByListRoomIds getRoomByListRoomIds;
-    private LoveFragment loveFragment;
+    private StatusResult statusResult;
+    private RoomsResult roomsResult;
+
     private Bookmark bookmark;
-    public BookmarkPresenter(LoveFragment loveFragment){
-        this.loveFragment = loveFragment;
+    public BookmarkPresenter(StatusResult statusResult,RoomsResult roomsResult){
+        this.statusResult = statusResult;
+        this.roomsResult = roomsResult;
         this.bookmark = new Bookmark();
         this.bookmarkDB = BookmarkDB.getInstance();
         getRoomByListRoomIds = new GetRoomByListRoomIds(this);
@@ -34,7 +37,7 @@ public class BookmarkPresenter implements StatusResult,RoomsResult {
             Log.e("Key: ",key);
             bookmarkDB.removeRoomOfBookmark(key,this,userUid);
         }else{
-            loveFragment.showStatus("Lỗi: Không tồn tại phòng muốn xóa");
+            statusResult.onFail();
         }
     }
     public void setListRoomIds(List<String>listRoomIds){
@@ -49,12 +52,12 @@ public class BookmarkPresenter implements StatusResult,RoomsResult {
     }
     @Override
     public void onFail() {
-        loveFragment.showStatus("Thất bại");
+        statusResult.onFail();
     }
 
     @Override
     public void onSuccess() {
-        loveFragment.showStatus("Thành công");
+        statusResult.onSuccess();
 
 
         Log.e("SAVE BookMark","Thanh cong");
@@ -75,6 +78,6 @@ public class BookmarkPresenter implements StatusResult,RoomsResult {
 //        for(Room room: rooms){
 //            Log.e("PrintRoom",room.toString());
 //        }
-        loveFragment.returnRooms(rooms);
+        roomsResult.returnRooms(rooms);
     }
 }
