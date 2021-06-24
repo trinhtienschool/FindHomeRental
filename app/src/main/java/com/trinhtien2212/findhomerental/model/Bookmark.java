@@ -52,9 +52,26 @@ public class Bookmark {
         return roomIds;
     }
     //ToDo
-//    public void addRoom(Room room){
-//        for(String key: )
-//    }
+    public void addRoom(String roomId){
+        mapRoomIds.put(getMax(),roomId);
+    }
+    public String removeRoom(String roomId){
+        for(String key: mapRoomIds.keySet()){
+            if(mapRoomIds.get(key).equalsIgnoreCase(roomId)){
+                mapRoomIds.remove(key);
+                return key;
+            }
+        }
+        return  null;
+    }
+    private String getMax(){
+        int max = 0;
+        for(String key: mapRoomIds.keySet()){
+            max = Math.max(max,Integer.parseInt(key));
+        }
+        max = max+1;
+        return String.valueOf(max);
+    }
     public String getKey(String roomId) {
         Log.e("RoomID",roomId);
         Log.e("KeyMap",mapRoomIds.toString());
