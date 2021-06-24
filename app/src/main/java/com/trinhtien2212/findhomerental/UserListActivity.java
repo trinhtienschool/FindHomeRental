@@ -13,22 +13,26 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.mmin18.widget.RealtimeBlurView;
 import com.trinhtien2212.findhomerental.adapter.UserAdapter;
 import com.trinhtien2212.findhomerental.model.User;
-import com.trinhtien2212.findhomerental.ui.PaginationScrollListener;
+import com.trinhtien2212.findhomerental.presenter.IUserResult;
+import com.trinhtien2212.findhomerental.presenter.StatusResult;
+import com.trinhtien2212.findhomerental.presenter.UserManagerPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserListActivity extends AppCompatActivity {
+public class UserListActivity extends AppCompatActivity implements StatusResult, IUserResult {
     private RecyclerView recyclerView;
-    private UserAdapter UserAdapter;
+    private UserAdapter userAdapter;
     private List<User> mListUser;
     private ProgressBar progressBar;
     private ImageButton imgBtnBack;
     private SearchView searchView;
-//    private ImageButton btnFilter, btnSort;
-//    private TextView txtTotalResults;
+    private UserManagerPresenter userManagerPresenter;
+    private RealtimeBlurView realtimeBlurView;
+    private ProgressBar pb_waiting;
 
     private boolean isLoading, isLastPage;
     private int currentPage=1, totalPage=2;
@@ -37,7 +41,9 @@ public class UserListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_list);
-
+        realtimeBlurView = findViewById(R.id.realtimeBlurView);
+        pb_waiting = findViewById(R.id.pb_waiting);
+        userManagerPresenter = new UserManagerPresenter(this,this);
         recyclerView = findViewById(R.id.recycler_view_user);
         progressBar = findViewById(R.id.progress_bar);
         imgBtnBack = findViewById(R.id.ImageButtonBack);
@@ -52,31 +58,31 @@ public class UserListActivity extends AppCompatActivity {
 //        btnFilter = findViewById(R.id.ImgButtonFilter);
 //        btnSort = findViewById(R.id.ImgButtonSort);
 //        txtTotalResults = findViewById(R.id.TextViewTotalResult);
-        UserAdapter = new UserAdapter();
+        userAdapter = new UserAdapter();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(UserAdapter);
+        recyclerView.setAdapter(userAdapter);
 
-        recyclerView.addOnScrollListener(new PaginationScrollListener(linearLayoutManager) {
-            @Override
-            public void loadMoreItems() {
-                isLoading = true;
-                progressBar.setVisibility(View.VISIBLE);
-                currentPage += 1;
-                loadNextPage();
-            }
-
-            @Override
-            public boolean isLoading() {
-                return isLoading;
-            }
-
-            @Override
-            public boolean isLastPage() {
-                return isLastPage;
-            }
-        });
+//        recyclerView.addOnScrollListener(new PaginationScrollListener(linearLayoutManager) {
+//            @Override
+//            public void loadMoreItems() {
+//                isLoading = true;
+//                progressBar.setVisibility(View.VISIBLE);
+//                currentPage += 1;
+//                loadNextPage();
+//            }
+//
+//            @Override
+//            public boolean isLoading() {
+//                return isLoading;
+//            }
+//
+//            @Override
+//            public boolean isLastPage() {
+//                return isLastPage;
+//            }
+//        });
 
         setFirstData();
     }
@@ -88,7 +94,7 @@ public class UserListActivity extends AppCompatActivity {
             public void run() {
                 List<User> list = getListUser();
                 mListUser.addAll(list);
-                UserAdapter.notifyDataSetChanged();
+                userAdapter.notifyDataSetChanged();
 
                 isLoading = false;
                 progressBar.setVisibility(View.GONE);
@@ -102,7 +108,8 @@ public class UserListActivity extends AppCompatActivity {
     //Load data
     private void setFirstData(){
         mListUser = getListUser();
-        UserAdapter.setData(mListUser);
+        userAdapter.setData(mListUser);
+        userManagerPresenter.getAllUsers();
     }
     private List<User> getListUser(){
         Toast.makeText(this, "Đang tải chờ xiu...", Toast.LENGTH_SHORT).show();
@@ -131,6 +138,27 @@ public class UserListActivity extends AppCompatActivity {
         list.add(u10);
 
         return list;
+    }
+
+    @Override
+    public void onFail() {
+        Toast.makeText(this,"Có lỗi xảy ra, vui lòng thử lại",Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onSuccess() {
+
+    }
+
+    @Override
+    public void returnUser(List<User> users) {
+        mListUser = users;
+        userAdapter.setData(mListUser);
+        showWaiting(View.INVISIBLE);
+    }
+    private void showWaiting(int waiting){
+        realtimeBlurView.setVisibility(waiting);
+        pb_waiting.setVisibility(waiting);
     }
 
 //    @Override

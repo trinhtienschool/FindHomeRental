@@ -125,7 +125,6 @@ public class RoomDetail extends AppCompatActivity implements StatusResult, Rooms
 
                     Toast.makeText(RoomDetail.this,"Bạn phải đăng nhập để thêm yêu thích",Toast.LENGTH_LONG).show();
                 }else if(isLove){
-
                     bookmarkPresenter.removeRoom(room.getRoomID(),FirebaseAuth.getInstance().getCurrentUser().getUid());
 
                 }

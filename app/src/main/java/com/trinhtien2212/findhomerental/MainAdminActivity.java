@@ -2,10 +2,13 @@ package com.trinhtien2212.findhomerental;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Locale;
 
 public class MainAdminActivity extends AppCompatActivity {
 
@@ -15,7 +18,7 @@ public class MainAdminActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_admin);
-
+        Log.e("Dang vao onCreate","ONCreated");
         btnUser = findViewById(R.id.buttonUserManagement);
         btnRoom = findViewById(R.id.buttonRoomManagement);
 
@@ -34,6 +37,7 @@ public class MainAdminActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        Log.e("Ket thuc onCreate","ONCreated");
 
     }
 }
