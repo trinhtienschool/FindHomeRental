@@ -40,6 +40,7 @@ import com.trinhtien2212.findhomerental.ui.add_room.AddRoomActivity;
 import com.trinhtien2212.findhomerental.ui.home.IGetMyLocation;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements IUserResult, Stat
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
@@ -137,9 +139,6 @@ public class MainActivity extends AppCompatActivity implements IUserResult, Stat
 //        roomDB.getRandomRooms(null);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.admin);
         navigationView = findViewById(R.id.nav_view);
         hView = navigationView.getHeaderView(0);
         iv_header_avatar = (ImageView) hView.findViewById(R.id.iv_header_avatar);
@@ -153,7 +152,9 @@ public class MainActivity extends AppCompatActivity implements IUserResult, Stat
                 return true;
             }
         });
-
+//        getSupportActionBar().setHomeButtonEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_menu_24);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -174,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements IUserResult, Stat
                 .requestIdToken("127210357343-05dpqllrk3t6r3srb6m7alediirnifqt.apps.googleusercontent.com")
                 .requestProfile()
                 .requestEmail()
-                .build();
+                .build();       
 
         mGoogleSignInClient = com.google.android.gms.auth.api.signin.GoogleSignIn.getClient(this, gso);
         //end
