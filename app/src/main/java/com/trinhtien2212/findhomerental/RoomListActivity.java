@@ -3,6 +3,7 @@ package com.trinhtien2212.findhomerental;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -76,6 +77,11 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
             @Override
             public void onDeleteClick(int position) {
                 // Todo DELETE
+                Room room = mListRoom.get(position);
+                room_pending_delete = position;
+                roomPresenter = new RoomPresenter(RoomListActivity.this,RoomListActivity.this);
+                //ToDo Nhuan
+                roomPresenter.deleteRoom();
             }
 
             @Override
@@ -118,9 +124,11 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_search, menu);
+        getMenuInflater().inflate(R.menu.menu_search_admin, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+
+        searchView = (SearchView) menu.findItem(R.id.action_search2).getActionView();
+        Log.e("Da qua cast search","Da qua");
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setMaxWidth(Integer.MAX_VALUE);
 
@@ -162,6 +170,8 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
         popup.show();
     }
 
+
+    //ToDo nhan su kien loc, sort, filter
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()){
