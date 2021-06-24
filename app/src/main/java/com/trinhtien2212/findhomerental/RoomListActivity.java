@@ -5,6 +5,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -16,7 +17,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
-//import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,12 +28,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.trinhtien2212.findhomerental.adapter.RoomAdminAdapter;
+import com.trinhtien2212.findhomerental.model.Notification;
 import com.trinhtien2212.findhomerental.model.Room;
+import com.trinhtien2212.findhomerental.presenter.NotificationPresenter;
 import com.trinhtien2212.findhomerental.presenter.RoomPresenter;
 import com.trinhtien2212.findhomerental.presenter.RoomsResult;
 import com.trinhtien2212.findhomerental.presenter.SearchPresenter;
 import com.trinhtien2212.findhomerental.presenter.StatusResult;
 import com.trinhtien2212.findhomerental.ui.PaginationScrollListener;
+import com.trinhtien2212.findhomerental.ui.home.RoomDetail;
 
 import java.util.List;
 
@@ -43,17 +46,18 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
     private List<Room> mListRoom;
     private ProgressBar progressBar;
     private int room_pending_delete;
-    SearchView searchView;
+    private SearchView searchView;
     private ImageButton btnFilter, btnSort;
     private TextView txtTotalResults;
     private ImageButton imgBtnBack;
     private Button btnThoat;
     private Button btnXoa;
     private RoomPresenter roomPresenter;
-    SearchPresenter searchPresenter;
-
+    private SearchPresenter searchPresenter;
+    private NotificationPresenter notificationPresenter;
     private boolean isLoading, isLastPage;
-    private int currentPage=1, totalPage=2;
+    private int currentPage = 1, totalPage = 2;
+    private boolean isShowDialogReport;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,12 +66,16 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
 
         getSupportActionBar().setTitle("Danh sách bài viết");
 
+        notificationPresenter = new NotificationPresenter(this);
+        isShowDialogReport = false;
+
+        assert getSupportActionBar() != null;   //null check
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);   //show back button
         assign();
         buildRecyclerView();
         actionItemRecyclerView();
         setFirstData();
     }
-
 
 
     private void setFirstData() {
@@ -80,6 +88,12 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
             @Override
             public void onItemClick(int position) {
                 // Todo item
+                Log.e("Room", mListRoom.get(position).toString());
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("room", mListRoom.get(position));
+                Intent intent = new Intent(RoomListActivity.this, RoomDetail.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
 
             }
 
@@ -88,7 +102,7 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
                 // Todo DELETE
                 Room room = mListRoom.get(position);
                 room_pending_delete = position;
-                roomPresenter = new RoomPresenter(RoomListActivity.this,RoomListActivity.this);
+                roomPresenter = new RoomPresenter(RoomListActivity.this, RoomListActivity.this);
                 //ToDo Nhuan
                 //startdialog
                 Dialog dialog = new Dialog(getApplicationContext());
@@ -129,6 +143,17 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
             @Override
             public void onReportClick(int position) {
                 // Todo REPORT
+                Room room = mListRoom.get(position);
+
+                //Todo Nhuan
+
+                //Message
+                //M
+
+                isShowDialogReport = true;
+
+                Notification notification = new Notification(room.getAddress(), "Message", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                notificationPresenter.addNotification(notification);
             }
         });
     }
@@ -154,12 +179,19 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
 
     @Override
     public void onFail() {
-        Toast.makeText(RoomListActivity.this,"Thất bại",Toast.LENGTH_LONG).show();
+        Toast.makeText(RoomListActivity.this, "Thất bại", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onSuccess() {
-        Toast.makeText(RoomListActivity.this,"Thành công",Toast.LENGTH_LONG).show();
+        //Todo Nhuan
+        if (isShowDialogReport) {
+            isShowDialogReport = false;
+
+            //dismiss here
+        }
+
+        Toast.makeText(RoomListActivity.this, "Thành công", Toast.LENGTH_LONG).show();
         mListRoom.remove(room_pending_delete);
         adapter.notifyDataSetChanged();
     }
@@ -170,7 +202,7 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
         searchView = (SearchView) menu.findItem(R.id.action_search2).getActionView();
-        Log.e("Da qua cast search","Da qua");
+        Log.e("Da qua cast search", "Da qua");
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setMaxWidth(Integer.MAX_VALUE);
 
@@ -189,29 +221,26 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
         });
         return true;
     }
-    @Override
-    public boolean onSupportNavigateUp() {
-        finish();
-        return true;
-    }
+
 
     @Override
     public void onBackPressed() {
-        if(!searchView.isIconified()){
+        if (!searchView.isIconified()) {
             searchView.setIconified(true);
             return;
         }
         super.onBackPressed();
     }
 
-    public void filterDistance(View v){
-        PopupMenu popup = new PopupMenu(this,v);
+    public void filterDistance(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
         popup.setOnMenuItemClickListener(RoomListActivity.this);
         popup.inflate(R.menu.distance_menu);
         popup.show();
     }
-    public void sortPrice(View v){
-        androidx.appcompat.widget.PopupMenu popup = new androidx.appcompat.widget.PopupMenu(this,v);
+
+    public void sortPrice(View v) {
+        androidx.appcompat.widget.PopupMenu popup = new androidx.appcompat.widget.PopupMenu(this, v);
         popup.setOnMenuItemClickListener(RoomListActivity.this);
         popup.inflate(R.menu.price_menu);
         popup.show();
@@ -221,7 +250,7 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
     //ToDo nhan su kien loc, sort, filter
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.filter_3000:
                 Toast.makeText(this, "Lọc theo 500m", Toast.LENGTH_SHORT).show();
                 return true;
@@ -241,5 +270,10 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
                 return false;
         }
     }
-
+    // back
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
 }
