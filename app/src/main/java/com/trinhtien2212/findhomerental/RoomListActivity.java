@@ -3,12 +3,18 @@ package com.trinhtien2212.findhomerental;
 import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -44,6 +50,8 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
     private ImageButton btnFilter, btnSort;
     private TextView txtTotalResults;
     private ImageButton imgBtnBack;
+    private Button btnThoat;
+    private Button btnXoa;
     private RoomPresenter roomPresenter;
     private SearchPresenter searchPresenter;
     private NotificationPresenter notificationPresenter;
@@ -96,7 +104,40 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
                 room_pending_delete = position;
                 roomPresenter = new RoomPresenter(RoomListActivity.this, RoomListActivity.this);
                 //ToDo Nhuan
-                roomPresenter.deleteRoom();
+                //startdialog
+                Dialog dialog = new Dialog(getApplicationContext());
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.warning);
+                Window window=dialog.getWindow();
+                if(window==null){
+                    return;
+                }
+                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
+                window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams windowatribute=window.getAttributes();
+                windowatribute.gravity= Gravity.CENTER;
+                window.setAttributes(windowatribute);
+                btnThoat=dialog.findViewById(R.id.btnthoatid);
+                btnXoa=dialog.findViewById(R.id.btnxoaid);
+                btnThoat.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                btnXoa.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        roomPresenter.deleteRoom();
+
+                    }
+                });
+
+                dialog.show();
+                //enddialog
+
+
             }
 
             @Override
