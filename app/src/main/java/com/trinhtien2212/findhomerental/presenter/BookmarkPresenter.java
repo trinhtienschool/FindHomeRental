@@ -24,6 +24,7 @@ public class BookmarkPresenter implements StatusResult,RoomsResult {
         getRoomByListRoomIds = new GetRoomByListRoomIds(this);
     }
     public void addBookmark(String roomId,String userUid){
+        bookmark.addRoom(roomId);
         this.bookmarkDB.addBookmarks(roomId,userUid,this);
     }
     public void getAllBookmarks(String userUid){
@@ -32,7 +33,7 @@ public class BookmarkPresenter implements StatusResult,RoomsResult {
     }
 
     public void removeRoom(String roomId, String userUid){
-        String key = bookmark.getKey(roomId);
+        String key = bookmark.removeRoom(roomId);
         if(key !=null){
             Log.e("Key: ",key);
             bookmarkDB.removeRoomOfBookmark(key,this,userUid);
