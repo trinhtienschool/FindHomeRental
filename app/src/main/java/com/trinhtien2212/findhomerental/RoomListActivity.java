@@ -70,17 +70,17 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
             @Override
             public void onItemClick(int position) {
                 // Todo item
-                Room room = mListRoom.get(position);
-                room_pending_delete = position;
-                roomPresenter = new RoomPresenter(RoomListActivity.this,RoomListActivity.this);
 
-                //ToDo Nhuan
-                roomPresenter.deleteRoom();
             }
 
             @Override
             public void onDeleteClick(int position) {
                 // Todo DELETE
+                Room room = mListRoom.get(position);
+                room_pending_delete = position;
+                roomPresenter = new RoomPresenter(RoomListActivity.this,RoomListActivity.this);
+                //ToDo Nhuan
+                roomPresenter.deleteRoom();
             }
 
             @Override
