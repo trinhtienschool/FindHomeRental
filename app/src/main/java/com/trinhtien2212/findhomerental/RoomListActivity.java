@@ -52,6 +52,10 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
     private ImageButton imgBtnBack;
     private Button btnThoat;
     private Button btnXoa;
+    private Button btngui;
+    private  Dialog dialog = new Dialog(getApplicationContext());
+    private TextView txtReportInfo;
+    private TextView txtRoomInfo;
     private RoomPresenter roomPresenter;
     private SearchPresenter searchPresenter;
     private NotificationPresenter notificationPresenter;
@@ -144,16 +148,40 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
             public void onReportClick(int position) {
                 // Todo REPORT
                 Room room = mListRoom.get(position);
-
+                String roomInfo=room.getDescription();
+                txtRoomInfo=(TextView)findViewById(R.id.roominfo);
+                txtReportInfo=(TextView) findViewById(R.id.reportinfo);
+                txtRoomInfo.setText(roomInfo);
+                String reportinfo=txtReportInfo.getText().toString();
                 //Todo Nhuan
+                //startdialog
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.warning);
+                Window window=dialog.getWindow();
+                if(window==null){
+                    return;
+                }
+                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
+                window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams windowatribute=window.getAttributes();
+                windowatribute.gravity= Gravity.CENTER;
+                window.setAttributes(windowatribute);
+                btngui.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Notification notification = new Notification(room.getAddress(), reportinfo, FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        notificationPresenter.addNotification(notification);
+                    }
+                });
+
+                dialog.show();
+                //enddialog
+
 
                 //Message
                 //M
 
                 isShowDialogReport = true;
-
-                Notification notification = new Notification(room.getAddress(), "Message", FirebaseAuth.getInstance().getCurrentUser().getUid());
-                notificationPresenter.addNotification(notification);
             }
         });
     }
@@ -187,7 +215,7 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
         //Todo Nhuan
         if (isShowDialogReport) {
             isShowDialogReport = false;
-
+            dialog.dismiss();
             //dismiss here
         }
 
