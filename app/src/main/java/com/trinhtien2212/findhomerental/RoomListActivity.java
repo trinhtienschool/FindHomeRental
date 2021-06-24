@@ -1,8 +1,11 @@
 package com.trinhtien2212.findhomerental;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -23,9 +26,9 @@ import com.trinhtien2212.findhomerental.ui.PaginationScrollListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoomListActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener, androidx.appcompat.widget.PopupMenu.OnMenuItemClickListener{
+public class RoomListActivity extends AppCompatActivity implements androidx.appcompat.widget.PopupMenu.OnMenuItemClickListener{
     private RecyclerView recyclerView;
-    private RoomAdminAdapter RoomAdminAdapter;
+    private RoomAdminAdapter adapter;
     private List<Room> mListlist;
     private ProgressBar progressBar;
     private SearchView searchView;
@@ -48,18 +51,18 @@ public class RoomListActivity extends AppCompatActivity implements PopupMenu.OnM
         imgBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RoomListActivity.this, MainActivity.class);
+                Intent intent = new Intent(RoomListActivity.this, MainAdminActivity.class);
                 startActivity(intent);
             }
         });
 //        btnFilter = findViewById(R.id.ImgButtonFilter);
 //        btnSort = findViewById(R.id.ImgButtonSort);
 //        txtTotalResults = findViewById(R.id.TextViewTotalResult);
-        RoomAdminAdapter = new RoomAdminAdapter();
+        adapter = new RoomAdminAdapter();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(RoomAdminAdapter);
+        recyclerView.setAdapter(adapter);
 
         recyclerView.addOnScrollListener(new PaginationScrollListener(linearLayoutManager) {
             @Override
@@ -91,7 +94,7 @@ public class RoomListActivity extends AppCompatActivity implements PopupMenu.OnM
             public void run() {
                 List<Room> list = getListRoom();
                 mListlist.addAll(list);
-                RoomAdminAdapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
 
                 isLoading = false;
                 progressBar.setVisibility(View.GONE);
@@ -105,7 +108,7 @@ public class RoomListActivity extends AppCompatActivity implements PopupMenu.OnM
     //Load data
     private void setFirstData(){
         mListlist = getListRoom();
-        RoomAdminAdapter.setData(mListlist);
+        adapter.setData(mListlist);
     }
     private List<Room> getListRoom(){
         Toast.makeText(this, "Đang tải chờ xíu...", Toast.LENGTH_SHORT).show();
@@ -136,40 +139,7 @@ public class RoomListActivity extends AppCompatActivity implements PopupMenu.OnM
         return list;
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_search, menu);
-//
-//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-//        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-//        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-//        searchView.setMaxWidth(Integer.MAX_VALUE);
-//
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                RoomAdminAdapter.getFilter().filter(query);
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                RoomAdminAdapter.getFilter().filter(newText);
-//                return false;
-//            }
-//        });
-//
-//        return true;
-//    }
-//
-//    @Override
-//    public void onBackPressed() {
-//        if(!searchView.isIconified()){
-//            searchView.setIconified(true);
-//            return;
-//        }
-//        super.onBackPressed();
-//    }
+
 
     public void filterDistance(View v){
         androidx.appcompat.widget.PopupMenu popup = new androidx.appcompat.widget.PopupMenu(this,v);
@@ -209,7 +179,8 @@ public class RoomListActivity extends AppCompatActivity implements PopupMenu.OnM
     }
 
     @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_search_admin, menu);
+        return true;
     }
 }

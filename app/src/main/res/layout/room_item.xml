@@ -38,6 +38,7 @@
                 android:layout_below="@id/titleAddress2"
                 android:layout_toRightOf="@id/imageHome">
                 <ImageButton
+                    android:id="@+id/imageButtonReport"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/ic_baseline_library_books_24"
@@ -45,6 +46,7 @@
                     android:layout_marginLeft="100dp"
                     android:scaleType="fitXY"/>
                 <ImageButton
+                    android:id="@+id/imageButtonDelete"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/ic_baseline_delete_outline_24"

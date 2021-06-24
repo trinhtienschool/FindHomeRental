@@ -54,7 +54,7 @@ public class SearchActivity extends AppCompatActivity implements RoomAdapter.Ite
         btnFilter = findViewById(R.id.ImgButtonFilter);
         btnSort = findViewById(R.id.ImgButtonSort);
         txtTotalResults = findViewById(R.id.TextViewTotalResult);
-        roomAdapter = new RoomAdapter(this);
+        roomAdapter = new RoomAdapter();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mListlist = new ArrayList<Room>();
