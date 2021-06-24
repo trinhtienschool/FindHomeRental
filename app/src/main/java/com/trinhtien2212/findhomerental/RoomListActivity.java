@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
-//import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +40,7 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
     private List<Room> mListRoom;
     private ProgressBar progressBar;
     private int room_pending_delete;
-    SearchView searchView;
+    private SearchView searchView;
     private ImageButton btnFilter, btnSort;
     private TextView txtTotalResults;
     private ImageButton imgBtnBack;
@@ -58,8 +57,12 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
         setContentView(R.layout.activity_room_list);
 
         getSupportActionBar().setTitle("Danh sách bài viết");
+
         notificationPresenter = new NotificationPresenter(this);
         isShowDialogReport = false;
+
+        assert getSupportActionBar() != null;   //null check
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);   //show back button
         assign();
         buildRecyclerView();
         actionItemRecyclerView();
@@ -178,11 +181,6 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
         return true;
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        finish();
-        return true;
-    }
 
     @Override
     public void onBackPressed() {
@@ -231,5 +229,10 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
                 return false;
         }
     }
-
+    // back
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
 }
