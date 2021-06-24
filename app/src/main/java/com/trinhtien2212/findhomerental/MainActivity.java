@@ -137,11 +137,15 @@ public class MainActivity extends AppCompatActivity implements IUserResult, Stat
 //        roomDB.getRandomRooms(null);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.admin);
         navigationView = findViewById(R.id.nav_view);
         hView = navigationView.getHeaderView(0);
         iv_header_avatar = (ImageView) hView.findViewById(R.id.iv_header_avatar);
         tv_header_name = (TextView) hView.findViewById(R.id.tv_header_name);
         tv_header_email = (TextView) hView.findViewById(R.id.tv_header_email);
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
