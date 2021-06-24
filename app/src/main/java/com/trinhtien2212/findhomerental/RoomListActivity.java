@@ -3,17 +3,19 @@ package com.trinhtien2212.findhomerental;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import android.widget.SearchView;
+//import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -68,7 +70,12 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
             @Override
             public void onItemClick(int position) {
                 // Todo item
+                Room room = mListRoom.get(position);
+                room_pending_delete = position;
+                roomPresenter = new RoomPresenter(RoomListActivity.this,RoomListActivity.this);
 
+                //ToDo Nhuan
+                roomPresenter.deleteRoom();
             }
 
             @Override
@@ -116,9 +123,11 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_search, menu);
+        getMenuInflater().inflate(R.menu.menu_search_admin, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+
+        searchView = (SearchView) menu.findItem(R.id.action_search2).getActionView();
+        Log.e("Da qua cast search","Da qua");
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setMaxWidth(Integer.MAX_VALUE);
 
@@ -135,6 +144,11 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
                 return false;
             }
         });
+        return true;
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
         return true;
     }
 
@@ -160,6 +174,8 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
         popup.show();
     }
 
+
+    //ToDo nhan su kien loc, sort, filter
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()){

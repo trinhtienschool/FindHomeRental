@@ -87,58 +87,58 @@ public class UserListActivity extends AppCompatActivity implements StatusResult,
         setFirstData();
     }
 
-    private void loadNextPage() {
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                List<User> list = getListUser();
-                mListUser.addAll(list);
-                userAdapter.notifyDataSetChanged();
-
-                isLoading = false;
-                progressBar.setVisibility(View.GONE);
-                if(currentPage == totalPage){
-                    isLastPage = true;
-                }
-            }
-        }, 2000);
-    }
+//    private void loadNextPage() {
+//        Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+////                List<User> list = getListUser();
+//                mListUser.addAll(list);
+//                userAdapter.notifyDataSetChanged();
+//
+//                isLoading = false;
+//                progressBar.setVisibility(View.GONE);
+//                if(currentPage == totalPage){
+//                    isLastPage = true;
+//                }
+//            }
+//        }, 2000);
+//    }
 
     //Load data
     private void setFirstData(){
-        mListUser = getListUser();
+//        mListUser = getListUser();
         userAdapter.setData(mListUser);
         userManagerPresenter.getAllUsers();
     }
-    private List<User> getListUser(){
-        Toast.makeText(this, "Đang tải chờ xiu...", Toast.LENGTH_SHORT).show();
-
-        List<User> list = new ArrayList<>();
-        User u1 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
-        User u2 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
-        User u3 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
-        User u4 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
-        User u5 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
-        User u6 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
-        User u7 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
-        User u8 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
-        User u9 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
-        User u10 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
-
-        list.add(u1);
-        list.add(u2);
-        list.add(u3);
-        list.add(u4);
-        list.add(u5);
-        list.add(u6);
-        list.add(u7);
-        list.add(u8);
-        list.add(u9);
-        list.add(u10);
-
-        return list;
-    }
+//    private List<User> getListUser(){
+//        Toast.makeText(this, "Đang tải chờ xiu...", Toast.LENGTH_SHORT).show();
+//
+//        List<User> list = new ArrayList<>();
+//        User u1 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
+//        User u2 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
+//        User u3 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
+//        User u4 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
+//        User u5 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
+//        User u6 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
+//        User u7 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
+//        User u8 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
+//        User u9 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
+//        User u10 = new User("user1","Trần Nhật Thy", "nhatthy1224@gmail.com","image");
+//
+//        list.add(u1);
+//        list.add(u2);
+//        list.add(u3);
+//        list.add(u4);
+//        list.add(u5);
+//        list.add(u6);
+//        list.add(u7);
+//        list.add(u8);
+//        list.add(u9);
+//        list.add(u10);
+//
+//        return list;
+//    }
 
     @Override
     public void onFail() {
