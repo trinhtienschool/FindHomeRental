@@ -51,7 +51,10 @@ public class Bookmark {
         }
         return roomIds;
     }
-
+    //ToDo
+//    public void addRoom(Room room){
+//        for(String key: )
+//    }
     public String getKey(String roomId) {
         Log.e("RoomID",roomId);
         Log.e("KeyMap",mapRoomIds.toString());
