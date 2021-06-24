@@ -21,10 +21,6 @@ import java.util.List;
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder> implements Filterable {
     private List<Room> mListroom;
     private List<Room> mListroomOld;
-    private RoomAdapter.ItemClickListener mItemClickListener;
-    public RoomAdapter( RoomAdapter.ItemClickListener itemClickListener){
-        this.mItemClickListener = itemClickListener;
-    }
 
     public void setData(List<Room> list){
         this.mListroom = list;
@@ -36,7 +32,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     @Override
     public RoomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_row_item, parent,false);
-        return new RoomViewHolder(view,mItemClickListener);
+        return new RoomViewHolder(view);
     }
     public interface ItemClickListener{
         void onItemClick(int position);
@@ -62,19 +58,19 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         private TextView tv_address,tv_cost,tv_distance;
         private ImageView imgHome;
 
-        public RoomViewHolder(@NonNull View itemView, RoomAdapter.ItemClickListener itemClickListener) {
+        public RoomViewHolder(@NonNull View itemView) {
             super(itemView);
            imgHome = itemView.findViewById(R.id.imageHome);
             tv_address = itemView.findViewById(R.id.tv_address);
             tv_cost = itemView.findViewById(R.id.tv_cost);
             tv_distance = itemView.findViewById(R.id.tv_distance);
             // ToDo set action for item
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    itemClickListener.onItemClick(getAdapterPosition());
-                }
-            });
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    itemClickListener.onItemClick(getAdapterPosition());
+//                }
+//            });
         }
     }
 

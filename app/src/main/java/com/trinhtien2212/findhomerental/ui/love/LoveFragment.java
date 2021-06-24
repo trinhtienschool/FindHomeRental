@@ -80,7 +80,7 @@ public class LoveFragment extends Fragment implements RoomsResult, StatusResult 
     //Load data
     private void setFirstData(){
         //Todo FirebaseAuth.getInstance().getCurrentUser().getUid()
-        bookmarkPresenter.getAllBookmarks("At137YkMB7OXy99UzZINGbVExY72");
+        bookmarkPresenter.getAllBookmarks(FirebaseAuth.getInstance().getCurrentUser().getUid());
         //ToDo
 //        bookmarkPresenter.getAllBookmarks();
 //        RoomDB roomDB = RoomDB.getInstance();
@@ -188,7 +188,7 @@ public class LoveFragment extends Fragment implements RoomsResult, StatusResult 
                     public void onClick(View v) {
                         dialog.dismiss();
                         room_pending_delete = position;
-                        bookmarkPresenter.removeRoom(mListRoom.get(position).getRoomID(),"At137YkMB7OXy99UzZINGbVExY72");
+                        bookmarkPresenter.removeRoom(mListRoom.get(position).getRoomID(),FirebaseAuth.getInstance().getCurrentUser().getUid());
 
                     }
                 });

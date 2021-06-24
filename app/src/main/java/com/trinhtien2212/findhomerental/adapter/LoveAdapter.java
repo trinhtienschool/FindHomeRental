@@ -19,13 +19,14 @@ import java.util.List;
 
 public class LoveAdapter extends RecyclerView.Adapter<LoveAdapter.RoomViewHolder>{
     private List<Room> mListroom;
-    private OnItemClickListener mListener;
+    private OnItemClickListener mListener; // item click
 
+    // item click
     public interface OnItemClickListener{
         void onItemClick(int positon);
         void onDeleteClick(int position);
     }
-
+    // item click
     public void setOnItemClickListener(OnItemClickListener listener){
         mListener = listener;
     }
