@@ -57,7 +57,9 @@ public class RoomListActivity extends AppCompatActivity implements IGetMyLocatio
     private Button btnThoat;
     private Button btnXoa;
     private Button btngui;
-    private  Dialog dialog;
+
+    private  Dialog dialogreport;
+
     private TextView txtReportInfo;
     private TextView txtRoomInfo;
     private RoomPresenter roomPresenter;
@@ -96,7 +98,7 @@ public class RoomListActivity extends AppCompatActivity implements IGetMyLocatio
     @Override
     protected void onStart() {
         super.onStart();
-        dialog = new Dialog(getApplicationContext());
+        dialogreport = new Dialog(getApplicationContext());
     }
 
     private void setFirstData() {
@@ -128,7 +130,7 @@ public class RoomListActivity extends AppCompatActivity implements IGetMyLocatio
                 roomPresenter.deleteRoom();
                 //ToDo Nhuan
                 //startdialog
-                Dialog dialog = new Dialog(getApplicationContext());
+                Dialog dialog = new Dialog(RoomListActivity.this);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.warning);
                 Window window=dialog.getWindow();
@@ -168,15 +170,21 @@ public class RoomListActivity extends AppCompatActivity implements IGetMyLocatio
                 // Todo REPORT
                 Room room = mListRoom.get(position);
                 String roomInfo=room.getDescription();
-                txtRoomInfo=(TextView)findViewById(R.id.roominfo);
-                txtReportInfo=(TextView) findViewById(R.id.reportinfo);
-                txtRoomInfo.setText(roomInfo);
-                String reportinfo=txtReportInfo.getText().toString();
+
                 //Todo Nhuan
                 //startdialog
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.warning);
-                Window window=dialog.getWindow();
+                dialogreport = new Dialog(RoomListActivity.this);
+                dialogreport.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialogreport.setContentView(R.layout.report);
+                txtRoomInfo=dialogreport.findViewById(R.id.roominfo);
+                txtReportInfo=dialogreport.findViewById(R.id.reportinfo);
+                txtRoomInfo.setText(roomInfo);
+                String reportinfo=txtReportInfo.getText().toString();
+                int width = (int)(getResources().getDisplayMetrics().widthPixels*0.90);
+                int height = (int)(getResources().getDisplayMetrics().heightPixels*0.90);
+
+                dialogreport.getWindow().setLayout(width, height);
+                Window window=dialogreport.getWindow();
                 if(window==null){
                     return;
                 }
@@ -185,6 +193,7 @@ public class RoomListActivity extends AppCompatActivity implements IGetMyLocatio
                 WindowManager.LayoutParams windowatribute=window.getAttributes();
                 windowatribute.gravity= Gravity.CENTER;
                 window.setAttributes(windowatribute);
+                btngui=dialogreport.findViewById(R.id.btnGui);
                 btngui.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -193,7 +202,7 @@ public class RoomListActivity extends AppCompatActivity implements IGetMyLocatio
                     }
                 });
 
-                dialog.show();
+                dialogreport.show();
                 //enddialog
 
 
@@ -270,7 +279,7 @@ public class RoomListActivity extends AppCompatActivity implements IGetMyLocatio
         //Todo Nhuan
         if (isShowDialogReport) {
             isShowDialogReport = false;
-            dialog.dismiss();
+            dialogreport.dismiss();
             //dismiss here
         }else {
             Toast.makeText(RoomListActivity.this, "Thành công", Toast.LENGTH_LONG).show();
