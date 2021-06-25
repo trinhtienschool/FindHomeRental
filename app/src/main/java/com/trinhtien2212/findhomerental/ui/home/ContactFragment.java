@@ -22,7 +22,7 @@ public class ContactFragment extends Fragment {
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.fragment_contact, container, false);
         //Todo Hang
-        textZalo=view.findViewById(R.id.text_zalo);
+//        textZalo=view.findViewById(R.id.text_zalo);
         mainActivity = (MainActivity) getActivity();
 
 

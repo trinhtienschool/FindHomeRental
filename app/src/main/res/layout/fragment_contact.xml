@@ -37,7 +37,7 @@
                     android:id="@+id/slider"
                     android:layout_width="match_parent"
                     android:layout_height="210dp"
-                    android:src="@drawable/my_tam"
+                    android:src="@drawable/home"
 
 
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -55,7 +55,7 @@
 
                     <ImageView
                         android:id="@+id/image_phone"
-                        android:src="@drawable/phone_call"
+                        android:src="@drawable/home"
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
 
                     <ImageView
                         android:id="@+id/image_phone2"
-                        android:src="@drawable/phone_call"
+                        android:src="@drawable/home"
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -126,7 +126,7 @@
 
                     <ImageView
                         android:id="@+id/image_zalo"
-                        android:src="@drawable/facebook"
+                        android:src="@drawable/home"
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
