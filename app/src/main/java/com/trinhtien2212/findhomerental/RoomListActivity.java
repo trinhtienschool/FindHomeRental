@@ -304,6 +304,7 @@ public class RoomListActivity extends AppCompatActivity implements IGetMyLocatio
             mListRoom.remove(room_pending_delete);
             adapter.notifyDataSetChanged();
         }
+
     }
 
     @Override
