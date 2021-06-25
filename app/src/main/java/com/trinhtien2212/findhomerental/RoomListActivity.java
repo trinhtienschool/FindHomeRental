@@ -71,6 +71,8 @@ public class RoomListActivity extends AppCompatActivity implements IGetMyLocatio
     private boolean isResultSearch = false;
     private boolean isResultFilter = false;
     private boolean isResultSort = false;
+    private boolean isDeleting = false;
+    private boolean isNoting = false;
     private FrameLayout frameLayout;
     private RealtimeBlurView realtimeBlurView;
     private ProgressBar pb_waiting;
@@ -127,7 +129,7 @@ public class RoomListActivity extends AppCompatActivity implements IGetMyLocatio
                 Log.e("RoomID",room.getRoomID());
                 room_pending_delete = position;
                 roomPresenter.setRoom(room);
-                roomPresenter.deleteRoom();
+
                 //ToDo Nhuan
                 //startdialog
                 Dialog dialog = new Dialog(RoomListActivity.this);
@@ -153,6 +155,8 @@ public class RoomListActivity extends AppCompatActivity implements IGetMyLocatio
                 btnXoa.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        isDeleting =true;
+                        Toast.makeText(RoomListActivity.this,"Đang xóa...",Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                         roomPresenter.deleteRoom();
 
@@ -179,7 +183,7 @@ public class RoomListActivity extends AppCompatActivity implements IGetMyLocatio
                 txtRoomInfo=dialogreport.findViewById(R.id.roominfo);
                 txtReportInfo=dialogreport.findViewById(R.id.reportinfo);
                 txtRoomInfo.setText(roomInfo);
-                String reportinfo=txtReportInfo.getText().toString();
+
                 int width = (int)(getResources().getDisplayMetrics().widthPixels*0.90);
                 int height = (int)(getResources().getDisplayMetrics().heightPixels*0.90);
 
@@ -197,7 +201,13 @@ public class RoomListActivity extends AppCompatActivity implements IGetMyLocatio
                 btngui.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Notification notification = new Notification(room.getAddress(), reportinfo, FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        isNoting = true;
+                        Toast.makeText(RoomListActivity.this,"Đang gửi...",Toast.LENGTH_LONG).show();
+                        String reportinfo=txtReportInfo.getText().toString();
+                        Log.e("ReportInfo",reportinfo);
+                        Log.e("RoomID",room.getRoomID());
+                        Log.e("UserId",room.getUserCreatedId());
+                        Notification notification = new Notification(room.getAddress(), reportinfo,room.getUserCreatedId());
                         notificationPresenter.addNotification(notification);
                     }
                 });
@@ -223,14 +233,14 @@ public class RoomListActivity extends AppCompatActivity implements IGetMyLocatio
         recyclerView.addOnScrollListener(new PaginationScrollListener(linearLayoutManager) {
             @Override
             public void loadMoreItems() {
-                isLoading = true;
-                progressBar.setVisibility(View.VISIBLE);
-                currentPage += 1;
-                if(isResultSearch){
-                    getListRoom();
-                }else if(isResultFilter){
-
-                }
+//                isLoading = true;
+//                progressBar.setVisibility(View.VISIBLE);
+//                currentPage += 1;
+//                if(isResultSearch){
+//                    getListRoom();
+//                }else if(isResultFilter){
+//
+//                }
 
 //                loadNextPage();
 
@@ -267,6 +277,7 @@ public class RoomListActivity extends AppCompatActivity implements IGetMyLocatio
     public void returnRooms(List<Room> rooms) {
         mListRoom = rooms;
         adapter.setData(mListRoom);
+       showWaiting(View.INVISIBLE);
     }
 
     @Override
@@ -277,11 +288,18 @@ public class RoomListActivity extends AppCompatActivity implements IGetMyLocatio
     @Override
     public void onSuccess() {
         //Todo Nhuan
+        Log.e("onSucccccccccc","Co vao");
         if (isShowDialogReport) {
             isShowDialogReport = false;
             dialogreport.dismiss();
             //dismiss here
-        }else {
+        }else if(isNoting){
+            isNoting = false;
+            Toast.makeText(RoomListActivity.this,"Thành công",Toast.LENGTH_LONG).show();
+        }
+
+        else if(isDeleting){
+            isDeleting  = false;
             Toast.makeText(RoomListActivity.this, "Thành công", Toast.LENGTH_LONG).show();
             mListRoom.remove(room_pending_delete);
             adapter.notifyDataSetChanged();

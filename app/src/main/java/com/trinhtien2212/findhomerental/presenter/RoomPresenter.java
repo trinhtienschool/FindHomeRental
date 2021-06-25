@@ -135,10 +135,10 @@ public class RoomPresenter implements StatusResult, RoomsResult {
     }
     @Override
     public void returnRooms(List<Room> rooms) {
-        for(Room room: rooms){
-            Log.e("Room",room.toString());
-        }
-//        roomsResult.returnRooms(rooms);
+//        for(Room room: rooms){
+//            Log.e("Room",room.toString());
+//        }
+        roomsResult.returnRooms(rooms);
 
     }
 
