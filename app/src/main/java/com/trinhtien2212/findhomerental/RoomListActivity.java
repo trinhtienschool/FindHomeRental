@@ -102,7 +102,7 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
                 // Todo DELETE
                 Room room = mListRoom.get(position);
                 room_pending_delete = position;
-                roomPresenter = new RoomPresenter(RoomListActivity.this, RoomListActivity.this);
+                roomPresenter.setRoom(room);
                 //ToDo Nhuan
                 //startdialog
                 Dialog dialog = new Dialog(getApplicationContext());

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.trinhtien2212.findhomerental.R;
 import com.trinhtien2212.findhomerental.model.User;
+import com.trinhtien2212.findhomerental.ui.Util;
 
 import java.util.List;
 
@@ -48,7 +49,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         holder.txtName.setText(User.getDisplayName());
         holder.txtEmail.setText(User.getEmail());
 //        ToDo
-//        holder.imgHome.setImageResource(User.getImg());
+//        holder.imgUser.setImageResource(User.getPhotoUrl());
+        Util.setImage(holder.imgUser,User.getPhotoUrl());
     }
 
     @Override

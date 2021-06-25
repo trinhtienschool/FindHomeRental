@@ -3,6 +3,7 @@ package com.trinhtien2212.findhomerental;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -22,6 +23,7 @@ import com.trinhtien2212.findhomerental.presenter.UserManagerPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class UserListActivity extends AppCompatActivity implements StatusResult, IUserResult {
     private RecyclerView recyclerView;
@@ -48,6 +50,7 @@ public class UserListActivity extends AppCompatActivity implements StatusResult,
 
         assign();
         buildRecyclerView();
+        actionItemRecyclerView();
         setFirstData();
     }
 
@@ -56,6 +59,7 @@ public class UserListActivity extends AppCompatActivity implements StatusResult,
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(userAdapter);
+
     }
 
     private void assign() {
@@ -103,6 +107,7 @@ public class UserListActivity extends AppCompatActivity implements StatusResult,
             @Override
             public void onDeleteClick(int position) {
                 // Todo DELETE
+                Log.e("UserListActivity",position+"");
             }
         });
     }
