@@ -33,6 +33,7 @@ import com.trinhtien2212.findhomerental.presenter.IUserResult;
 import com.trinhtien2212.findhomerental.presenter.NotificationPresenter;
 import com.trinhtien2212.findhomerental.presenter.NotificationResult;
 import com.trinhtien2212.findhomerental.presenter.RoomPresenter;
+import com.trinhtien2212.findhomerental.presenter.RoomsResult;
 import com.trinhtien2212.findhomerental.presenter.StatusResult;
 import com.trinhtien2212.findhomerental.presenter.UserManagerPresenter;
 import com.trinhtien2212.findhomerental.ui.Util;
@@ -137,6 +138,11 @@ public class MainActivity extends AppCompatActivity implements IUserResult, Stat
         //updateRoom
 //        RoomDB_Test roomDB = RoomDB_Test.getInstance();
 //        roomDB.getRandomRooms(null);
+
+
+        //Test filter admin
+//        RoomPresenter roomPresenter = new RoomPresenter((RoomsResult) null);
+//        roomPresenter.filterRoom(0,5);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);

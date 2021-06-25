@@ -9,6 +9,8 @@ import com.trinhtien2212.findhomerental.model.Location;
 import com.trinhtien2212.findhomerental.model.Room;
 import com.trinhtien2212.findhomerental.ui.add_room.AddRoomActivity;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class RoomPresenter implements StatusResult, RoomsResult {
@@ -17,6 +19,11 @@ public class RoomPresenter implements StatusResult, RoomsResult {
     Room room;
     RoomsResult roomsResult;
     StatusResult statusResult;
+    private int startPrice=1000000, endPrice=1200000;
+    private int rangePrice = 100000;
+    private boolean isLoading = false;
+    private Date startDate,endDate;
+
     public RoomPresenter(RoomsResult roomsResult) {
 //        this.addRoomActivity = addRoomActivity;
         this.roomsResult = roomsResult;
@@ -109,9 +116,30 @@ public class RoomPresenter implements StatusResult, RoomsResult {
         this.statusResult = statusResult;
     }
 
+    public void sortRoom(boolean isASC){
+        endPrice = startPrice+rangePrice;
+        roomDB.getRoomForSort(this,isASC,startPrice,endPrice);
+        startPrice = endPrice;
+    }
+    public void filterRoom(int month_start,int month_end){
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH,-month_end);
+        Date start = calendar.getTime();
+        calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH,-month_start);
+        Date end = calendar.getTime();
+        Log.e("dateStart",start.toString());
+        Log.e("dateEnd",end.toString());
+        roomDB.filterByDateCreated(this,start,end);
+
+    }
     @Override
     public void returnRooms(List<Room> rooms) {
-        roomsResult.returnRooms(rooms);
+        for(Room room: rooms){
+            Log.e("Room",room.toString());
+        }
+//        roomsResult.returnRooms(rooms);
+
     }
 
 

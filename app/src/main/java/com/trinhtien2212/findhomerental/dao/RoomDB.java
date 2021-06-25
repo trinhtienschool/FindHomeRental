@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -27,7 +28,9 @@ import com.trinhtien2212.findhomerental.presenter.RoomsResult;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +57,82 @@ public class RoomDB extends ConnectDB {
         }
         return instance;
     }
+    //Sort by price and limit form start to end
+    public void getRoomForSort(RoomsResult roomsResult,boolean isASC, int start,int end){
+        List<Room>rooms = new ArrayList<Room>();
+
+        Query query = this.db.collection("rooms").whereGreaterThan("cost",start).whereLessThanOrEqualTo("cost",end);
+
+        if(isASC) query = query.orderBy("cost", Query.Direction.ASCENDING);
+        else query = query.orderBy("cost", Query.Direction.DESCENDING);
+
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    if(!task.getResult().isEmpty()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Room room = new Room();
+                            room.setRoom(document);
+                            if(!room.isDeleted()) {
+                                rooms.add(room);
+                            }
+                            Log.e("Room", room.toString());
+
+                            Log.d("Room", document.getId() + " => " + document.getData());
+                        }
+                        //ToDo
+                        getImagesOfRoom(rooms, -1, roomsResult);
+                    }else{
+                        roomsResult.returnRooms(null);
+                    }
+                } else {
+                    roomsResult.returnRooms(null);
+                    Log.d("Error", "Error getting documents: ", task.getException());
+                }
+            }
+        });
+    }
+
+    //Filter by dateCreated
+    public void filterByDateCreated(RoomsResult roomsResult, Date start, Date end){
+        List<Room>rooms = new ArrayList<Room>();
+        Query query = this.db.collection("rooms").whereGreaterThan("dateCreated",start).whereLessThanOrEqualTo("dateCreated",end);
+
+        query = query.orderBy("dateCreated", Query.Direction.ASCENDING);
+
+
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    if(!task.getResult().isEmpty()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Room room = new Room();
+                            room.setRoom(document);
+                            if(!room.isDeleted()) {
+                                rooms.add(room);
+                            }
+                            Log.e("Room", room.toString());
+
+                            Log.d("Room", document.getId() + " => " + document.getData());
+                        }
+                        //ToDo
+                        getImagesOfRoom(rooms, -1, roomsResult);
+                    }else{
+                        roomsResult.returnRooms(null);
+                    }
+                } else {
+                    roomsResult.returnRooms(null);
+                    Log.d("Error", "Error getting documents: ", task.getException());
+                }
+            }
+        });
+    }
+
+    //getNotificationOfOneRoom
+
+
     public void addRoom(Room room, RoomPresenter roomPresenter) {
         Log.e("Dang vo addRoom", "Dang vo addroom");
 

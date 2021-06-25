@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.mmin18.widget.RealtimeBlurView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.trinhtien2212.findhomerental.adapter.RoomAdminAdapter;
 import com.trinhtien2212.findhomerental.model.Notification;
@@ -36,11 +38,13 @@ import com.trinhtien2212.findhomerental.presenter.RoomsResult;
 import com.trinhtien2212.findhomerental.presenter.SearchPresenter;
 import com.trinhtien2212.findhomerental.presenter.StatusResult;
 import com.trinhtien2212.findhomerental.ui.PaginationScrollListener;
+import com.trinhtien2212.findhomerental.ui.Util;
+import com.trinhtien2212.findhomerental.ui.home.IGetMyLocation;
 import com.trinhtien2212.findhomerental.ui.home.RoomDetail;
 
 import java.util.List;
 
-public class RoomListActivity extends AppCompatActivity implements RoomsResult, StatusResult, PopupMenu.OnMenuItemClickListener {
+public class RoomListActivity extends AppCompatActivity implements IGetMyLocation, RoomsResult, StatusResult, PopupMenu.OnMenuItemClickListener {
     private RecyclerView recyclerView;
     private RoomAdminAdapter adapter;
     private List<Room> mListRoom;
@@ -53,7 +57,7 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
     private Button btnThoat;
     private Button btnXoa;
     private Button btngui;
-    private  Dialog dialog = new Dialog(getApplicationContext());
+    private  Dialog dialog;
     private TextView txtReportInfo;
     private TextView txtRoomInfo;
     private RoomPresenter roomPresenter;
@@ -62,7 +66,12 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
     private boolean isLoading, isLastPage;
     private int currentPage = 1, totalPage = 2;
     private boolean isShowDialogReport;
-
+    private boolean isResultSearch = false;
+    private boolean isResultFilter = false;
+    private boolean isResultSort = false;
+    private FrameLayout frameLayout;
+    private RealtimeBlurView realtimeBlurView;
+    private ProgressBar pb_waiting;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,15 +81,23 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
 
         notificationPresenter = new NotificationPresenter(this);
         isShowDialogReport = false;
-
+        realtimeBlurView = findViewById(R.id.realtimeBlurView);
+        pb_waiting = findViewById(R.id.pb_waiting);
         assert getSupportActionBar() != null;   //null check
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);   //show back button
         assign();
+        frameLayout = findViewById(R.id.activity_room_list_frame);
         buildRecyclerView();
         actionItemRecyclerView();
         setFirstData();
+        searchPresenter = new SearchPresenter(this);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        dialog = new Dialog(getApplicationContext());
+    }
 
     private void setFirstData() {
         roomPresenter.getRandomRooms();
@@ -105,8 +122,10 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
             public void onDeleteClick(int position) {
                 // Todo DELETE
                 Room room = mListRoom.get(position);
+                Log.e("RoomID",room.getRoomID());
                 room_pending_delete = position;
                 roomPresenter.setRoom(room);
+                roomPresenter.deleteRoom();
                 //ToDo Nhuan
                 //startdialog
                 Dialog dialog = new Dialog(getApplicationContext());
@@ -192,6 +211,42 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
+        recyclerView.addOnScrollListener(new PaginationScrollListener(linearLayoutManager) {
+            @Override
+            public void loadMoreItems() {
+                isLoading = true;
+                progressBar.setVisibility(View.VISIBLE);
+                currentPage += 1;
+                if(isResultSearch){
+                    getListRoom();
+                }else if(isResultFilter){
+
+                }
+
+//                loadNextPage();
+
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+
+            @Override
+            public boolean isLastPage() {
+                return isLastPage;
+            }
+        });
+    }
+    private void getListRoom(){
+        searchPresenter.getNext();
+    }
+    //Load data
+    private void search(String address){
+        if(Util.checkNetwork(this,this)) {
+            searchPresenter.searchLocation(address);
+            showWaiting(View.VISIBLE);
+        }else showWaiting(View.INVISIBLE);
     }
 
     private void assign() {
@@ -217,11 +272,11 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
             isShowDialogReport = false;
             dialog.dismiss();
             //dismiss here
+        }else {
+            Toast.makeText(RoomListActivity.this, "Thành công", Toast.LENGTH_LONG).show();
+            mListRoom.remove(room_pending_delete);
+            adapter.notifyDataSetChanged();
         }
-
-        Toast.makeText(RoomListActivity.this, "Thành công", Toast.LENGTH_LONG).show();
-        mListRoom.remove(room_pending_delete);
-        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -237,14 +292,15 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                adapter.getFilter().filter(query);
-                return false;
+//                adapter.getFilter().filter(query);
+                search(query);
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
-                return false;
+//                adapter.getFilter().filter(newText);
+                return true;
             }
         });
         return true;
@@ -279,29 +335,69 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.filter_3000:
-                Toast.makeText(this, "Lọc theo 500m", Toast.LENGTH_SHORT).show();
+            case R.id.filter_1month:
+                Toast.makeText(this, "Lọc theo < 1 tháng", Toast.LENGTH_SHORT).show();
+                    roomPresenter.filterRoom(0,1);
+                    isResultSearch = false;
+                    isResultSort = false;
+                    isResultFilter = true;
+                    showWaiting(View.VISIBLE);
                 return true;
-            case R.id.filter_5000:
-                Toast.makeText(this, "Lọc theo 1000m", Toast.LENGTH_SHORT).show();
+            case R.id.filter_1_3_month:
+                Toast.makeText(this, "Lọc theo từ 1 đến 3 tháng", Toast.LENGTH_SHORT).show();
+                roomPresenter.filterRoom(1,3);
+                isResultSearch = false;
+                isResultSort = false;
+                isResultFilter = true;
+                showWaiting(View.VISIBLE);
                 return true;
-            case R.id.filter_M5000:
-                Toast.makeText(this, "Lọc theo 1500m", Toast.LENGTH_SHORT).show();
+            case R.id.filter_3month:
+                Toast.makeText(this, "Lọc theo lớn hơn 3 tháng", Toast.LENGTH_SHORT).show();
+                roomPresenter.filterRoom(3,6);
+                isResultSearch = false;
+                isResultSort = false;
+                isResultFilter = true;
+                showWaiting(View.VISIBLE);
                 return true;
             case R.id.item_distance_increase:
                 Toast.makeText(this, "Sắp xếp theo giá tăng dần", Toast.LENGTH_SHORT).show();
+                roomPresenter.sortRoom(true);
+                isResultSearch = false;
+                isResultSort = true;
+                isResultFilter = false;
+                showWaiting(View.VISIBLE);
                 return true;
             case R.id.item_distance_decrease:
                 Toast.makeText(this, "Sắp xếp theo giá giảm dần", Toast.LENGTH_SHORT).show();
+                roomPresenter.sortRoom(false);
+                isResultSearch = false;
+                isResultSort = true;
+                isResultFilter = false;
+                showWaiting(View.VISIBLE);
                 return true;
             default:
                 return false;
         }
     }
+
     // back
     @Override
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    @Override
+    public void returnMyLocation(String location) {
+
+    }
+
+    @Override
+    public void showSnackbar(String message) {
+        Util.showSnackbar(frameLayout,message);
+    }
+    private void showWaiting(int waiting){
+        realtimeBlurView.setVisibility(waiting);
+        pb_waiting.setVisibility(waiting);
     }
 }

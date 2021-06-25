@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
@@ -27,11 +28,12 @@ import com.trinhtien2212.findhomerental.model.Room;
 import com.trinhtien2212.findhomerental.presenter.RoomsResult;
 import com.trinhtien2212.findhomerental.presenter.SearchPresenter;
 import com.trinhtien2212.findhomerental.ui.PaginationScrollListener;
+import com.trinhtien2212.findhomerental.ui.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchActivity extends AppCompatActivity implements RoomAdapter.ItemClickListener, RoomsResult, PopupMenu.OnMenuItemClickListener, androidx.appcompat.widget.PopupMenu.OnMenuItemClickListener {
+public class SearchActivity extends AppCompatActivity implements IGetMyLocation, RoomAdapter.ItemClickListener, RoomsResult, PopupMenu.OnMenuItemClickListener, androidx.appcompat.widget.PopupMenu.OnMenuItemClickListener {
     private RecyclerView recyclerView;
     private RoomAdapter roomAdapter;
     private List<Room> mListlist;
@@ -43,12 +45,15 @@ public class SearchActivity extends AppCompatActivity implements RoomAdapter.Ite
     private ProgressBar pb_waiting;
     private boolean isLoading, isLastPage;
     private int currentPage=1, totalPage=2;
-    SearchPresenter searchPresenter;
+    private SearchPresenter searchPresenter;
+    private FrameLayout frameLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        frameLayout = findViewById(R.id.activity_search_frame);
         recyclerView = findViewById(R.id.recycler_view_room);
         progressBar = findViewById(R.id.progress_bar);
         btnFilter = findViewById(R.id.ImgButtonFilter);
@@ -90,7 +95,13 @@ public class SearchActivity extends AppCompatActivity implements RoomAdapter.Ite
         pb_waiting = findViewById(R.id.pb_waiting);
 
     }
-
+    //Load data
+    private void search(String address){
+        if(Util.checkNetwork(this,this)) {
+            searchPresenter.searchLocation(address);
+            showWaiting(View.VISIBLE);
+        }else showWaiting(View.INVISIBLE);
+    }
 //    private void loadNextPage() {
 //        Handler handler = new Handler();
 //        handler.postDelayed(new Runnable() {
@@ -109,11 +120,7 @@ public class SearchActivity extends AppCompatActivity implements RoomAdapter.Ite
 //        }, 2000);
 //    }
 
-    //Load data
-    private void search(String address){
-        searchPresenter.searchLocation(address);
-//        showWaiting(View.VISIBLE);
-    }
+
     private void getListRoom(){
        searchPresenter.getNext();
     }
@@ -227,5 +234,15 @@ public class SearchActivity extends AppCompatActivity implements RoomAdapter.Ite
         Intent intent = new Intent(this, RoomDetail.class);
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    @Override
+    public void returnMyLocation(String location) {
+
+    }
+
+    @Override
+    public void showSnackbar(String message) {
+        Util.showSnackbar(frameLayout,message);
     }
 }

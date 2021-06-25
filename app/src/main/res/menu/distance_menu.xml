@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/filter_3000"
-        android:title="3000m"/>
-    <item android:id="@+id/filter_5000"
-        android:title="5000m"/>
-    <item android:id="@+id/filter_M5000"
-        android:title=">5000m"/>
+    <item android:id="@+id/filter_1month"
+        android:title="nhỏ hơn 1 tháng"/>
+    <item android:id="@+id/filter_1_3_month"
+        android:title="1 đến 3 tháng"/>
+    <item android:id="@+id/filter_3month"
+        android:title="lớn hơn 3 tháng"/>
 </menu>
