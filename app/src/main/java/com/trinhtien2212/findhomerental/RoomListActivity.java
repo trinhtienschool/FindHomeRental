@@ -224,11 +224,12 @@ public class RoomListActivity extends AppCompatActivity implements RoomsResult, 
             isShowDialogReport = false;
             dialogreport.dismiss();
             //dismiss here
+        }else {
+            Toast.makeText(RoomListActivity.this, "Thành công", Toast.LENGTH_LONG).show();
+            mListRoom.remove(room_pending_delete);
+            adapter.notifyDataSetChanged();
         }
 
-        Toast.makeText(RoomListActivity.this, "Thành công", Toast.LENGTH_LONG).show();
-        mListRoom.remove(room_pending_delete);
-        adapter.notifyDataSetChanged();
     }
 
     @Override
