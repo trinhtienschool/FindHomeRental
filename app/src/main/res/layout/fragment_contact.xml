@@ -37,7 +37,7 @@
                     android:id="@+id/slider"
                     android:layout_width="match_parent"
                     android:layout_height="210dp"
-                    android:src="@drawable/home"
+                    android:src="@drawable/house"
 
 
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -55,14 +55,14 @@
 
                     <ImageView
                         android:id="@+id/image_phone"
-                        android:src="@drawable/home"
-
                         android:layout_width="wrap_content"
+
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
                         android:layout_marginTop="0dp"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
+                        android:src="@drawable/phone_call"
                         android:text="Giá:"
                         android:textColor="@color/black"
                         android:textSize="18dp">
@@ -79,7 +79,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="0dp"
                         android:layout_toRightOf="@+id/image_phone"
-                        android:text="0888243741"
+                        android:text="0987654321"
                         android:textColor="@color/black"
                         android:textSize="18dp"></TextView>
                 </RelativeLayout>
@@ -91,7 +91,7 @@
 
                     <ImageView
                         android:id="@+id/image_phone2"
-                        android:src="@drawable/home"
+                        android:src="@drawable/phone_call"
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -114,7 +114,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="0dp"
                         android:layout_toRightOf="@+id/image_phone2"
-                        android:text="0332089063"
+                        android:text="0332089065"
                         android:textColor="@color/black"
                         android:textSize="18dp"></TextView>
                 </RelativeLayout>
@@ -126,7 +126,7 @@
 
                     <ImageView
                         android:id="@+id/image_zalo"
-                        android:src="@drawable/home"
+                        android:src="@drawable/facebook"
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -149,8 +149,8 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="0dp"
                         android:layout_toRightOf="@+id/image_zalo"
-                        android:text="https://www.facebook.com/mytam.info"
-                        android:textColor="#D2AF00"
+                        android:text="NongLamUniversity"
+                        android:textColor="@color/black"
                         android:textSize="18dp"></TextView>
                 </RelativeLayout>
 
@@ -187,7 +187,7 @@
                         android:layout_marginTop="0dp"
                         android:layout_toRightOf="@+id/image_gmail"
                         android:text="18130068@st.hcmuaf.edu.vn"
-                        android:textColor="#D2AF00"
+                        android:textColor="@color/black"
                         android:textSize="18dp"></TextView>
                 </RelativeLayout>
 
