@@ -88,7 +88,12 @@ public class RoomAdminAdapter extends RecyclerView.Adapter<RoomAdminAdapter.Room
         }
         Util.setImage(holder.imgHome,room.getImages().get(0));
         Log.e("RoomAdminAdap","DANG VAO bindView");
-        holder.txtAddress.setText(room.getAddress());
+        // Todo address
+        String address = room.getAddress();
+        if(address.length() >= 40){
+            address = address.substring(0,40) + "...";
+        }
+        holder.txtAddress.setText(address);
         holder.tv_cost.setText("Giá thuê 1 tháng: "+Util.formatCurrency(room.getCost()));
         Log.e("RoomAdminAdap","DANG VAO da qua getCost"+Util.formatCurrency(room.getCost())+" : "+Util.formateDate(room.getDateCreated()));
         Log.e("RoomDate",room.getDateCreated().toString());

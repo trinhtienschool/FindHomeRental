@@ -55,8 +55,12 @@ public class MyRoomAdapter extends RecyclerView.Adapter<MyRoomAdapter.RoomViewHo
         else Util.setImage(holder.imgHome,room.getImages().get(0));
 
         holder.txtPrice.setText(Util.formatCurrency(room.getCost()));
-        holder.txtAddress.setText(room.getAddress());
-//        ToDo
+//        ToDo address
+        String address = room.getAddress();
+        if(address.length() > 40){
+            address = address.substring(0,40) + "...";
+        }
+        holder.txtAddress.setText(address);
 
     }
 

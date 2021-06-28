@@ -63,7 +63,7 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:background="@color/white"
-                android:onClick="sortPrice"
+                android:onClick="sortDistance"
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_baseline_swap_vert_24"
                 tools:ignore="OnClick" />

@@ -167,23 +167,23 @@ public class SearchActivity extends AppCompatActivity implements StatusResult, I
         popup.inflate(R.menu.distance_menu);
         popup.show();
     }
-    public void sortPrice(View v){
+    public void sortDistance(View v){
         androidx.appcompat.widget.PopupMenu popup = new androidx.appcompat.widget.PopupMenu(this,v);
         popup.setOnMenuItemClickListener(this);
-        popup.inflate(R.menu.price_menu);
+        popup.inflate(R.menu.sort_menu);
         popup.show();
     }
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.item_price_decrease: // ToDo ACTION ITEM
+            case R.id.sort_decrease: // ToDo ACTION ITEM
                 mListlist.clear();
                 searchPresenter.sortDecrease();
                 showWaiting(View.VISIBLE);
                 Toast.makeText(this, "Sắp xếp theo khoảng cách giảm dần", Toast.LENGTH_SHORT).show();
                 return true;
-            case R.id.item_price_increase: // ToDo ACTION ITEM
+            case R.id.sort_increase: // ToDo ACTION ITEM
                 mListlist.clear();
                 searchPresenter.sortIncrease();
                 showWaiting(View.VISIBLE);
