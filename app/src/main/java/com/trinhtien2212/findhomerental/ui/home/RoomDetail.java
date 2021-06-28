@@ -134,7 +134,6 @@ public class RoomDetail extends AppCompatActivity implements StatusResult, Rooms
 
                 }
                 else if(!isLove){
-
                     bookmarkPresenter.addBookmark(room.getRoomID(), FirebaseAuth.getInstance().getCurrentUser().getUid());
                 }
             }

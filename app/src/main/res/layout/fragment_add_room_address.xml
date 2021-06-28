@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.add_room.AddRoomAddressFragment">
+    tools:context=".ui.add_room.AddRoomAddressFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
@@ -19,11 +19,12 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+
             android:text="Địa chỉ"
             android:textColor="#FF9800"
             android:inputType="text"
-            android:textSize="35sp" />
+
+            android:textSize="22sp" />
 
         <EditText
 
@@ -32,13 +33,18 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Tỉnh/Thành phố"
-            android:inputType="text" />
+            android:inputType="none"
+
+
+            android:text="TP. Hồ Chí Minh"
+            android:textSize="18sp" />
 
         <EditText
             android:id="@+id/txt_district"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:textSize="18sp"
             android:hint="Quận/Huyện"
             android:inputType="text" />
 
@@ -47,6 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:textSize="18sp"
             android:hint="Xã/Phường"
             android:inputType="text" />
 
@@ -55,6 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:textSize="18sp"
             android:hint="Đường"
             android:inputType="text" />
 
@@ -63,6 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:textSize="18sp"
             android:hint="Số nhà"
             android:inputType="text" />
 
@@ -71,6 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:textSize="18sp"
             android:hint="Số điện thoại"
             android:inputType="phone" />
 
@@ -79,7 +89,7 @@
             android:layout_width="238dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-
+            android:textSize="16sp"
             android:layout_margin="20dp"
             android:text="Tiếp theo"
             android:textColor="#FFFFFF"
