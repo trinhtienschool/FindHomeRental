@@ -20,8 +20,10 @@ public class SearchPresenter implements StatusResult, RoomsResult {
 
     GetRoomByListRoomIds getRoomByListRoomIds;
     RoomsResult roomsResult;
-    public SearchPresenter(RoomsResult roomsResult){
+    StatusResult statusResult;
+    public SearchPresenter(RoomsResult roomsResult, StatusResult statusResult){
         this.roomsResult = roomsResult;
+        this.statusResult = statusResult;
     }
     public void searchLocation(String address){
         locations = new ArrayList<Location>();
@@ -101,7 +103,8 @@ public class SearchPresenter implements StatusResult, RoomsResult {
 
     @Override
     public void onFail() {
-
+        Log.e("OnFail","Dang vao onFail Search presenter");
+        statusResult.onFail();
     }
 
     @Override

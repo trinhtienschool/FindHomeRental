@@ -58,7 +58,7 @@ public class NotificationDB extends ConnectDB {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     Log.d("GetAllNot", document.getId() + " => " + document.getData());
                                     Notification notification = new Notification();
-                                    notification.setNotification(document.getData());
+                                    notification.setNotification(document);
                                     notifications.add(notification);
                                     Log.e("noti: ", notification.toString());
                                 }

@@ -10,12 +10,14 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -32,6 +34,10 @@ import com.trinhtien2212.findhomerental.ui.home.IGetMyLocation;
 
 import java.io.IOException;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -42,6 +48,15 @@ public class Util {
         double meterAround = (double) Math.round(meter * 10) / 10;
         String dis = meterAround +" m";
         return dis;
+    }
+
+    public static String formateDate(Date date){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return simpleDateFormat.format(date);
+    }
+    public static String formatDateConnectServer(Date date){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return simpleDateFormat.format(date);
     }
     public static  String formatCurrency(int price) {
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
@@ -77,6 +92,7 @@ public class Util {
                 .load(url)
                 .placeholder(R.drawable.image_holder)
                 .error(R.drawable.image_holder)
+                .transform(new PiccassoTranform())
                 .into(ib);
 
     }

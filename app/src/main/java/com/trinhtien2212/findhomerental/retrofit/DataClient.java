@@ -32,4 +32,10 @@ public interface DataClient {
 
     @DELETE("api/delete-user")
     Call<String> deleteUser(@Query("userUid") String userUid);
+
+    @GET("api/get-total-room-filter")
+    Call<String> getTotalRoomFilter(@Query("start") String dateStart, @Query("end") String dateEnd);
+
+    @GET("api/get-total-room-sort")
+    Call<String> getTotalRoomSort();
 }

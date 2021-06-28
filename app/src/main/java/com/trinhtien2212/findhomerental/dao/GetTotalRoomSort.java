@@ -3,29 +3,30 @@ package com.trinhtien2212.findhomerental.dao;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.trinhtien2212.findhomerental.RoomListActivity;
 import com.trinhtien2212.findhomerental.model.Location;
+import com.trinhtien2212.findhomerental.presenter.RoomPresenter;
 import com.trinhtien2212.findhomerental.presenter.SearchPresenter;
 
 import org.json.JSONException;
 
 import retrofit2.Call;
-import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class SearchLocationBehavior extends ConnectServer {
-    private SearchPresenter searchPresenter;
-    public SearchLocationBehavior(SearchPresenter searchPresenter){
-        this.searchPresenter = searchPresenter;
+public class GetTotalRoomSort extends ConnectServer{
+    private RoomPresenter roomPresenter;
+    public GetTotalRoomSort(RoomPresenter roomPresenter){
+        this.roomPresenter = roomPresenter;
     }
     @Override
     public void connectServer(Object object, int action) {
-        if(object instanceof Location) {
-            Log.e("Location search",object.toString());
-            Log.e("action",action+"");
-            Location location = (Location)object;
-            retrofit2.Call<Object> callback = this.dataClient.searchData(location.getAddress(), action);
+
+//            Log.e("Location search",object.toString());
+//            Log.e("action",action+"");
+
+            retrofit2.Call<String> callback = this.dataClient.getTotalRoomSort();
             callback.enqueue(this);
-        }
+
     }
 
     @Override
@@ -34,19 +35,14 @@ public class SearchLocationBehavior extends ConnectServer {
 //        //ToDo
 
         if(response.isSuccessful()){
-            Log.e("TAG", "response 33: "+new Gson().toJson(response.body()) );
-            String json = new Gson().toJson(response.body());
-            try {
-                searchPresenter.parseJson(json);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+           Log.e("Total",response.body().toString());
+            roomPresenter.returnTotalRoom(response.body().toString());
         }
     }
 
     @Override
     public void onFailure(Call call, Throwable t) {
-        searchPresenter.onFail();
+        roomPresenter.onFail();
         Log.e("Error",t.getMessage());
         Log.e("Error",t.toString());
 //        HttpException exception = (HttpException) t;

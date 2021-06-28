@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/sort_increase"
+        android:title="Khoảng cách tăng dần"/>
+    <item android:id="@+id/sort_decrease"
+        android:title="Khoảng cách giảm dần"/>
+</menu>

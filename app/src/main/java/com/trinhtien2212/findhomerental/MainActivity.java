@@ -1,15 +1,19 @@
 package com.trinhtien2212.findhomerental;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mmin18.widget.RealtimeBlurView;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -23,16 +27,19 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.FieldValue;
 import com.trinhtien2212.findhomerental.dao.RoomDB;
 import com.trinhtien2212.findhomerental.dao.RoomDB_Test;
 import com.trinhtien2212.findhomerental.model.Notification;
 import com.trinhtien2212.findhomerental.model.Room;
 import com.trinhtien2212.findhomerental.model.User;
+import com.trinhtien2212.findhomerental.presenter.AdminUserPresenter;
 import com.trinhtien2212.findhomerental.presenter.BookmarkPresenter;
 import com.trinhtien2212.findhomerental.presenter.IUserResult;
 import com.trinhtien2212.findhomerental.presenter.NotificationPresenter;
 import com.trinhtien2212.findhomerental.presenter.NotificationResult;
 import com.trinhtien2212.findhomerental.presenter.RoomPresenter;
+import com.trinhtien2212.findhomerental.presenter.RoomsResult;
 import com.trinhtien2212.findhomerental.presenter.StatusResult;
 import com.trinhtien2212.findhomerental.presenter.UserManagerPresenter;
 import com.trinhtien2212.findhomerental.ui.Util;
@@ -40,6 +47,7 @@ import com.trinhtien2212.findhomerental.ui.add_room.AddRoomActivity;
 import com.trinhtien2212.findhomerental.ui.home.IGetMyLocation;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -53,7 +61,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements IUserResult, StatusResult, IGetMyLocation {
+public class MainActivity extends AppCompatActivity implements StatusResult{
     //Google sign in
     private GoogleSignInClient mGoogleSignInClient;
     private final int RC_SIGN_IN = 12345;
@@ -66,14 +74,19 @@ public class MainActivity extends AppCompatActivity implements IUserResult, Stat
     private MenuItem menuItem;
     private AppBarConfiguration mAppBarConfiguration;
     private NavigationView navigationView;
-
+    private AdminUserPresenter adminUserPresenter;
+    private RealtimeBlurView realtimeBlurView;
+    private ProgressBar pv_saving;
+    private FrameLayout frameLayout;
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Toolbar toolbar = findViewById(R.id.toolbar);
-
+        realtimeBlurView = findViewById(R.id.realtimeBlurView);
+        pv_saving = findViewById(R.id.pb_saving);
+        frameLayout = findViewById(R.id.main_activity_baseView);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -138,6 +151,23 @@ public class MainActivity extends AppCompatActivity implements IUserResult, Stat
 //        RoomDB_Test roomDB = RoomDB_Test.getInstance();
 //        roomDB.getRandomRooms(null);
 
+
+        //Test filter admin
+//        RoomPresenter roomPresenter = new RoomPresenter((RoomsResult) null);
+//        roomPresenter.filterRoom(0,5);
+
+        //Test
+//        RoomDB_Test roomDB_test = RoomDB_Test.getInstance();
+//        roomDB_test.getRandomRooms(null);
+//        Log.e("Da xong","Done");
+//        Date date = roomDB_test.between();
+//        Log.e("Date",date.toString());
+//        Log.e("Day", String.valueOf(date.getDay()));
+//        Log.e("Month", String.valueOf(date.getMonth()));
+//        Log.e("Year",String.valueOf(date.ge));
+
+       adminUserPresenter = AdminUserPresenter.getInstance();
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         hView = navigationView.getHeaderView(0);
@@ -195,6 +225,7 @@ public class MainActivity extends AppCompatActivity implements IUserResult, Stat
         else updateUi(false);
         return true;
     }
+
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -293,8 +324,7 @@ public class MainActivity extends AppCompatActivity implements IUserResult, Stat
 
     private void updateUi(boolean isLogin) {
         if (isLogin) {
-            UserManagerPresenter userManagerPresenter = new UserManagerPresenter(this,this);
-            userManagerPresenter.checkIsAdmin(FirebaseAuth.getInstance().getCurrentUser().getUid());
+            setShowAdmin();
             menuItem.setTitle("Đăng xuất");
             Util.setImage(iv_header_avatar, currentUser.getPhotoUrl().toString());
             tv_header_name.setText(currentUser.getDisplayName());
@@ -313,12 +343,7 @@ public class MainActivity extends AppCompatActivity implements IUserResult, Stat
         Menu nav_Menu = navigationView.getMenu();
         nav_Menu.findItem(R.id.nav_admin).setVisible(show);
     }
-    @Override
-    public void returnUser(List<User> users) {
-        if(users != null){
-            showItemAdmin(true);
-        }
-    }
+
 
 
 
@@ -334,13 +359,18 @@ public class MainActivity extends AppCompatActivity implements IUserResult, Stat
 
     }
 
-    @Override
-    public void returnMyLocation(String location) {
-
+    public void showSnackbar(String message) {
+        Util.showSnackbar(frameLayout,message);
     }
 
-    @Override
-    public void showSnackbar(String message) {
-
+    public void setShowAdmin() {
+        boolean isAdmin = adminUserPresenter.checkIsAdmin(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        if(isAdmin){
+            showItemAdmin(true);
+        }
+    }
+    public void showWaiting(int waiting){
+        realtimeBlurView.setVisibility(waiting);
+        pv_saving.setVisibility(waiting);
     }
 }

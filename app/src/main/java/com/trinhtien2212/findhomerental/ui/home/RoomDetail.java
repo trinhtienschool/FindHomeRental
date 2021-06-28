@@ -100,9 +100,14 @@ public class RoomDetail extends AppCompatActivity implements StatusResult, Rooms
         text_gac_lung = findViewById(R.id.text_gaclung);
         text_tivi = findViewById(R.id.text_tivi);
         Log.e("OnCreateRoomDetail","Dang vao 3");
-
+        iv_love = findViewById(R.id.image_yeu_thich);
         Bundle bundle = getIntent().getExtras();
         room = (Room) bundle.getSerializable("room");
+        String admin = bundle.getString("admin");
+        if(admin != null){
+            Log.e("VisibleLove","CoAn");
+            iv_love.setVisibility(View.GONE);
+        }
         Log.e("imageRoom",room.getImages().toString());
         //slide show
         for(String imageUrl: room.getImages()){
@@ -117,7 +122,7 @@ public class RoomDetail extends AppCompatActivity implements StatusResult, Rooms
 //        }
 
         bookmarkPresenter = new BookmarkPresenter(this,this);
-        iv_love = findViewById(R.id.image_yeu_thich);
+
         iv_love.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

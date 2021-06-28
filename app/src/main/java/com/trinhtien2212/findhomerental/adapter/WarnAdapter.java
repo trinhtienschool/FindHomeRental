@@ -49,11 +49,12 @@ public class WarnAdapter extends RecyclerView.Adapter<WarnAdapter.RoomViewHolder
         }
 //        ToDo
         if(notification.getMessage().length() > 50){
-            holder.txtReport.setText(notification.getMessage().substring(50) + "...");
+            holder.txtReport.setText(notification.getMessage().substring(0,50) + "...");
         } else{
             holder.txtReport.setText(notification.getMessage());
         }
         holder.txtAddress.setText(notification.getAddress());
+        holder.txtDateCreated.setText(Util.formateDate(notification.getDateCreated()));
     }
 
 
@@ -63,14 +64,14 @@ public class WarnAdapter extends RecyclerView.Adapter<WarnAdapter.RoomViewHolder
     }
 
     public class RoomViewHolder extends RecyclerView.ViewHolder{
-        private TextView txtReport, txtAddress;
-        private ImageView imgHome, btnDelete;
+        private TextView txtReport, txtAddress,txtDateCreated;
 
         public RoomViewHolder(@NonNull View itemView, OnItemClickListener listener) {
             super(itemView);
 
             txtAddress = itemView.findViewById(R.id.titleAddress5);
             txtReport = itemView.findViewById(R.id.titleReport);
+            txtDateCreated = itemView.findViewById(R.id.dateCreated);
             // ToDo set action for item
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

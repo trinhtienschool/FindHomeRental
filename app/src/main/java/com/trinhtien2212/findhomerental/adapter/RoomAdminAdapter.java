@@ -1,5 +1,6 @@
 package com.trinhtien2212.findhomerental.adapter;
 
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.trinhtien2212.findhomerental.R;
@@ -77,6 +79,7 @@ public class RoomAdminAdapter extends RecyclerView.Adapter<RoomAdminAdapter.Room
         return new RoomViewHolder(view,mListener);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull RoomViewHolder holder, int position) {
         Room room = mListroom.get(position);
@@ -84,7 +87,18 @@ public class RoomAdminAdapter extends RecyclerView.Adapter<RoomAdminAdapter.Room
             return;
         }
         Util.setImage(holder.imgHome,room.getImages().get(0));
-        holder.txtAddress.setText(room.getAddress());
+        Log.e("RoomAdminAdap","DANG VAO bindView");
+        // Todo address
+        String address = room.getAddress();
+        if(address.length() >= 40){
+            address = address.substring(0,40) + "...";
+        }
+        holder.txtAddress.setText(address);
+        holder.tv_cost.setText("Giá thuê 1 tháng: "+Util.formatCurrency(room.getCost()));
+        Log.e("RoomAdminAdap","DANG VAO da qua getCost"+Util.formatCurrency(room.getCost())+" : "+Util.formateDate(room.getDateCreated()));
+        Log.e("RoomDate",room.getDateCreated().toString());
+        holder.tv_dateCreated.setText("Ngày đăng: "+Util.formateDate(room.getDateCreated()));
+        Log.e("RoomAdminAdap","Da qua bindView");
     }
 
     @Override
@@ -93,17 +107,20 @@ public class RoomAdminAdapter extends RecyclerView.Adapter<RoomAdminAdapter.Room
     }
 
     public class RoomViewHolder extends RecyclerView.ViewHolder{
-        private TextView txtAddress;
+        private TextView txtAddress,tv_cost,tv_dateCreated;
         private ImageView imgHome;
         private ImageButton btnReport, btnDelete;
 
         public RoomViewHolder(@NonNull View itemView, OnItemClickListener listener) {
             super(itemView);
+            Log.e("RoomAdminAdap","DANG VAO khoi tao roomview holder");
             txtAddress = itemView.findViewById(R.id.titleAddress2);
             imgHome = itemView.findViewById(R.id.imageHome);
             btnDelete = itemView.findViewById(R.id.imageButtonDelete);
             btnReport = itemView.findViewById(R.id.imageButtonReport);
-
+            tv_cost = itemView.findViewById(R.id.tv_cost_room_admin);
+            tv_dateCreated = itemView.findViewById(R.id.tv_dateCreated);
+            Log.e("RoomAdminAdap","Da qua khoi tao roomview holder");
             // Todo set action for item
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
