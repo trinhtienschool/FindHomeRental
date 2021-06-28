@@ -36,13 +36,16 @@ import com.trinhtien2212.findhomerental.model.Room;
 import com.trinhtien2212.findhomerental.presenter.RoomPresenter;
 import com.trinhtien2212.findhomerental.presenter.RoomsResult;
 import com.trinhtien2212.findhomerental.presenter.StatusResult;
+import com.trinhtien2212.findhomerental.ui.Util;
 import com.trinhtien2212.findhomerental.ui.add_room.AddRoomActivity;
+import com.trinhtien2212.findhomerental.ui.home.IGetMyLocation;
 import com.trinhtien2212.findhomerental.ui.home.RoomDetail;
+import com.trinhtien2212.findhomerental.ui.love.LoveFragment;
 
 import java.util.List;
 
 
-public class MyRoomFragment extends Fragment implements RoomsResult,StatusResult {
+public class MyRoomFragment extends Fragment implements RoomsResult,StatusResult, IGetMyLocation {
 
     private RecyclerView recyclerView;
     private MyRoomAdapter adapter;
@@ -133,6 +136,7 @@ public class MyRoomFragment extends Fragment implements RoomsResult,StatusResult
             public void onDeleteClick(int position) {
                 // ToDo button DELETE
 //                removeItem(position);
+                if(!Util.checkNetwork(mainActivity, MyRoomFragment.this)) return;
                 Room room = mListRoom.get(position);
                 room_pending_delete = position;
                 //Todo
@@ -177,6 +181,7 @@ public class MyRoomFragment extends Fragment implements RoomsResult,StatusResult
             @Override
             public void onEditClick(int position) {
                 // Todo Button EDIT
+                if(!Util.checkNetwork(mainActivity, MyRoomFragment.this)) return;
                 Room room = mListRoom.get(position);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("room",room);
@@ -199,5 +204,15 @@ public class MyRoomFragment extends Fragment implements RoomsResult,StatusResult
         Toast.makeText(mainActivity,"Thành công",Toast.LENGTH_LONG).show();
         mListRoom.remove(room_pending_delete);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void returnMyLocation(String location) {
+
+    }
+
+    @Override
+    public void showSnackbar(String message) {
+        mainActivity.showSnackbar(message);
     }
 }

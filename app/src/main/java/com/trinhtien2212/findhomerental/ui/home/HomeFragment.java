@@ -35,6 +35,7 @@ import com.trinhtien2212.findhomerental.presenter.RoomsResult;
 import com.trinhtien2212.findhomerental.presenter.SearchPresenter;
 import com.trinhtien2212.findhomerental.ui.PaginationScrollListener;
 import com.trinhtien2212.findhomerental.ui.Util;
+import com.trinhtien2212.findhomerental.ui.myroom.MyRoomFragment;
 
 import java.util.List;
 
@@ -73,6 +74,7 @@ public class HomeFragment extends Fragment implements RoomsResult, RoomHomeAdapt
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!Util.checkNetwork(mainActivity, HomeFragment.this)) return;
                 if(TextUtils.isEmpty(edtSearch.getText().toString())){
                     Toast.makeText(mainActivity, "Bạn chưa nhập thông tin", Toast.LENGTH_LONG).show();
                 } else {
@@ -135,8 +137,10 @@ public class HomeFragment extends Fragment implements RoomsResult, RoomHomeAdapt
         edtSearch = root.findViewById(R.id.EditTextSearch);
 
         btn_my_location.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+                if(!Util.checkNetwork(mainActivity, HomeFragment.this)) return;
                 if(!Util.checkGPS(mainActivity,HomeFragment.this) ||
                         !Util.checkNetwork(mainActivity,HomeFragment.this)) {
                     return;

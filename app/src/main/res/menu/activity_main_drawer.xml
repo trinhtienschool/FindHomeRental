@@ -7,20 +7,12 @@
             android:id="@+id/nav_home"
             android:icon="@drawable/homep"
             android:title="@string/menu_home" />
-        <item
-            android:id="@+id/nav_logout"
-            app:iconTint="@color/design_default_color_error"
-            android:icon="@drawable/logout"
-            android:title="@string/menu_logout"></item>
         <item android:id="@+id/nav_myroom"
             android:title="@string/menu_myRoom"
             android:icon="@drawable/myroom"></item>
         <item android:id="@+id/nav_love"
             android:title="@string/menu_love"
             android:icon="@drawable/love"></item>
-        <item android:id="@+id/nav_share"
-            android:title="@string/menu_share"
-            android:icon="@drawable/share"></item>
         <item android:id="@+id/nav_contactus"
             android:title="@string/menu_contactus"
             android:icon="@drawable/contactus"></item>
