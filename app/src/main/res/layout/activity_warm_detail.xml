@@ -25,6 +25,13 @@
             android:textSize="18sp"
             android:text="TextView" />
         <TextView
+            android:textSize="18sp"
+            android:padding="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Nội dung sai phạm:" />
+        <TextView
             android:textSize="16sp"
             android:id="@+id/tv_content"
             android:padding="20dp"
