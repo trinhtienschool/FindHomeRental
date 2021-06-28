@@ -43,8 +43,13 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         if(room == null){
             return;
         }
+        String address = room.getAddress();
+
+        if(address.length() >=40){
+            address = address.substring(0,40)+"...";
+        }
         Util.setImage(holder.imgHome,room.getImages().get(0));
-        holder.tv_address.setText(room.getAddress());
+        holder.tv_address.setText(address);
         holder.tv_cost.setText("Giá thuê 1 tháng: "+Util.formatCurrency(room.getCost()));
         holder.tv_distance.setText("Khoảng cách: "+Util.formatDistance(room.getLocation().getDistance()));
     }

@@ -1,9 +1,12 @@
 package com.trinhtien2212.findhomerental.ui.home;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,7 +40,7 @@ import java.util.List;
 
 public class HomeFragment extends Fragment implements RoomsResult, RoomHomeAdapter.ItemClickListener, IGetMyLocation {
 
-    private ImageButton btnSearch;
+    private ImageButton btnSearch, btn_my_location;
     private EditText edtSearch;
     private RecyclerView recyclerView;
     private RoomHomeAdapter adapter;
@@ -81,6 +85,18 @@ public class HomeFragment extends Fragment implements RoomsResult, RoomHomeAdapt
             }
         });
     }
+    private void actionSearch(){
+        Log.e("Nhan Search","Search");
+        if(TextUtils.isEmpty(edtSearch.getText().toString())){
+            Toast.makeText(mainActivity, "Bạn phải nhập địa chỉ", Toast.LENGTH_LONG).show();
+        } else {
+            Bundle bundle = new Bundle();
+            Intent intent = new Intent(mainActivity,SearchActivity.class);
+            bundle.putString("address",edtSearch.getText().toString());
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
+    }
     @Override
     public void onStart() {
         super.onStart();
@@ -113,10 +129,45 @@ public class HomeFragment extends Fragment implements RoomsResult, RoomHomeAdapt
     }
 
     private void assign(){
-
+        btn_my_location = root.findViewById(R.id.ib_my_location);
         recyclerView = root.findViewById(R.id.recycler_home);
         btnSearch = root.findViewById(R.id.ImageButtonSearch);
         edtSearch = root.findViewById(R.id.EditTextSearch);
+
+        btn_my_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!Util.checkGPS(mainActivity,HomeFragment.this) ||
+                        !Util.checkNetwork(mainActivity,HomeFragment.this)) {
+                    return;
+                }
+
+                if (ActivityCompat.checkSelfPermission(mainActivity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    Log.e("Cap quye","Ca qu");
+                    //Permission granted
+                    Util.getMyLocation(mainActivity,HomeFragment.this);
+                } else {
+                    //deny
+                    ActivityCompat.requestPermissions(mainActivity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+                }
+            }
+        });
+        edtSearch.setOnKeyListener(new View.OnKeyListener() {
+
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                Log.e("Key", keyCode + "");
+                if (event.getKeyCode() == 66) {
+                    Log.e("Nhan Search key", "Search");
+                    actionSearch();
+                    //do code
+
+                    return true;
+
+                }
+                return false;
+            }
+        });
     }
 
     //Load data
@@ -157,7 +208,7 @@ public class HomeFragment extends Fragment implements RoomsResult, RoomHomeAdapt
 
     @Override
     public void returnMyLocation(String location) {
-
+        edtSearch.setText(location);
     }
 
     @Override

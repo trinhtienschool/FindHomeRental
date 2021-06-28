@@ -39,13 +39,13 @@
     <EditText
         android:id="@+id/reportinfo"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="50dp"
         android:inputType="textMultiLine"
         android:hint="Nhập tại đây:"
         android:textSize="16sp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:padding="6dp">
     </EditText>
     <Button

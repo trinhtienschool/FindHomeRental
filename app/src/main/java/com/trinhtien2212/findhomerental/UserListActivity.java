@@ -123,6 +123,8 @@ public class UserListActivity extends AppCompatActivity implements StatusResult,
             public void onDeleteClick(int position) {
                 Log.e("DeleteClick",position+"");
                 position_index_pending = position;
+
+                //Todo Nhuan
                 userManagerPresenter.deleteUser(mListUser.get(position));
             }
 
