@@ -27,6 +27,7 @@
                 android:id="@+id/titleAddress2"
                 android:text="6 Tân Hòa Đông, phường 14, Quận 6"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 android:textColor="#000"
                 android:layout_toRightOf="@id/imageHome"
                 android:layout_toEndOf="@id/imageHome"
