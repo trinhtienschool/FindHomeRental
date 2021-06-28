@@ -37,6 +37,11 @@ public class WarnList extends AppCompatActivity implements NotificationResult, S
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_warn_list);
 
+        getSupportActionBar().setTitle("Danh sách cảnh báo");
+
+        assert getSupportActionBar() != null;   //null check
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);   //show back button
+
         mListNoti = new ArrayList<Notification>();
         notificationPresenter = new NotificationPresenter((NotificationResult) this);
         assign();
@@ -108,5 +113,11 @@ public class WarnList extends AppCompatActivity implements NotificationResult, S
     @Override
     public void onSuccess() {
 
+    }
+    // back
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 }
