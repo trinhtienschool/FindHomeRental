@@ -13,6 +13,7 @@
     </ImageView>
 
     <TextView
+        android:id="@+id/textWarning"
         android:layout_marginTop="25dp"
         android:textAlignment="center"
         android:layout_width="match_parent"
