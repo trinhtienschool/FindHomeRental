@@ -40,7 +40,7 @@
                     android:layout_toRightOf="@id/imageHome"
                     android:text="Trần Nhật Thy"
                     android:textColor="#000"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView

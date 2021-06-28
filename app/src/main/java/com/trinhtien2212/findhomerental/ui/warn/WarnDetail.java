@@ -26,6 +26,11 @@ public class WarnDetail extends AppCompatActivity implements RoomsResult {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_warm_detail);
+        getSupportActionBar().setTitle("Chi tiết cảnh báo");
+
+        assert getSupportActionBar() != null;   //null check
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);   //show back button
+
         roomPresenter = new RoomPresenter(this);
         tv_title = findViewById(R.id.tv_title);
         tv_content = findViewById(R.id.tv_content);
@@ -58,5 +63,11 @@ public class WarnDetail extends AppCompatActivity implements RoomsResult {
         }else{
             Toast.makeText(this,"Phòng trọ không tồn tại",Toast.LENGTH_LONG).show();
         }
+    }
+    // back
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 }

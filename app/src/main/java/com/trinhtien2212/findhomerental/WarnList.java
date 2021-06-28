@@ -30,7 +30,7 @@ public class WarnList extends AppCompatActivity implements NotificationResult, S
     private List<Notification> mListNoti;
 
     private boolean isLoading, isLastPage;
-    private int currentPage=1, totalPage=2;
+    private int currentPage = 1, totalPage = 2;
 
     private NotificationPresenter notificationPresenter;
 
@@ -38,6 +38,11 @@ public class WarnList extends AppCompatActivity implements NotificationResult, S
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_warn_list);
+
+        getSupportActionBar().setTitle("Danh sách cảnh báo");
+
+        assert getSupportActionBar() != null;   //null check
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);   //show back button
 
         mListNoti = new ArrayList<Notification>();
         notificationPresenter = new NotificationPresenter((NotificationResult) this);
@@ -51,18 +56,19 @@ public class WarnList extends AppCompatActivity implements NotificationResult, S
         String userId = bundle.getString("userId");
 
         notificationPresenter.getNotifications(userId);
-        Log.e("WarnFrag","Co vao");
+        Log.e("WarnFrag", "Co vao");
     }
 
-    private void assign(){
+    private void assign() {
         recyclerView = findViewById(R.id.recycler_home5);
     }
+
     //Load data
-    private void getListNoti(){
+    private void getListNoti() {
 
     }
 
-    private void buildRecyclerView(){
+    private void buildRecyclerView() {
         adapter = new WarnAdapter();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -71,6 +77,7 @@ public class WarnList extends AppCompatActivity implements NotificationResult, S
 
 
     }
+
     public void actionItemRecyclerView() {
         adapter.setOnItemClickListener(new WarnAdapter.OnItemClickListener() {
             @Override
@@ -80,7 +87,7 @@ public class WarnList extends AppCompatActivity implements NotificationResult, S
                 Notification notification = mListNoti.get(positon);
                 Bundle bundle = new Bundle();
                 Intent intent = new Intent(WarnList.this, WarnDetail.class);
-                bundle.putSerializable("note",notification);
+                bundle.putSerializable("note", notification);
 
                 intent.putExtras(bundle);
                 startActivity(intent);
@@ -88,18 +95,19 @@ public class WarnList extends AppCompatActivity implements NotificationResult, S
         });
 
     }
+
     public void showStatus(String s) {
-        Toast.makeText(this,s,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void returnNotification(List<Notification> notifications) {
-        if(notifications!=null){
+        if (notifications != null) {
             mListNoti.addAll(notifications);
             adapter.setData(mListNoti);
             adapter.notifyDataSetChanged();
 
-        }else Toast.makeText(this,"Chưa có cảnh báo nào",Toast.LENGTH_LONG).show();
+        } else Toast.makeText(this, "Chưa có cảnh báo nào", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -112,6 +120,13 @@ public class WarnList extends AppCompatActivity implements NotificationResult, S
 
     }
 
+    // back
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
     @Override
     public void returnMyLocation(String location) {
 
@@ -119,6 +134,6 @@ public class WarnList extends AppCompatActivity implements NotificationResult, S
 
     @Override
     public void showSnackbar(String message) {
-        Util.showSnackbar(findViewById(R.id.layoutWarnlist),message);
+        Util.showSnackbar(findViewById(R.id.layoutWarnlist), message);
     }
 }

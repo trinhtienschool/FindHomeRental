@@ -230,6 +230,9 @@ public class RoomDetail extends AppCompatActivity implements StatusResult, Rooms
 
     @Override
     public void returnRooms(List<Room> rooms) {
+        if(rooms == null){
+            return;
+        }
         for(Room r : rooms){
             if(r.getRoomID().equalsIgnoreCase(this.room.getRoomID())){
                 iv_love.setImageResource(R.drawable.heart_red);
