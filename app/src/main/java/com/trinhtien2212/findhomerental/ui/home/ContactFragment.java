@@ -14,9 +14,11 @@ import android.widget.TextView;
 
 import com.trinhtien2212.findhomerental.MainActivity;
 import com.trinhtien2212.findhomerental.R;
+import com.trinhtien2212.findhomerental.ui.Util;
+import com.trinhtien2212.findhomerental.ui.myroom.MyRoomFragment;
 
 
-public class ContactFragment extends Fragment {
+public class ContactFragment extends Fragment implements IGetMyLocation {
     TextView textZalo,textGmail,textPhone,textPhone2;
     private View view;
     private MainActivity mainActivity;
@@ -55,6 +57,7 @@ public class ContactFragment extends Fragment {
         textGmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!Util.checkNetwork(mainActivity, ContactFragment.this)) return;
                 try {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("mailto:" + "18130068@st.hcmuaf.edu.vn"));
                     intent.putExtra(Intent.EXTRA_SUBJECT, "your_subject");
@@ -70,6 +73,7 @@ public class ContactFragment extends Fragment {
         textZalo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!Util.checkNetwork(mainActivity, ContactFragment.this)) return;
                 String facebookUrl = "https://www.facebook.com/NongLamUniversity";
                 try {
 
@@ -94,5 +98,13 @@ public class ContactFragment extends Fragment {
     }
 
 
+    @Override
+    public void returnMyLocation(String location) {
 
+    }
+
+    @Override
+    public void showSnackbar(String message) {
+        mainActivity.showSnackbar(message);
+    }
 }

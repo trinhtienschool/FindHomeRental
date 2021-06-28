@@ -21,4 +21,9 @@
         <item name="spinBars">true</item>
         <item name="color">@color/title_color</item>
     </style>
+
+    <style name="red_color" >
+
+        <item name="android:textColor">#F35252</item>
+    </style>
 </resources>

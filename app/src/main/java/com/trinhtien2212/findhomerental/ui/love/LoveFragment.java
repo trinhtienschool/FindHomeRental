@@ -14,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,8 @@ import com.trinhtien2212.findhomerental.presenter.BookmarkPresenter;
 import com.trinhtien2212.findhomerental.presenter.RoomsResult;
 import com.trinhtien2212.findhomerental.presenter.StatusResult;
 import com.trinhtien2212.findhomerental.ui.PaginationScrollListener;
+import com.trinhtien2212.findhomerental.ui.Util;
+import com.trinhtien2212.findhomerental.ui.home.IGetMyLocation;
 import com.trinhtien2212.findhomerental.ui.home.RoomDetail;
 
 
@@ -38,7 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class LoveFragment extends Fragment implements RoomsResult, StatusResult {
+public class LoveFragment extends Fragment implements RoomsResult, StatusResult, IGetMyLocation {
 
     private RecyclerView recyclerView;
     private LoveAdapter adapter;
@@ -52,6 +55,7 @@ public class LoveFragment extends Fragment implements RoomsResult, StatusResult 
     private ProgressBar progressBar;
     private Button btnThoat;
     private Button btnXoa;
+    private TextView txtWarning;
     private BookmarkPresenter bookmarkPresenter;
     public LoveFragment(){
     }
@@ -160,7 +164,7 @@ public class LoveFragment extends Fragment implements RoomsResult, StatusResult 
             @Override
             public void onDeleteClick(int position) {
                 // ToDo button DELETE
-
+                if(!Util.checkNetwork(mainActivity,LoveFragment.this)) return;
                 Log.e("Dang vao Delete Love",position+"");
                 //startdialog
                 Dialog dialog = new Dialog(getContext());
@@ -186,6 +190,7 @@ public class LoveFragment extends Fragment implements RoomsResult, StatusResult 
                 btnXoa.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         dialog.dismiss();
                         room_pending_delete = position;
                         bookmarkPresenter.removeRoom(mListRoom.get(position).getRoomID(),FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -216,5 +221,15 @@ public class LoveFragment extends Fragment implements RoomsResult, StatusResult 
         Toast.makeText(mainActivity,"Thành công",Toast.LENGTH_LONG).show();
         mListRoom.remove(room_pending_delete);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void returnMyLocation(String location) {
+
+    }
+
+    @Override
+    public void showSnackbar(String message) {
+        mainActivity.showSnackbar(message);
     }
 }

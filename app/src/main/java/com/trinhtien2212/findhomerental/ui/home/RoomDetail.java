@@ -17,6 +17,7 @@ import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.trinhtien2212.findhomerental.R;
+import com.trinhtien2212.findhomerental.UserListActivity;
 import com.trinhtien2212.findhomerental.model.Room;
 import com.trinhtien2212.findhomerental.presenter.BookmarkPresenter;
 import com.trinhtien2212.findhomerental.presenter.RoomsResult;
@@ -27,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class RoomDetail extends AppCompatActivity implements StatusResult, RoomsResult {
+public class RoomDetail extends AppCompatActivity implements StatusResult, RoomsResult,IGetMyLocation {
     private ImageView iv_love;
     private boolean isLove = false;
     private Room room;
@@ -124,8 +125,12 @@ public class RoomDetail extends AppCompatActivity implements StatusResult, Rooms
         bookmarkPresenter = new BookmarkPresenter(this,this);
 
         iv_love.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+                if(!Util.checkNetwork(RoomDetail.this,RoomDetail.this)) {
+                    return;
+                }
                 if(FirebaseAuth.getInstance().getCurrentUser() ==null){
 
                     Toast.makeText(RoomDetail.this,"Bạn phải đăng nhập để thêm yêu thích",Toast.LENGTH_LONG).show();
@@ -255,5 +260,15 @@ public class RoomDetail extends AppCompatActivity implements StatusResult, Rooms
             iv_love.setImageResource(R.drawable.traitim);
         }
 //        Toast.makeText(this,"Thành công",Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void returnMyLocation(String location) {
+
+    }
+
+    @Override
+    public void showSnackbar(String message) {
+        Util.showSnackbar(findViewById(R.id.layoutRoomdetail),message);
     }
 }
