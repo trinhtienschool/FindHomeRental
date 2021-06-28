@@ -148,6 +148,9 @@ public class RoomListActivity extends AppCompatActivity implements ITotalRoomRes
 
             @Override
             public void onDeleteClick(int position) {
+                if(!Util.checkNetwork(RoomListActivity.this,RoomListActivity.this)) {
+                    return;
+                }
                 // Todo DELETE
                 Room room = mListRoom.get(position);
                 Log.e("RoomID",room.getRoomID());

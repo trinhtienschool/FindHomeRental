@@ -16,12 +16,14 @@ import com.trinhtien2212.findhomerental.model.Notification;
 import com.trinhtien2212.findhomerental.presenter.NotificationPresenter;
 import com.trinhtien2212.findhomerental.presenter.NotificationResult;
 import com.trinhtien2212.findhomerental.presenter.StatusResult;
+import com.trinhtien2212.findhomerental.ui.Util;
+import com.trinhtien2212.findhomerental.ui.home.IGetMyLocation;
 import com.trinhtien2212.findhomerental.ui.warn.WarnDetail;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WarnList extends AppCompatActivity implements NotificationResult, StatusResult {
+public class WarnList extends AppCompatActivity implements NotificationResult, StatusResult, IGetMyLocation {
 
     private RecyclerView recyclerView;
     private WarnAdapter adapter;
@@ -108,5 +110,15 @@ public class WarnList extends AppCompatActivity implements NotificationResult, S
     @Override
     public void onSuccess() {
 
+    }
+
+    @Override
+    public void returnMyLocation(String location) {
+
+    }
+
+    @Override
+    public void showSnackbar(String message) {
+        Util.showSnackbar(findViewById(R.id.layoutWarnlist),message);
     }
 }
