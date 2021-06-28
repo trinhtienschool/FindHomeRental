@@ -14,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -52,6 +53,7 @@ public class LoveFragment extends Fragment implements RoomsResult, StatusResult 
     private ProgressBar progressBar;
     private Button btnThoat;
     private Button btnXoa;
+    private TextView txtWarning;
     private BookmarkPresenter bookmarkPresenter;
     public LoveFragment(){
     }

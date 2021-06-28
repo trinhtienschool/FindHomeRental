@@ -59,6 +59,7 @@ public class RoomListActivity extends AppCompatActivity implements ITotalRoomRes
     private ImageButton imgBtnBack;
     private Button btnThoat;
     private Button btnXoa;
+    private TextView txtWarning;
     private Button btngui;
 
     private  Dialog dialogreport;
@@ -169,6 +170,8 @@ public class RoomListActivity extends AppCompatActivity implements ITotalRoomRes
                 window.setAttributes(windowatribute);
                 btnThoat=dialog.findViewById(R.id.btnthoatid);
                 btnXoa=dialog.findViewById(R.id.btnxoaid);
+                txtWarning=dialog.findViewById(R.id.textWarning);
+                txtWarning.setText("Xóa bài viết vĩnh viễn");
                 btnThoat.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

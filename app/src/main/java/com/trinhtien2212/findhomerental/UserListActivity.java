@@ -11,8 +11,10 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,6 +50,9 @@ public class UserListActivity extends AppCompatActivity implements StatusResult,
     private ProgressBar pb_waiting;
     private AdminUserPresenter adminUserPresenter;
     private int position_index_pending;
+    private Button btnThoat;
+    private Button btnXoa;
+    private TextView txtWarning;
     private boolean isLoading, isLastPage;
     private int currentPage=1, totalPage=2;
 
@@ -123,7 +128,39 @@ public class UserListActivity extends AppCompatActivity implements StatusResult,
             public void onDeleteClick(int position) {
                 Log.e("DeleteClick",position+"");
                 position_index_pending = position;
-                userManagerPresenter.deleteUser(mListUser.get(position));
+                //startdialog
+                Dialog dialog = new Dialog(UserListActivity.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.warning);
+                Window window=dialog.getWindow();
+                if(window==null){
+                    return;
+                }
+                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
+                window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams windowatribute=window.getAttributes();
+                windowatribute.gravity= Gravity.CENTER;
+                window.setAttributes(windowatribute);
+                btnThoat=dialog.findViewById(R.id.btnthoatid);
+                btnXoa=dialog.findViewById(R.id.btnxoaid);
+                txtWarning=dialog.findViewById(R.id.textWarning);
+                txtWarning.setText("Xóa người dùng vĩnh viễn");
+                btnThoat.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                btnXoa.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        userManagerPresenter.deleteUser(mListUser.get(position));
+                    }
+                });
+
+                dialog.show();
+                //enddialog
             }
 
             @Override
