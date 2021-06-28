@@ -53,11 +53,7 @@ public class WarnFragment extends Fragment implements NotificationResult, Status
         assign();
 
         buildRecyclerView();
-
         actionItemRecyclerView();
-
-//        bookmarkPresenter.("0b4oSVQ6aB6fpmvbkVvo",FirebaseAuth.getInstance().getCurrentUser().getUid());
-//
         setFirstData();
         Log.e("WarnFrag","Co vao");
         return root;
@@ -70,7 +66,6 @@ public class WarnFragment extends Fragment implements NotificationResult, Status
     private void setFirstData(){
         //ToDo
         notificationPresenter.getNotifications(FirebaseAuth.getInstance().getCurrentUser().getUid());
-
     }
     private void getListNoti(){
 

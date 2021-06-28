@@ -15,7 +15,8 @@
         <LinearLayout
             android:id="@+id/header_title_1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:orientation="horizontal">
@@ -28,13 +29,13 @@
                 android:layout_marginRight="10dp"
                 android:text="20"
                 android:textColor="@color/colorPrimary"
-                android:textSize="30sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Kết quả"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
 
             <ImageButton

@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/dateCreated"
                 android:text="Ngày tạo: 14/2/2021"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
