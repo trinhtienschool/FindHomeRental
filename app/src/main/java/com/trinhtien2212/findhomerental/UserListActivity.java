@@ -32,13 +32,15 @@ import com.trinhtien2212.findhomerental.presenter.AdminUserPresenter;
 import com.trinhtien2212.findhomerental.presenter.IUserResult;
 import com.trinhtien2212.findhomerental.presenter.StatusResult;
 import com.trinhtien2212.findhomerental.presenter.UserManagerPresenter;
+import com.trinhtien2212.findhomerental.ui.Util;
+import com.trinhtien2212.findhomerental.ui.home.IGetMyLocation;
 import com.trinhtien2212.findhomerental.ui.home.RoomDetail;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class UserListActivity extends AppCompatActivity implements StatusResult, IUserResult {
+public class UserListActivity extends AppCompatActivity implements StatusResult, IUserResult, IGetMyLocation {
     private RecyclerView recyclerView;
     private UserAdapter userAdapter;
     private List<User> mListUser;
@@ -127,40 +129,46 @@ public class UserListActivity extends AppCompatActivity implements StatusResult,
             @Override
             public void onDeleteClick(int position) {
                 Log.e("DeleteClick",position+"");
-                position_index_pending = position;
-                //startdialog
-                Dialog dialog = new Dialog(UserListActivity.this);
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.warning);
-                Window window=dialog.getWindow();
-                if(window==null){
+                if(!Util.checkNetwork(UserListActivity.this,UserListActivity.this)) {
                     return;
                 }
-                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
-                window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                WindowManager.LayoutParams windowatribute=window.getAttributes();
-                windowatribute.gravity= Gravity.CENTER;
-                window.setAttributes(windowatribute);
-                btnThoat=dialog.findViewById(R.id.btnthoatid);
-                btnXoa=dialog.findViewById(R.id.btnxoaid);
-                txtWarning=dialog.findViewById(R.id.textWarning);
-                txtWarning.setText("Xóa người dùng vĩnh viễn");
-                btnThoat.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                btnXoa.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                        userManagerPresenter.deleteUser(mListUser.get(position));
-                    }
-                });
+                    position_index_pending = position;
 
-                dialog.show();
+                    //startdialog
+                    Dialog dialog = new Dialog(UserListActivity.this);
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.setContentView(R.layout.warning);
+                    Window window = dialog.getWindow();
+                    if (window == null) {
+                        return;
+                    }
+                    window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                    window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    WindowManager.LayoutParams windowatribute = window.getAttributes();
+                    windowatribute.gravity = Gravity.CENTER;
+                    window.setAttributes(windowatribute);
+                    btnThoat = dialog.findViewById(R.id.btnthoatid);
+                    btnXoa = dialog.findViewById(R.id.btnxoaid);
+                    txtWarning = dialog.findViewById(R.id.textWarning);
+                    txtWarning.setText("Xóa người dùng vĩnh viễn");
+                    btnThoat.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
+                    btnXoa.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                            userManagerPresenter.deleteUser(mListUser.get(position));
+                        }
+                    });
+
+                    dialog.show();
+
                 //enddialog
+
             }
 
             @Override
@@ -193,4 +201,13 @@ public class UserListActivity extends AppCompatActivity implements StatusResult,
         });
     }
 
+    @Override
+    public void returnMyLocation(String location) {
+
+    }
+
+    @Override
+    public void showSnackbar(String message) {
+        Util.showSnackbar(findViewById(R.id.frame_layout),message);
+    }
 }

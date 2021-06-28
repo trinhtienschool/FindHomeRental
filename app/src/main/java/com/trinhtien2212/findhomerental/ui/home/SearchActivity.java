@@ -138,14 +138,15 @@ public class SearchActivity extends AppCompatActivity implements StatusResult, I
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                roomAdapter.getFilter().filter(query);
-                return false;
+                Log.e("Query",query);
+                search(query);
+
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                roomAdapter.getFilter().filter(newText);
-                return false;
+                return true;
             }
         });
 
