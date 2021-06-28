@@ -27,6 +27,7 @@
                 android:id="@+id/titleAddress3"
                 android:text="88 Tân Hòa Đông, Quận 6"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 android:textColor="#000"
                 android:layout_toRightOf="@id/imageHome3"
                 android:layout_toEndOf="@id/imageHome3"
