@@ -7,8 +7,7 @@ android {
     signingConfigs {
         release {
 
-            storeFile file('D:\\MobileProject\\Official\\Final2\\FindHomeRental\\app\\KeystoreRelease.jks')
-
+            storeFile file('D:\\Mobile Programming\\finalProject\\FindHomeRental\\app\\KeystoreRelease.jks')
             storePassword '1234567890'
             keyAlias 'key0'
             keyPassword '1234567890'

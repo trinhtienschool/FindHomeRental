@@ -56,11 +56,7 @@ public class WarnFragment extends Fragment {
         assign();
 
         buildRecyclerView();
-
         actionItemRecyclerView();
-
-//        bookmarkPresenter.("0b4oSVQ6aB6fpmvbkVvo",FirebaseAuth.getInstance().getCurrentUser().getUid());
-//
         setFirstData();
         return root;
     }
@@ -74,11 +70,6 @@ public class WarnFragment extends Fragment {
     private void setFirstData(){
         //ToDo
         notificationPresenter.getNotifications("At137YkMB7OXy99UzZINGbVExY72");
-//        bookmarkPresenter.getAllBookmarks();
-//        RoomDB roomDB = RoomDB.getInstance();
-//        roomDB.getRandomRooms(this);
-//
-//        Toast.makeText(mainActivity, "Load data page", Toast.LENGTH_SHORT).show();
     }
     private void getListNoti(){
 
@@ -99,7 +90,6 @@ public class WarnFragment extends Fragment {
                 }
             });
             isLoading = false;
-//            bookmarkPresenter.removeRoom("0b4oSVQ6aB6fpmvbkVvo",FirebaseAuth.getInstance().getCurrentUser().getUid());
         }else Toast.makeText(mainActivity,"Chưa có cảnh báo nào",Toast.LENGTH_LONG).show();
 
         progressBar.setVisibility(View.GONE);

@@ -47,11 +47,6 @@ public class WarnAdapter extends RecyclerView.Adapter<WarnAdapter.RoomViewHolder
         if(notification == null){
             return;
         }
-
-//        Util.setImage(holder.imgHome,room.getImages().get(0));
-//
-//        holder.txtPrice.setText(Util.formatCurrency(room.getCost()));
-//        holder.txtAddress.setText(room.getAddress());
 //        ToDo
         if(notification.getMessage().length() > 50){
             holder.txtReport.setText(notification.getMessage().substring(50) + "...");
