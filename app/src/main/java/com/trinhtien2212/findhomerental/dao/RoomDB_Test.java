@@ -3,9 +3,11 @@ package com.trinhtien2212.findhomerental.dao;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,10 +33,13 @@ import com.trinhtien2212.findhomerental.ui.Util;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class RoomDB_Test extends ConnectDB {
 
@@ -42,7 +47,7 @@ public class RoomDB_Test extends ConnectDB {
     StorageReference storageRef;
     List<String> imageInternalUri;
     List<String>imageStorageUrl;
-
+    Random random = new Random();
     public RoomDB_Test() {
         this.storage = FirebaseStorage.getInstance();
         this.storageRef = storage.getReference();
@@ -111,12 +116,29 @@ public class RoomDB_Test extends ConnectDB {
                     }
                 });
     }
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public static Date between() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2021,2,1);
+        Date start = calendar.getTime();
+
+        calendar.set(2021,8,15);
+        Date end = calendar.getTime();
+        long startMillis = start.getTime();
+        long endMillis = end.getTime();
+        long randomMillisSinceEpoch = ThreadLocalRandom
+                .current()
+                .nextLong(startMillis, endMillis);
+
+        return new Date(randomMillisSinceEpoch);
+    }
     public void getRandomRooms(RoomsResult roomsResult){
         List<String>roomIds = new ArrayList<String>();
         db.collection("rooms")
 
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
@@ -136,6 +158,10 @@ public class RoomDB_Test extends ConnectDB {
                             user.add(new User("Tâm Quyết","https://lh3.googleusercontent.com/a/AATXAJzRARmurWfjIsZrT6voenLlU5IF6m5Kuo9PpEr7=s96-c","iudgy5K9vFMS7RlgULYtDDPyAXf1"));
                             user.add(new User("Trịnh Quang Tiến","https://lh3.googleusercontent.com/a/AATXAJz_Bct5ZCfD6bJidIMH6eXqpqpXOSexZNqngECf=s96-c","npsT4ViIQeSGCqZ19gs8NMmCDQp2"));
                             user.add(new User("Quang Tiến Trịnh","https://lh3.googleusercontent.com/a/AATXAJzeH6VqIHq7TaX6Jswm29bDcyqbCPHeCL_1b1RW=s96-c","p1O3NUAmPpeGrlXkMtLmCpKjoSW2"));
+                            user.add(new User("Nhuan DuongBa","https://lh3.googleusercontent.com/a/AATXAJwOn1EMYlD02jScEVeBLCwbEdla6y2VNY09Luw-=s96-c","4sqr2hpDw3UrHTEIJyN8llgEAv22"));
+                            user.add(new User("Nhật Thy Trần","https://lh3.googleusercontent.com/a/AATXAJxkQHtGYlnkOCNeQvprSWluZOozgdcD4lUhiSG8=s96-c","KYUfmugBxgbEYAhrAvaEiz6OOlk2"));
+
+
 
 //                            getImagesOfRoom(rooms,-1,roomsResult);
                             update(roomIds,-1,user);
@@ -148,21 +174,28 @@ public class RoomDB_Test extends ConnectDB {
     }
 
 //    Test
-    public void update(List<String>roomIds,int index,List<User>users){
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void update(List<String>roomIds, int index, List<User>users){
 
         final int index2 = index+1;
-        int user_index = new Random().nextInt(6);
+        int user_index = new Random().nextInt(8);
         User user = users.get(user_index);
         if(index2 == roomIds.size()) {
             Log.e("Xong","Da update xong");
             return;
         }
         Map<String,Object>map = new HashMap<String, Object>();
+//        int cost = ThreadLocalRandom.current().nextInt(1000, 10000 + 1);
+//
+//        int deposit = (int)(cost*30/100);
+//        cost = cost*1000;
+//        deposit = deposit*1000;
+//        map.put("dateCreated",between());
+//        map.put("cost",cost);
+//        map.put("deposit",deposit);
         map.put("userPhotoUrl",user.getPhotoUrl());
-        map.put("userUid", FieldValue.delete());
         map.put("userCreatedId", user.getUserUid());
-        map.put("imageUrl",FieldValue.delete());
-        map.put("isAirCondition",new Random().nextBoolean());
+//        map.put("isAirCondition",new Random().nextBoolean());
         map.put("userDisplayName",user.getDisplayName());
 
         DocumentReference washingtonRef = db.collection("rooms").document(roomIds.get(index2));

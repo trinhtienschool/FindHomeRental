@@ -1,10 +1,16 @@
 package com.trinhtien2212.findhomerental;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -15,11 +21,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mmin18.widget.RealtimeBlurView;
+import com.trinhtien2212.findhomerental.adapter.RoomAdminAdapter;
 import com.trinhtien2212.findhomerental.adapter.UserAdapter;
+import com.trinhtien2212.findhomerental.model.Notification;
+import com.trinhtien2212.findhomerental.model.Room;
 import com.trinhtien2212.findhomerental.model.User;
+import com.trinhtien2212.findhomerental.presenter.AdminUserPresenter;
 import com.trinhtien2212.findhomerental.presenter.IUserResult;
 import com.trinhtien2212.findhomerental.presenter.StatusResult;
 import com.trinhtien2212.findhomerental.presenter.UserManagerPresenter;
+import com.trinhtien2212.findhomerental.ui.home.RoomDetail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +46,8 @@ public class UserListActivity extends AppCompatActivity implements StatusResult,
     private UserManagerPresenter userManagerPresenter;
     private RealtimeBlurView realtimeBlurView;
     private ProgressBar pb_waiting;
-
+    private AdminUserPresenter adminUserPresenter;
+    private int position_index_pending;
     private boolean isLoading, isLastPage;
     private int currentPage=1, totalPage=2;
 
@@ -47,7 +59,7 @@ public class UserListActivity extends AppCompatActivity implements StatusResult,
         getSupportActionBar().setTitle("Danh sách người dùng");
         assert getSupportActionBar() != null;   //null check
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);   //show back button
-
+        adminUserPresenter = AdminUserPresenter.getInstance();
         assign();
         buildRecyclerView();
         actionItemRecyclerView();
@@ -82,7 +94,9 @@ public class UserListActivity extends AppCompatActivity implements StatusResult,
 
     @Override
     public void onSuccess() {
-
+        mListUser.remove(position_index_pending);
+        userAdapter.notifyDataSetChanged();
+        Toast.makeText(this,"Thành công",Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -102,12 +116,42 @@ public class UserListActivity extends AppCompatActivity implements StatusResult,
         return true;
     }
 
-    public void actionItemRecyclerView(){
+    private void actionItemRecyclerView() {
         userAdapter.setOnItemClickListener(new UserAdapter.OnItemClickListener() {
+
             @Override
             public void onDeleteClick(int position) {
-                // Todo DELETE
-                Log.e("UserListActivity",position+"");
+                Log.e("DeleteClick",position+"");
+                position_index_pending = position;
+                userManagerPresenter.deleteUser(mListUser.get(position));
+            }
+
+            @Override
+            public void onAdminClick(int position) {
+                Log.e("AdminClick",position+"");
+
+
+            }
+
+            @Override
+            public void onHouseClick(int position) {
+                User user = mListUser.get(position);
+                Intent intent = new Intent(UserListActivity.this,RoomListActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("userId",user.getUserUid());
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onNoteClick(int position) {
+                Log.e("NoteClick",position+"");
+                User user = mListUser.get(position);
+                Intent intent = new Intent(UserListActivity.this,WarnList.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("userId",user.getUserUid());
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
     }

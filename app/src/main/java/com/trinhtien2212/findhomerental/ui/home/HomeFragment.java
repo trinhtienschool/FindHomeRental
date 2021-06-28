@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mmin18.widget.RealtimeBlurView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.trinhtien2212.findhomerental.MainActivity;
 
 import com.trinhtien2212.findhomerental.MainAdminActivity;
@@ -45,8 +46,7 @@ public class HomeFragment extends Fragment implements RoomsResult, RoomHomeAdapt
     private View root;
     private boolean isLoading, isLastPage;
     private int currentPage=1, totalPage=2;
-    private RealtimeBlurView realtimeBlurView;
-    private ProgressBar progressBar;
+
     private SearchPresenter searchPresenter;
     public HomeFragment() {
     }
@@ -81,7 +81,12 @@ public class HomeFragment extends Fragment implements RoomsResult, RoomHomeAdapt
             }
         });
     }
+    @Override
+    public void onStart() {
+        super.onStart();
+        Util.checkNetwork(mainActivity,this);
 
+    }
     private void buildRecyclerView() {
         adapter = new RoomHomeAdapter(mListRoom, this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mainActivity, 2);
@@ -108,8 +113,7 @@ public class HomeFragment extends Fragment implements RoomsResult, RoomHomeAdapt
     }
 
     private void assign(){
-        realtimeBlurView = root.findViewById(R.id.realtimeBlurView);
-        progressBar = root.findViewById(R.id.pb_saving);
+
         recyclerView = root.findViewById(R.id.recycler_home);
         btnSearch = root.findViewById(R.id.ImageButtonSearch);
         edtSearch = root.findViewById(R.id.EditTextSearch);
@@ -117,20 +121,26 @@ public class HomeFragment extends Fragment implements RoomsResult, RoomHomeAdapt
 
     //Load data
     private void setFirstData(){
+
         roomPresenter.getRandomRooms();
         Toast.makeText(mainActivity, "Đang tải chờ xíu...", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void returnRooms(List<Room> rooms) {
-        mListRoom = rooms;
-        adapter.setData(mListRoom);
-        showWaiting(View.INVISIBLE);
+        if(rooms == null){
+            mainActivity.showSnackbar("Lỗi tải trang, vui lòng thử lại");
+        }else {
+            mListRoom = rooms;
+            adapter.setData(mListRoom);
+            mainActivity.showWaiting(View.INVISIBLE);
+        }
+        if(FirebaseAuth.getInstance().getCurrentUser() !=null){
+            Log.e("MainStart","Dang kiem");
+           mainActivity.setShowAdmin();
+        }
     }
-    private void showWaiting(int waiting){
-        realtimeBlurView.setVisibility(waiting);
-        progressBar.setVisibility(waiting);
-    }
+
 
     @Override
     public void onItemClick(int position) {
@@ -152,6 +162,6 @@ public class HomeFragment extends Fragment implements RoomsResult, RoomHomeAdapt
 
     @Override
     public void showSnackbar(String message) {
-//        Util.setImage();
+        mainActivity.showSnackbar(message);
     }
 }

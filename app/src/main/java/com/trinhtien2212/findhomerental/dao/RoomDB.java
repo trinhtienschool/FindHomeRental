@@ -155,6 +155,32 @@ public class RoomDB extends ConnectDB {
                 });
 
     }
+    public void getRoomById(String roomId,RoomsResult roomsResult){
+        List<Room>rooms = new ArrayList<>();
+        DocumentReference docRef = db.collection("rooms").document(roomId);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d("GetARoom", "DocumentSnapshot data: " + document.getData());
+                        Room room = new Room();
+                        room.setRoom(document);
+
+                        rooms.add(room);
+                        getImagesOfRoom(rooms,-1,roomsResult);
+                    } else {
+                        Log.d("GetARoom", "No such document");
+                        roomsResult.returnRooms(null);
+                    }
+                } else {
+                    Log.d("GetARoom", "get failed with ", task.getException());
+                    roomsResult.returnRooms(null);
+                }
+            }
+        });
+    }
     public void getAllRoomOfUser(String userUid,RoomPresenter roomPresenter){
         List<Room>rooms = new ArrayList<Room>();
         db.collection("rooms")

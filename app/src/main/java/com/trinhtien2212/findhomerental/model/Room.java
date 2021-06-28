@@ -460,5 +460,6 @@ public class Room implements Serializable {
         this.isFreeTime = (boolean) document.get("isFreeTime");
         this.isFence = (boolean) document.get("isFence");
         this.isPark = (boolean) document.get("isPark");
+        this.dateCreated = document.getDate("dateCreated");
     }
 }

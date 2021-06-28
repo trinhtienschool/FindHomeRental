@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/activity_room_list_frame"
     android:layout_height="match_parent">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,19 +15,19 @@
         <LinearLayout
             android:id="@+id/header_title_1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/TextViewTotalResult"
+                android:id="@+id/tv_TotalResult"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="10dp"
                 android:text="20"
-                android:textColor="#f00"
+                android:textColor="@color/colorPrimary"
                 android:textSize="30sp" />
 
             <TextView
@@ -37,11 +36,12 @@
                 android:text="Kết quả"
                 android:textSize="18sp" />
 
+
             <ImageButton
                 android:id="@+id/ImgButtonFilter"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="200dp"
+              android:layout_marginLeft="125dp"
                 android:background="@color/white"
                 android:onClick="filterDistance"
                 android:scaleType="fitXY"
@@ -72,14 +72,14 @@
             android:layout_centerInParent="true"
             android:visibility="gone" />
 
-    </RelativeLayout>
+        <com.github.mmin18.widget.RealtimeBlurView
+            android:id="@+id/realtimeBlurView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:realtimeBlurRadius="20dp"
+            app:realtimeOverlayColor="#74DAD8D8" />
 
-    <com.github.mmin18.widget.RealtimeBlurView
-        android:id="@+id/realtimeBlurView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:realtimeBlurRadius="20dp"
-        app:realtimeOverlayColor="#74DAD8D8" />
+    </RelativeLayout>
 
     <ProgressBar
         android:id="@+id/pb_waiting"

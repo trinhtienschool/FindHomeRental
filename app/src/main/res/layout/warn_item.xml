@@ -31,12 +31,21 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/titleReport"
                 android:text="Nhà bị báo cáo vì lí do"
-                android:textSize="18sp"
-                android:textColor="@color/colorText"
+                android:textSize="16sp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_below="@id/titleAddress5"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/dateCreated"
+                android:text="Ngày tạo: 14/2/2021"
+                android:textSize="14sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/titleReport"/>
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>

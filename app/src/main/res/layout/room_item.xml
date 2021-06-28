@@ -32,10 +32,37 @@
                 android:layout_toEndOf="@id/imageHome"
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_cost_room_admin"
+                android:text="4,3 triệu VND/căn"
+                android:textSize="18sp"
+                android:textColor="#FFBF00"
+                android:textStyle="bold"
+                android:layout_toRightOf="@id/imageHome"
+                android:layout_toEndOf="@id/imageHome"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/titleAddress2"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_dateCreated"
+                android:text="Ngày tạo: 22/04/2021"
+                android:textSize="18sp"
+                android:textColor="#787878"
+                android:layout_toRightOf="@id/imageHome"
+                android:layout_toEndOf="@id/imageHome"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/tv_cost_room_admin"/>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/titleAddress2"
+                android:layout_below="@id/tv_dateCreated"
                 android:layout_toRightOf="@id/imageHome">
                 <ImageButton
                     android:id="@+id/imageButtonReport"

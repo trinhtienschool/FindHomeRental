@@ -4,7 +4,6 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,13 +26,14 @@ import com.trinhtien2212.findhomerental.adapter.RoomAdapter;
 import com.trinhtien2212.findhomerental.model.Room;
 import com.trinhtien2212.findhomerental.presenter.RoomsResult;
 import com.trinhtien2212.findhomerental.presenter.SearchPresenter;
+import com.trinhtien2212.findhomerental.presenter.StatusResult;
 import com.trinhtien2212.findhomerental.ui.PaginationScrollListener;
 import com.trinhtien2212.findhomerental.ui.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchActivity extends AppCompatActivity implements IGetMyLocation, RoomAdapter.ItemClickListener, RoomsResult, PopupMenu.OnMenuItemClickListener, androidx.appcompat.widget.PopupMenu.OnMenuItemClickListener {
+public class SearchActivity extends AppCompatActivity implements StatusResult, IGetMyLocation, RoomAdapter.ItemClickListener, RoomsResult, PopupMenu.OnMenuItemClickListener, androidx.appcompat.widget.PopupMenu.OnMenuItemClickListener {
     private RecyclerView recyclerView;
     private RoomAdapter roomAdapter;
     private List<Room> mListlist;
@@ -87,12 +87,13 @@ public class SearchActivity extends AppCompatActivity implements IGetMyLocation,
                 return isLastPage;
             }
         });
-        searchPresenter = new SearchPresenter(this);
+        searchPresenter = new SearchPresenter(this,this);
         Bundle bundle = getIntent().getExtras();
         String address = bundle.getString("address");
-        search(address);
+
         realtimeBlurView = findViewById(R.id.realtimeBlurView);
         pb_waiting = findViewById(R.id.pb_waiting);
+        search(address);
 
     }
     //Load data
@@ -176,13 +177,13 @@ public class SearchActivity extends AppCompatActivity implements IGetMyLocation,
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.item_distance_decrease: // ToDo ACTION ITEM
+            case R.id.item_price_decrease: // ToDo ACTION ITEM
                 mListlist.clear();
                 searchPresenter.sortDecrease();
                 showWaiting(View.VISIBLE);
                 Toast.makeText(this, "Sắp xếp theo khoảng cách giảm dần", Toast.LENGTH_SHORT).show();
                 return true;
-            case R.id.item_distance_increase: // ToDo ACTION ITEM
+            case R.id.item_price_increase: // ToDo ACTION ITEM
                 mListlist.clear();
                 searchPresenter.sortIncrease();
                 showWaiting(View.VISIBLE);
@@ -244,5 +245,16 @@ public class SearchActivity extends AppCompatActivity implements IGetMyLocation,
     @Override
     public void showSnackbar(String message) {
         Util.showSnackbar(frameLayout,message);
+    }
+
+    @Override
+    public void onFail() {
+        Toast.makeText(this,"Có lỗi xảy ra, vui lòng thử lại",Toast.LENGTH_LONG).show();
+        showWaiting(View.INVISIBLE);
+    }
+
+    @Override
+    public void onSuccess() {
+
     }
 }
