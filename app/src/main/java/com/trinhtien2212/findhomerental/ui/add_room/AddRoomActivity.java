@@ -2,7 +2,10 @@ package com.trinhtien2212.findhomerental.ui.add_room;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -19,31 +22,35 @@ import com.trinhtien2212.findhomerental.model.Room;
 import com.trinhtien2212.findhomerental.presenter.RoomPresenter;
 import com.trinhtien2212.findhomerental.presenter.RoomsResult;
 import com.trinhtien2212.findhomerental.presenter.StatusResult;
+import com.trinhtien2212.findhomerental.ui.Util;
+import com.trinhtien2212.findhomerental.ui.home.IGetMyLocation;
 
 import java.util.List;
 import java.util.Map;
 
-public class AddRoomActivity extends AppCompatActivity implements StatusResult {
+public class AddRoomActivity extends AppCompatActivity implements StatusResult, IGetMyLocation {
     private TabLayout mTabLayout;
     private ViewPager2 viewPager2;
     private AddRoomViewPagerAdapter adapter;
     private Room room;
     private RoomPresenter roomPresenter;
-    RealtimeBlurView realtimeBlurView;
-    ProgressBar progressBar;
+    private RealtimeBlurView realtimeBlurView;
+    private ProgressBar progressBar;
+    private FrameLayout frameLayout;
     private boolean isUpdate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_room);
         init();
-        this.room = new Room();
+
         isUpdate = false;
+        roomPresenter = new RoomPresenter(this);
         //include back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);      //icon in appbar
         getSupportActionBar().setDisplayShowHomeEnabled(true);      //back button in android
         getSupportActionBar().setHomeButtonEnabled(true);
-
+        frameLayout = findViewById(R.id.activity_add_room);
         //set Title for action bar
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Đăng tin phòng trọ");
@@ -60,6 +67,7 @@ public class AddRoomActivity extends AppCompatActivity implements StatusResult {
                 isUpdate = true;
             }
         }
+
 
         //Test delete
 //        roomPresenter = new RoomPresenter(this,room);
@@ -87,111 +95,54 @@ public class AddRoomActivity extends AppCompatActivity implements StatusResult {
         mTabLayout.addTab(mTabLayout.newTab().setText("Thông tin"));
         mTabLayout.addTab(mTabLayout.newTab().setText("Tiện ích"));
         viewPager2.setUserInputEnabled(false);
-        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager2.setCurrentItem(tab.getPosition());
-            }
+        LinearLayout tabStrip = ((LinearLayout)mTabLayout.getChildAt(0));
+        for(int i = 0; i < tabStrip.getChildCount(); i++) {
+            tabStrip.getChildAt(i).setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    return true;
+                }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
+            });
+        }
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
-               mTabLayout.selectTab(mTabLayout.getTabAt(position));
+                mTabLayout.selectTab(mTabLayout.getTabAt(position));
             }
         });
         //keep 3 fragments on either side of the current fragment alive in memory
         viewPager2.setOffscreenPageLimit(3);
-        
+
     }
     private void showWaiting(int waiting){
         realtimeBlurView.setVisibility(waiting);
         progressBar.setVisibility(waiting);
     }
-    public void getAddress(Map<String,Object>address){
-        room.setAddress((String)address.get("address"));
-        room.setPhone((String)address.get("phone"));
-        Log.e("Map",room.toString());
+    public void setAddress(Map<String,Object>address){
+        Log.e("AddressMap",address.toString());
+        Log.e("Roompre",roomPresenter.toString());
+        roomPresenter.setAddress(address);
         viewPager2.setCurrentItem(1);
     }
-    public void getInfo(Map<String,Object>info){
-        room.setCost((int)info.get("costPerMonth"));
-        room.setDeposit((int)info.get("dCost"));
-        room.setEleCost((int)info.get("eCost"));
-        room.setWatCost((int)info.get("wCost"));
-        room.setArea((float)info.get("area"));
-        room.setDescription((String)info.get("description"));
-//        room.putAll(info);
-        Log.e("Room",room.toString());
+    public void setInfo(Map<String,Object>info){
+        roomPresenter.setInfo(info);
         viewPager2.setCurrentItem(2);
     }
-    public void saveRoom(Map<String,Object>utilities,boolean isUpdate){
-//        room.putAll(utilities);
-        //ToDo
-//        room.setUserCreatedId(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        room.setUserCreatedId(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        room.setImages((List<String>) utilities.get("images"));
+    public void saveRoom(Map<String,Object>utilities){
 
-        List<String>utilitiesList = (List<String>) utilities.get("utilities");
-
-        for(String utility : utilitiesList){
-            switch (utility){
-                case "Tivi":
-                    room.setIsTivi(true);
-                    break;
-                case "Tủ đồ":
-                    room.setIsWardrobe(true);
-                    break;
-                case "Wifi":
-                    room.setIsWifi(true);
-                    break;
-                case "Tủ lạnh":
-                    room.setIsFre(true);
-                    break;
-                case "Máy lạnh":
-                    room.setIsAirCondition(true);
-                    break;
-                case "Gác lủng":
-                    room.setIsAttic(true);
-                    break;
-                case "Máy nước nóng":
-                    room.setIsHotWater(true);
-                    break;
-                case  "Nhà vệ sinh riêng":
-                    room.setIsWC(true);
-                    break;
-                case "Tự do giờ giấc":
-                    room.setFreeTime(true);
-                    break;
-                case "An ninh":
-                    room.setIsFence(true);
-                    break;
-                case "Chỗ để xe riêng":
-                    room.setIsPark(true);
-                    break;
-            }
+        if(!Util.checkNetwork(this,this)) {
+            Log.e("Ket thuc","Da ket thuc");
+            return;
         }
-        roomPresenter = new RoomPresenter(this,room);
-        if(isUpdate){
-            roomPresenter.updateRoom();
-        }
-        else roomPresenter.saveRoom();
+      if(isUpdate){
+          utilities.put("roomId",room.getRoomID());
+      }
+        roomPresenter.saveRoom(utilities, isUpdate);
         showWaiting(View.VISIBLE);
+
     }
-    public Room sendRoom(){
-        if(isUpdate){
-            return room;
-        }else return null;
-    }
+
     public void notifyStatus(String status){
         showWaiting(View.INVISIBLE);
         Toast.makeText(this,status,Toast.LENGTH_LONG).show();
@@ -207,5 +158,19 @@ public class AddRoomActivity extends AppCompatActivity implements StatusResult {
     @Override
     public void onSuccess() {
         notifyStatus("Thành công");
+    }
+
+    @Override
+    public void returnMyLocation(String location) {
+
+    }
+    public Room sendRoom(){
+        if(isUpdate){
+            return room;
+        }else return null;
+    }
+    @Override
+    public void showSnackbar(String message) {
+        Util.showSnackbar(frameLayout,message);
     }
 }

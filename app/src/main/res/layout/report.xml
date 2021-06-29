@@ -19,7 +19,7 @@
     <TextView
         android:id="@+id/roominfo"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="70dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:text="84, Lê Văn Chí, phường Linh Trung, Thủ Đức, Hồ Chí Minh"
@@ -33,7 +33,7 @@
         android:text="Nội dung báo cáo:"
         android:textColor="@color/colorPrimary"
         android:textSize="18sp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="20dp">
     </TextView>
     <EditText

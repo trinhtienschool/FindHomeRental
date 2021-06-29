@@ -66,7 +66,7 @@ public class Bookmark {
         return  null;
     }
     private String getMax(){
-        int max = 0;
+        int max = -1;
         for(String key: mapRoomIds.keySet()){
             max = Math.max(max,Integer.parseInt(key));
         }

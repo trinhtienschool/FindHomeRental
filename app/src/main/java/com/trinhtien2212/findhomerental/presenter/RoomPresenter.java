@@ -2,6 +2,7 @@ package com.trinhtien2212.findhomerental.presenter;
 
 import android.util.Log;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.trinhtien2212.findhomerental.dao.ConnectServer;
 import com.trinhtien2212.findhomerental.dao.GetTotalRoomFilter;
 import com.trinhtien2212.findhomerental.dao.GetTotalRoomSort;
@@ -15,6 +16,7 @@ import com.trinhtien2212.findhomerental.ui.add_room.AddRoomActivity;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class RoomPresenter implements StatusResult, RoomsResult {
     ConnectServer connectServer;
@@ -39,13 +41,14 @@ public class RoomPresenter implements StatusResult, RoomsResult {
     public RoomPresenter(RoomsResult roomsResult) {
 //        this.addRoomActivity = addRoomActivity;
         this.roomsResult = roomsResult;
+        this.room = new Room();
         this.connectServer = new SaveLocationBehavior(this);
         this.roomDB = RoomDB.getInstance();
     }
     public RoomPresenter(StatusResult statusResult) {
 //        this.addRoomActivity = addRoomActivity;
         this.statusResult = statusResult;
-
+        room = new Room();
         this.connectServer = new SaveLocationBehavior(this);
         this.roomDB = RoomDB.getInstance();
     }
@@ -54,12 +57,14 @@ public class RoomPresenter implements StatusResult, RoomsResult {
 //        this.addRoomActivity = addRoomActivity;
         this.statusResult = statusResult;
         this.roomsResult = roomsResult;
+        this.room = new Room();
         this.connectServer = new SaveLocationBehavior(this);
         this.roomDB = RoomDB.getInstance();
     }
     public RoomPresenter(RoomsResult roomsResult,StatusResult statusResult,ITotalRoomResult totalRoomResult) {
 //        this.addRoomActivity = addRoomActivity;
         this.totalRoomResult = totalRoomResult;
+        this.room = new Room();
         this.statusResult = statusResult;
         this.roomsResult = roomsResult;
         this.connectServer = new SaveLocationBehavior(this);
@@ -87,8 +92,83 @@ public class RoomPresenter implements StatusResult, RoomsResult {
     public void setRoom(Room room){
         this.room = room;
     }
-    public void saveRoom() {
-        this.roomDB.addRoom(room, this);
+//    public void saveRoom() {
+//        this.roomDB.addRoom(room, this);
+//    }
+public void setAddress(Map<String,Object> address){
+    Log.e("Map",address.toString());
+    String address_string = (String) address.get("address");
+    Log.e("address_string",address_string);
+    room.setAddress((String)address.get("address"));
+    Log.e("Da qua address","Da qua address");
+    room.setPhone((String)address.get("phone"));
+    Log.e("Da qua phone","Da qua phone");
+
+//        viewPager2.setCurrentItem(1);
+}
+    public void setInfo(Map<String,Object>info){
+        room.setCost((int)info.get("costPerMonth"));
+        room.setDeposit((int)info.get("dCost"));
+        room.setEleCost((int)info.get("eCost"));
+        room.setWatCost((int)info.get("wCost"));
+        room.setArea((float)info.get("area"));
+        room.setDescription((String)info.get("description"));
+//        room.putAll(info);
+        Log.e("Room",room.toString());
+//        viewPager2.setCurrentItem(2);
+    }
+    public void saveRoom(Map<String,Object> utilities, boolean isUpdate){
+        room.setUserCreatedId(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        room.setImages((List<String>) utilities.get("images"));
+
+        List<String>utilitiesList = (List<String>) utilities.get("utilities");
+
+        for(String utility : utilitiesList){
+            switch (utility){
+                case "Tivi":
+                    room.setIsTivi(true);
+                    break;
+                case "Tủ đồ":
+                    room.setIsWardrobe(true);
+                    break;
+                case "Wifi":
+                    room.setIsWifi(true);
+                    break;
+                case "Tủ lạnh":
+                    room.setIsFre(true);
+                    break;
+                case "Máy lạnh":
+                    room.setIsAirCondition(true);
+                    break;
+                case "Gác lủng":
+                    room.setIsAttic(true);
+                    break;
+                case "Máy nước nóng":
+                    room.setIsHotWater(true);
+                    break;
+                case  "Nhà vệ sinh riêng":
+                    room.setIsWC(true);
+                    break;
+                case "Tự do giờ giấc":
+                    room.setFreeTime(true);
+                    break;
+                case "An ninh":
+                    room.setIsFence(true);
+                    break;
+                case "Chỗ để xe riêng":
+                    room.setIsPark(true );
+                    break;
+            }
+        }
+        room.setUserCreatedId(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        room.setUserDisplayName(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+        room.setUserPhotoUrl(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString());
+        if(isUpdate){
+            Log.e("RoomId",(String)utilities.get("roomId"));
+            this.room.setRoomID((String)utilities.get("roomId"));
+            this.roomDB.updateRoom(room,this);
+        }
+        else this.roomDB.addRoom(room, this);
     }
 
     public void saveLocation(String roomID) {

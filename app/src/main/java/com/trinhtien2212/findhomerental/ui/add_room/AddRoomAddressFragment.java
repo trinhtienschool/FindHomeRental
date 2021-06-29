@@ -19,6 +19,8 @@ import com.trinhtien2212.findhomerental.model.Room;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.security.auth.login.LoginException;
+
 
 public class AddRoomAddressFragment extends Fragment {
     private View view;
@@ -46,10 +48,13 @@ public class AddRoomAddressFragment extends Fragment {
     }
     private void handleClickBtn(){
         Map<String, Object> addressMap = getFieldData();
+
         if(addressMap !=null){
-            addRoomActivity.getAddress(addressMap);
+            Log.e("address",addressMap.toString());
+            addRoomActivity.setAddress(addressMap);
         }
     }
+
     private Map<String,Object> getFieldData() {
         boolean hasError = false;
         String province = checkError(txt_province);
@@ -64,6 +69,14 @@ public class AddRoomAddressFragment extends Fragment {
         if(apart_number == null) hasError = true;
         String phone = checkError(txt_phone);
         if(phone == null) hasError = true;
+//        Log.e("Phone",phone.length()+"");
+        if(phone != null && !(phone.length() ==10 || phone.length() ==11)){
+            Log.e("VoDayTRuoc","Vodaytruoc");
+            hasError = true;
+            txt_phone.clearFocus();
+            txt_phone.setTextColor(Color.RED);
+            txt_phone.setText("Lỗi: Số điện thoại không hợp lệ");
+        }
 
         if(hasError) return null;
 
@@ -74,7 +87,9 @@ public class AddRoomAddressFragment extends Fragment {
     }
     private String checkError(EditText editText){
         String text = editText.getText().toString().trim();
-        if (text.isEmpty() || text.equals("Lỗi: Trường này không được bỏ trống")) {
+        Log.e("Text",text);
+        if (text.isEmpty() || text.contains("Lỗi")) {
+            Log.e("DangVaoError",text);
             setError(editText);
             return null;
         }
@@ -85,10 +100,15 @@ public class AddRoomAddressFragment extends Fragment {
         editText.setTextColor(Color.RED);
         Toast.makeText(addRoomActivity,"Lỗi",Toast.LENGTH_SHORT).show();
     }
-
+    private void disableEditText(EditText editText) {
+        editText.setFocusable(false);
+        editText.setEnabled(false);
+        editText.setCursorVisible(false);
+        editText.setKeyListener(null);
+    }
     private void init() {
         txt_province = view.findViewById(R.id.txt_province);
-        txt_province.requestFocus();
+//        disableEditText(txt_province);
 
         txt_district = view.findViewById(R.id.txt_district);
 
@@ -102,18 +122,18 @@ public class AddRoomAddressFragment extends Fragment {
 
         Room room = addRoomActivity.sendRoom();
         if(addRoomActivity.sendRoom() != null){
-           String address = room.getAddress();
-           String[] arr = address.split(",");
-           if(arr.length == 4){
-               String apart_street = arr[0];
-               txt_apart_number.setText(apart_street.substring(0,apart_street.indexOf(" ")));
-               txt_street.setText(apart_street.substring(apart_street.indexOf(" ")+1));
-               txt_commune.setText(arr[1]);
-               txt_district.setText(arr[2]);
-               txt_province.setText(arr[3]);
-           }else{
-               txt_province.setText(address);
-           }
+            String address = room.getAddress();
+            String[] arr = address.split(",");
+            if(arr.length == 4){
+                String apart_street = arr[0];
+                txt_apart_number.setText(apart_street.substring(0,apart_street.indexOf(" ")));
+                txt_street.setText(apart_street.substring(apart_street.indexOf(" ")+1));
+                txt_commune.setText(arr[1]);
+                txt_district.setText(arr[2]);
+                txt_province.setText(arr[3]);
+            }else{
+                txt_province.setText(address);
+            }
             txt_phone.setText(room.getPhone());
         }
 
@@ -128,7 +148,10 @@ public class AddRoomAddressFragment extends Fragment {
         txt_phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                txt_phone.setText("");
+                String text = txt_phone.getText().toString();
+                if(text.contains("Lỗi")) {
+                    txt_phone.setText("");
+                }
                 txt_phone.setTextColor(Color.BLACK);
             }
         });
@@ -138,7 +161,7 @@ public class AddRoomAddressFragment extends Fragment {
                 Log.e("KeyCode",""+keyCode);
                 Log.e("KeyEvent",event.getAction()+"");
                 // If the event is a key-down event on the "enter" button
-                if (keyCode == 66)
+                if (keyCode == 66 && event.getAction() == 1)
                 {
                     handleClickBtn();
                     return true;
@@ -152,14 +175,17 @@ public class AddRoomAddressFragment extends Fragment {
         editText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editText.setText("");
+                String text = editText.getText().toString();
+                if(text.startsWith("Lỗi")) {
+                    editText.setText("");
+                }
                 editText.setTextColor(Color.BLACK);
             }
         });
         editText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(keyCode == 66 && event.getAction() == 0){
+                if(keyCode == 66 && event.getAction() == 1){
                     Log.e("Edit: ",editText.getId()+" : "+nextEdit.getText().toString());
                     editText.clearFocus();
                     nextEdit.requestFocus();

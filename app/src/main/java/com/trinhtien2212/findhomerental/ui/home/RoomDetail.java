@@ -39,13 +39,11 @@ public class RoomDetail extends AppCompatActivity implements StatusResult, Rooms
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_room_detail);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Chi tiết phòng trọ");
         Log.e("OnCreateRoomDetail","Dang vao");
-
-        setContentView(R.layout.activity_room_detail);
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_room_detail);
         assign();
     }
     private void assign(){

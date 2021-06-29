@@ -164,6 +164,7 @@ public class LoveFragment extends Fragment implements RoomsResult, StatusResult,
                 Log.e("Room", mListRoom.get(positon).toString());
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("room",mListRoom.get(positon));
+                bundle.putString("admin","true");
                 Intent intent = new Intent(mainActivity, RoomDetail.class);
                 intent.putExtras(bundle);
                 startActivity(intent);

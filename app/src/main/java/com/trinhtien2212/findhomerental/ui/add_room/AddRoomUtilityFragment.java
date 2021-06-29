@@ -49,7 +49,7 @@ public class AddRoomUtilityFragment extends Fragment {
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.fragment_add_room_utility, container, false);
         addRoomActivity = (AddRoomActivity) getActivity();
-       init();
+        init();
 
 
         return view;
@@ -125,30 +125,31 @@ public class AddRoomUtilityFragment extends Fragment {
         cb.setChecked(true);
     }
     private void setUpdateImage(ImageButton ib,String url){
-      Util.setImage(ib,url);
+        Util.setImage(ib,url);
     }
     private void handleClickSaveButton(){
-        if(imageUris.size()<5){
-            Toast.makeText(addRoomActivity,"Bạn phải chọn ít nhất 5 ảnh",Toast.LENGTH_SHORT).show();
-            return;
-        }
         List<String>utilities = getAllCheckedCheckbox();
-        if(utilities.isEmpty()){
-            Toast.makeText(addRoomActivity,"Bạn phải chọn ít nhất 1 Tiện ích",Toast.LENGTH_LONG).show();
-            return;
-        }
+        if(checkError(utilities)) return;
         Map<String,Object>utilitiesMap = new HashMap<String,Object>();
         utilitiesMap.put("images",imageUris);
         utilitiesMap.put("utilities",utilities);
-
-        if(btn_add_room.getText().toString().equalsIgnoreCase("Cập nhật")){
-            addRoomActivity.saveRoom(utilitiesMap,true);
-        }
-        else addRoomActivity.saveRoom(utilitiesMap,false);
+       addRoomActivity.saveRoom(utilitiesMap);
 
 
     }
+    private boolean checkError(List<String>utilities){
+        boolean hasError = false;
+        if(imageUris.size()<5){
+            Toast.makeText(addRoomActivity,"Bạn phải chọn ít nhất 5 ảnh",Toast.LENGTH_SHORT).show();
+            hasError = true;
+        }
 
+        if(utilities.isEmpty()){
+            Toast.makeText(addRoomActivity,"Bạn phải chọn ít nhất 1 Tiện ích",Toast.LENGTH_LONG).show();
+            hasError = true;
+        }
+        return hasError;
+    }
     private List<String> getAllCheckedCheckbox(){
         List<String> utilities = new ArrayList<String>();
 
@@ -164,6 +165,7 @@ public class AddRoomUtilityFragment extends Fragment {
                         CheckBox checkBox = (CheckBox)view;
                         if(checkBox.isChecked()){
                             utilities.add(checkBox.getText().toString());
+                            Log.e("Checked",checkBox.getText().toString());
                         }
                     }
                 }
@@ -191,7 +193,7 @@ public class AddRoomUtilityFragment extends Fragment {
 
             @Override
             public void onPermissionDenied(List<String> deniedPermissions) {
-                Toast.makeText(addRoomActivity, "Không đồng ý cấp quyền" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(addRoomActivity, "Không đồng ý cấp quyền truy cập thiết bị", Toast.LENGTH_SHORT).show();
             }
 
 

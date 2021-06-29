@@ -313,7 +313,7 @@ public class RoomListActivity extends AppCompatActivity implements ITotalRoomRes
 
     @Override
     public void returnRooms(List<Room> rooms) {
-        Log.e("RoomListAc","Dang vao return room");
+        Log.e("RoomListAcR1","Dang vao return room");
         if(rooms != null){
             mListRoom.addAll(rooms);
             adapter.setData(mListRoom);
@@ -327,20 +327,21 @@ public class RoomListActivity extends AppCompatActivity implements ITotalRoomRes
                 }
             }
         }else {
-            isLoading = false;
-            progressBar.setVisibility(View.INVISIBLE);
             showWaiting(View.INVISIBLE);
         }
+        isLoading = false;
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void onFail() {
-        if(isResultSearch){
+        if(isResultSearch || isResultSort){
             Toast.makeText(RoomListActivity.this,"Có lỗi xảy ra, vui lòng thử lại",Toast.LENGTH_LONG).show();
             mListRoom= new ArrayList<>();
             adapter.notifyDataSetChanged();
         }
-        else Toast.makeText(RoomListActivity.this, "Thất bại", Toast.LENGTH_LONG).show();
+        else
+            Toast.makeText(RoomListActivity.this, "Thất bại", Toast.LENGTH_LONG).show();
         showWaiting(View.INVISIBLE);
     }
 

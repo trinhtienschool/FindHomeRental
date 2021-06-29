@@ -32,11 +32,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:inputType="text"
             android:hint="Tỉnh/Thành phố"
-            android:inputType="none"
-
-
-            android:text="TP. Hồ Chí Minh"
             android:textSize="18sp" />
 
         <EditText

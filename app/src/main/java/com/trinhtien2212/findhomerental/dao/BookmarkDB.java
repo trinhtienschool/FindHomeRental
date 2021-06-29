@@ -41,9 +41,11 @@ public class BookmarkDB extends ConnectDB{
 //                                List<String> roomIds = bookmark.convertToRoomId(documentSnapshot.getData());
                                 Map<String,Object> roomIds = documentSnapshot.getData();
                                 Log.e("RoomIds",roomIds.size()+"");
-                                roomIds.put(getNextKey(roomIds)+"",roomId);
-//                                roomIds.add(roomId);
-                                saveBookmark(roomIds,userUid,bookmarkPresenter);
+                                String nextKey = getNextKey(roomIds,roomId);
+                                if(nextKey !=null) {
+                                    roomIds.put(nextKey + "", roomId);
+                                    saveBookmark(roomIds, userUid, bookmarkPresenter);
+                                }
                             }else{
                                 Map<String,Object>roomIds = new HashMap<String, Object>();
                                 roomIds.put(0+"",roomId);
@@ -53,9 +55,10 @@ public class BookmarkDB extends ConnectDB{
                     }
                 });
     }
-    private String getNextKey(Map<String,Object>roomIds){
+    private String getNextKey(Map<String,Object>roomIds,String roomId){
         int max = -1;
         for(String key: roomIds.keySet()){
+            if(roomId.equalsIgnoreCase((String)roomIds.get(key))) return null;
             int key_num = Integer.parseInt(key);
             max = Math.max(max,key_num);
         }

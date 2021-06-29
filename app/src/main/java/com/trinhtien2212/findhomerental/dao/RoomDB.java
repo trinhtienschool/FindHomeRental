@@ -34,6 +34,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class RoomDB extends ConnectDB {
 
@@ -217,23 +218,29 @@ public class RoomDB extends ConnectDB {
     public void getRandomRooms(RoomsResult roomsResult){
         List<Room>rooms = new ArrayList<Room>();
         db.collection("rooms")
-
-                .orderBy("cost")
-                .limit(30)
+//
+//                .orderBy("cost")
+                .limit(70)
 
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            Random random = new Random();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Room room = new Room();
                                 room.setRoom(document);
                                 if(!room.isDeleted()) {
-                                    rooms.add(room);
+                                    if(random.nextBoolean()) {
+                                        rooms.add(room);
+                                    }
+                                    if(rooms.size()==20){
+                                        getImagesOfRoom(rooms,-1,roomsResult);
+                                        return;
+                                    }
                                 }
                                 Log.e("Room",room.toString());
-
                                 Log.d("Room", document.getId() + " => " + document.getData());
                             }
                             //ToDo

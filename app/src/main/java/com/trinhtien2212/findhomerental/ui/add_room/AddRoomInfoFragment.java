@@ -62,16 +62,25 @@ public class AddRoomInfoFragment extends Fragment {
             txt_description.setText(room.getDescription());
             txt_area.setText(room.getArea()+"");
         }
-        
-        
+
+
         //click field
         setOnClickField(txt_costPerMonth);
         setOnClickField(txt_depositCost);
         setOnClickField(txt_eleCost);
         setOnClickField(txt_watCost);
         setOnClickField(txt_area);
-        setOnClickField(txt_description);
-
+//        setOnClickField(txt_description);
+        txt_description.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String text = txt_description.getText().toString();
+                if(text.startsWith("Lỗi:")) {
+                    txt_description.setText("");
+                }
+                txt_description.setTextColor(Color.BLACK);
+            }
+        });
         //travel next field
         setOnNextField(txt_costPerMonth, txt_depositCost);
         setOnNextField(txt_depositCost, txt_eleCost);
@@ -98,11 +107,11 @@ public class AddRoomInfoFragment extends Fragment {
 
         Map<String, Object> addressMap = getFieldData();
         if (addressMap != null) {
-            addRoomActivity.getInfo(addressMap);
+            addRoomActivity.setInfo(addressMap);
         }
     }
 
-   
+
 
     private Map<String, Object> getFieldData() {
         boolean hasError = false;
@@ -111,6 +120,11 @@ public class AddRoomInfoFragment extends Fragment {
 
         int dCost = checkError(txt_depositCost, 100000);
         if (dCost == -1)  hasError = true;
+        if(dCost > costPM){
+            txt_depositCost.setTextColor(Color.RED);
+            txt_depositCost.setText("Tiền đặt cọc phải nhỏ hơn tiền thuê trong tháng");
+            hasError = true;
+        }
 
         int eCost = checkError(txt_eleCost, 1000);
         if (eCost == -1)  hasError = true;
@@ -120,13 +134,13 @@ public class AddRoomInfoFragment extends Fragment {
 
         String area = txt_area.getText().toString().trim();
         if (area.isEmpty() || area.startsWith("Lỗi:")) {
-            setError(txt_description, "Trường này không được bỏ trống");
+            setError(txt_area, "Trường này không được bỏ trống");
             hasError = true;
         }
         String description = txt_description.getText().toString().trim();
         if (description.isEmpty() || description.startsWith("Lỗi:")) {
             setError(txt_description, "Trường này không được bỏ trống");
-           hasError = true;
+            hasError = true;
         }
         if(hasError) return null;
         Map<String, Object> map = new HashMap<String, Object>();

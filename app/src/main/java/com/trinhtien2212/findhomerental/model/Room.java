@@ -19,7 +19,7 @@ public class Room implements Serializable {
         this.address = address;
     }
 
-    private String roomID, userCreatedId, address, imageUrl, description;
+    private String roomID, userCreatedId, address,description;
     private Date dateCreated;
     private boolean isDeleted, isPark, isWifi, isHotWater, isFre, isAttic , isTivi, isWardrobe , isFence, isWC, isFreeTime, isAirCondition;
     private float area;
@@ -52,7 +52,7 @@ public class Room implements Serializable {
         this.userCreatedId = userCreatedId;
         this.address = address;
         this.phone = phone;
-        this.imageUrl = imageUrl;
+
         this.description = description;
         this.dateCreated = dateCreated;
         this.isDeleted = isDeleted;
@@ -81,7 +81,6 @@ public class Room implements Serializable {
         map.put("isDeleted", this.isDeleted);
         map.put("address", this.address);
         map.put("phone", this.phone);
-        map.put("imageUrl", this.imageUrl);
         map.put("description", this.description);
         map.put("area", this.area);
         map.put("cost", this.cost);
@@ -191,13 +190,7 @@ public class Room implements Serializable {
         this.phone = phone;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 
     public String getDescription() {
         return description;
@@ -390,7 +383,7 @@ public class Room implements Serializable {
         return "Room{" +
                 "userCreatedId='" + userCreatedId + '\'' +
                 ", address='" + address + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
+
                 ", description='" + description + '\'' +
                 ", dateCreated=" + dateCreated +
                 ", isDeleted=" + isDeleted +

@@ -94,7 +94,7 @@ public class RoomAdminAdapter extends RecyclerView.Adapter<RoomAdminAdapter.Room
             address = address.substring(0,40) + "...";
         }
         holder.txtAddress.setText(address);
-        holder.tv_cost.setText("Giá thuê 1 tháng: "+Util.formatCurrency(room.getCost()));
+        holder.tv_cost.setText("Giá thuê: "+Util.formatCurrency(room.getCost()));
         Log.e("RoomAdminAdap","DANG VAO da qua getCost"+Util.formatCurrency(room.getCost())+" : "+Util.formateDate(room.getDateCreated()));
         Log.e("RoomDate",room.getDateCreated().toString());
         holder.tv_dateCreated.setText("Ngày đăng: "+Util.formateDate(room.getDateCreated()));

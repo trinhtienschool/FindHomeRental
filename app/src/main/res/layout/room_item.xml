@@ -17,8 +17,8 @@
             android:layout_height="wrap_content"
             android:padding="5dp">
             <ImageView
-                android:layout_width="75dp"
-                android:layout_height="75dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:id="@+id/imageHome"
                 android:src="@drawable/room"/>
             <TextView
