@@ -75,8 +75,8 @@ public class MainActivity extends AppCompatActivity implements StatusResult, IGe
     private AppBarConfiguration mAppBarConfiguration;
     private NavigationView navigationView;
     private AdminUserPresenter adminUserPresenter;
-    private RealtimeBlurView realtimeBlurView;
-    private ProgressBar pv_saving;
+//    private RealtimeBlurView realtimeBlurView;
+//    private ProgressBar pv_saving;
     private FrameLayout frameLayout;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -84,8 +84,8 @@ public class MainActivity extends AppCompatActivity implements StatusResult, IGe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        realtimeBlurView = findViewById(R.id.realtimeBlurView);
-        pv_saving = findViewById(R.id.pb_saving);
+//        realtimeBlurView = findViewById(R.id.realtimeBlurView);
+//        pv_saving = findViewById(R.id.pb_saving);
         frameLayout = findViewById(R.id.main_activity_baseView);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -387,8 +387,8 @@ public class MainActivity extends AppCompatActivity implements StatusResult, IGe
             showItemAdmin(true);
         }
     }
-    public void showWaiting(int waiting){
-        realtimeBlurView.setVisibility(waiting);
-        pv_saving.setVisibility(waiting);
-    }
+//    public void showWaiting(int waiting){
+//        realtimeBlurView.setVisibility(waiting);
+//        pv_saving.setVisibility(waiting);
+//    }
 }

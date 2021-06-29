@@ -104,8 +104,9 @@ public class MyRoomFragment extends Fragment implements RoomsResult,StatusResult
 
     @Override
     public void returnRooms(List<Room> rooms) {
-        if(rooms == null){
-            Toast.makeText(mainActivity,"Chưa có bài đăng phòng trọ nào",Toast.LENGTH_LONG).show();
+        if(rooms == null || rooms.isEmpty()){
+//            Toast.makeText(mainActivity,"Chưa có bài đăng phòng trọ nào",Toast.LENGTH_LONG).show();
+            mainActivity.showSnackbar("Chưa có bài đăng phòng trọ nào");
             showWaiting(View.INVISIBLE);
         }else {
             mListRoom = rooms;

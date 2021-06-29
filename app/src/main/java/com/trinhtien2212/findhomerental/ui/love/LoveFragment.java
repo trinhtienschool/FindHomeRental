@@ -105,8 +105,9 @@ public class LoveFragment extends Fragment implements RoomsResult, StatusResult,
     @Override
     public void returnRooms(List<Room> rooms) {
         Log.e("LoveFragment","Dang vao Love");
-        if(rooms.isEmpty()) Log.e("RoomsLove",rooms.toString());
-        if(rooms!=null || !rooms.isEmpty()){
+        if(rooms.isEmpty()) Log.e("RoomsLove",rooms.toString()+" : "+rooms.isEmpty());
+        if(rooms!=null && !rooms.isEmpty()){
+            Log.e("Dang vao","Dang vao");
             mListRoom.addAll(rooms);
             adapter.setData(mListRoom);
             totalPage = bookmarkPresenter.getTotalPage();
@@ -122,7 +123,11 @@ public class LoveFragment extends Fragment implements RoomsResult, StatusResult,
             });
             isLoading = false;
 //            bookmarkPresenter.removeRoom("0b4oSVQ6aB6fpmvbkVvo",FirebaseAuth.getInstance().getCurrentUser().getUid());
-        }else Toast.makeText(mainActivity,"Chưa có yêu thích nào",Toast.LENGTH_LONG).show();
+        }else{
+            Log.e("Dang vao2","Dang vao");
+            mainActivity.showSnackbar("Chưa có yêu thích nào");
+//            Toast.makeText(mainActivity,"Chưa có yêu thích nào",Toast.LENGTH_LONG).show();
+        }
 
         progressBar.setVisibility(View.GONE);
         showWaiting(View.INVISIBLE);

@@ -48,6 +48,8 @@ public class HomeFragment extends Fragment implements RoomsResult, RoomHomeAdapt
     private List<Room> mListRoom;
     private MainActivity mainActivity;
     private RoomPresenter roomPresenter;
+    private RealtimeBlurView realtimeBlurView;
+    private ProgressBar progressBar;
     private View root;
     private boolean isLoading, isLastPage;
     private int currentPage=1, totalPage=2;
@@ -102,7 +104,6 @@ public class HomeFragment extends Fragment implements RoomsResult, RoomHomeAdapt
     public void onStart() {
         super.onStart();
         Util.checkNetwork(mainActivity,this);
-        mainActivity.showWaiting(View.VISIBLE);
 
     }
     private void buildRecyclerView() {
@@ -131,6 +132,8 @@ public class HomeFragment extends Fragment implements RoomsResult, RoomHomeAdapt
     }
 
     private void assign(){
+        realtimeBlurView = root.findViewById(R.id.realtimeBlurView4);
+        progressBar = root.findViewById(R.id.pb_saving4);
         btn_my_location = root.findViewById(R.id.ib_my_location);
         recyclerView = root.findViewById(R.id.recycler_home);
         btnSearch = root.findViewById(R.id.ImageButtonSearch);
@@ -188,7 +191,7 @@ public class HomeFragment extends Fragment implements RoomsResult, RoomHomeAdapt
         }else {
             mListRoom = rooms;
             adapter.setData(mListRoom);
-            mainActivity.showWaiting(View.INVISIBLE);
+           showWaiting(View.INVISIBLE);
         }
         if(FirebaseAuth.getInstance().getCurrentUser() !=null){
             Log.e("MainStart","Dang kiem");
@@ -210,7 +213,10 @@ public class HomeFragment extends Fragment implements RoomsResult, RoomHomeAdapt
         intent.putExtras(bundle);
         startActivity(intent);
     }
-
+    private void showWaiting(int waiting){
+        realtimeBlurView.setVisibility(waiting);
+        progressBar.setVisibility(waiting);
+    }
     @Override
     public void returnMyLocation(String location) {
         edtSearch.setText(location);
