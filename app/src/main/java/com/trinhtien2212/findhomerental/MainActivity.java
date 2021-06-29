@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements StatusResult, IGe
 //        user.setUserUid("At137YkMB7OXy99UzZINGbVExY72");
 //        userManagerPresenter.deleteUser(user);
 
-        //updateRoom
+//        //updateRoom
 //        RoomDB_Test roomDB = RoomDB_Test.getInstance();
 //        roomDB.getRandomRooms(null);
 

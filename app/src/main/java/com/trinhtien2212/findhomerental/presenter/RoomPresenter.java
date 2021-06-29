@@ -268,6 +268,8 @@ public void setAddress(Map<String,Object> address){
         if(endDate.getTime()<=dateEnd.getTime()) {
             Log.e("dateStart", start.toString());
             Log.e("dateEnd", end.toString());
+            Log.e("startDate",startDate.toString());
+            Log.e("endDate",endDate.toString());
             roomDB.filterByDateCreated(this, startDate, endDate);
             startDate = endDate;
         }else{

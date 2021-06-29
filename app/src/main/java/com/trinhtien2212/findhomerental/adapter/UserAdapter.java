@@ -125,10 +125,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             btnAdmin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(!Util.checkNetwork(userListActivity,userListActivity)) return;
                     if (listener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
 //                            listener.onAdminClick(position);
+
                             User user = mListUser.get(position);
                             if (btnAdmin.getTag().equals(R.drawable.ic_baseline_admin_panel_settings_24))
                                 adminUserPresenter.addUserAdmin(user.getUserUid(), UserViewHolder.this);

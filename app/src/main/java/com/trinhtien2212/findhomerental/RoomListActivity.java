@@ -462,7 +462,7 @@ public class RoomListActivity extends AppCompatActivity implements ITotalRoomRes
                 if(!Util.checkNetwork(this,this)) return true;
                 Toast.makeText(this, "Lọc theo lớn hơn 3 tháng tất cả phòng trọ", Toast.LENGTH_SHORT).show();
                 mListRoom= new ArrayList<>();
-                roomPresenter.filterRoom(3,9);
+                roomPresenter.filterRoom(3,6);
                 isResultSearch = false;
                 isResultSort = false;
                 isResultFilter = true;

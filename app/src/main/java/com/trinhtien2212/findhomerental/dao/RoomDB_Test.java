@@ -32,7 +32,9 @@ import com.trinhtien2212.findhomerental.ui.Util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -119,10 +121,10 @@ public class RoomDB_Test extends ConnectDB {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public static Date between() {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2021,2,1);
+        calendar.set(2021,0,1);
         Date start = calendar.getTime();
 
-        calendar.set(2021,8,15);
+        calendar.set(2021,6,1);
         Date end = calendar.getTime();
         long startMillis = start.getTime();
         long endMillis = end.getTime();
@@ -160,11 +162,28 @@ public class RoomDB_Test extends ConnectDB {
                             user.add(new User("Quang Tiến Trịnh","https://lh3.googleusercontent.com/a/AATXAJzeH6VqIHq7TaX6Jswm29bDcyqbCPHeCL_1b1RW=s96-c","p1O3NUAmPpeGrlXkMtLmCpKjoSW2"));
                             user.add(new User("Nhuan DuongBa","https://lh3.googleusercontent.com/a/AATXAJwOn1EMYlD02jScEVeBLCwbEdla6y2VNY09Luw-=s96-c","4sqr2hpDw3UrHTEIJyN8llgEAv22"));
                             user.add(new User("Nhật Thy Trần","https://lh3.googleusercontent.com/a/AATXAJxkQHtGYlnkOCNeQvprSWluZOozgdcD4lUhiSG8=s96-c","KYUfmugBxgbEYAhrAvaEiz6OOlk2"));
+                            user.add(new User("Đinh Thị Hằng","https://lh3.googleusercontent.com/a/AATXAJxdytKywG6qAmcYHX-quVmyPhIswCyKdnEtDUYr=s96-c","1iMxcgcReJdLzMkMecIORQrXj0g2"));
 
+                            user.add(new User("Quỳnh Trần","https://lh3.googleusercontent.com/a/AATXAJyrk3_F5zwUIxvLt0KRa9_bGZD-P-hUWNkiFICKyg=s96-c","CWMs65Z5CEeQvn3Eh6E5rPtO6s53"));
+                            user.add(new User("QUYNH TRAN TRUC","https://lh3.googleusercontent.com/a/AATXAJy1XKSlZNnX1UxZiC9DR-jIks2b-8xIDNmGOn2j=s96-c","GtDmZCR7IdO3HQUZksQsJh4rkeH2"));
+
+                            user.add(new User("DuongBa Nhuan","https://lh3.googleusercontent.com/a/AATXAJxS6wLHV6Z0qbdagQdxUyvoMen-O13tToUyiReG=s96-c","JCYYUwBHXhOXFkmZ5fOVys69fUf1"));
+                            user.add(new User("Tiến Trần Nhật","https://lh3.googleusercontent.com/a-/AOh14GgtGFq5tc4zhoc1x52XW1hIExq0DdbP2UzcE-zR=s96-c","NXdlRY2SMlWKajmcQdNPxQ7JcQJ3"));
+                            user.add(new User("hang dinh", "https://lh3.googleusercontent.com/a/AATXAJw-Amx3oDtTLjh3Q_EVBXHO1kW10_fv63YyiH8i=s96-c","PBqLPTAVj3O4MGKwt3fcnerezmb2"));
+
+                            user.add(new User( "nguyên Trần","https://lh3.googleusercontent.com/a/AATXAJyrXFsiZ9vdo6EJ_f5myCrT-86k8mIdb6w7VWgZ=s96-c","ahIbWSc1IPYdyCagoHJPhmKcvBf1"));
+                            user.add(new User("Hằng MyTa IT","https://lh3.googleusercontent.com/a-/AOh14GiOI_s29qdhHYdwF04QGsgbo_zKm8m4i73deXeQ=s96-c","antiHmgTywU55fj81QnaeckmrBh1"));
+                            user.add(new User("Nhật Thy Trần","https://lh3.googleusercontent.com/a-/AOh14GgK68OPMfSkdG0YXaojWBuD-q-QRjjhHdhDEFTu5Q=s96-c","bAWKUgETfNaAhdKDrxBI05wdvlD2"));
+                            user.add(new User("Trần Nhật Thy","https://lh3.googleusercontent.com/a/AATXAJx0PgNekpS71XDCAVcnVs-pWqPxE5Jff8wSsrzZ=s96-c", "p86Hpcy18RcQLecZkNp55srUw943"));
+                            user.add(new User("Hân Khả","https://lh3.googleusercontent.com/a/AATXAJwAddMvtbe_zqAU8YiklTkMPlULntPTKUtd_ntS=s96-c",  "ufMOxWqLNxV0Hu9iLv60lAz7QTW2"));
 
 
 //                            getImagesOfRoom(rooms,-1,roomsResult);
-                            update(roomIds,-1,user);
+                            int[] a = new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+                            int a_user = roomIds.size()/user.size();
+                            int last_user = roomIds.size()/user.size() + roomIds.size()%user.size();
+                            Log.e("Tag","roomIDs: "+roomIds.size()+" users.size: "+user.size()+" a_user: "+a_user+" last_user: "+last_user);
+                            update(roomIds,-1,user,a,a_user,last_user);
                         } else {
                             Log.d("Error", "Error getting documents: ", task.getException());
                         }
@@ -175,10 +194,22 @@ public class RoomDB_Test extends ConnectDB {
 
 //    Test
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void update(List<String>roomIds, int index, List<User>users){
+    public void update(List<String>roomIds, int index, List<User>users,int[] currentRoomsOfAUser,int numOfRoomsOfAUser,int numOfRoomsOfLastUser){
 
         final int index2 = index+1;
-        int user_index = new Random().nextInt(8);
+        int user_index;
+        while(true){
+            user_index = new Random().nextInt(users.size());
+            if(user_index == (users.size()-1)){
+                if(currentRoomsOfAUser[user_index]<= numOfRoomsOfLastUser){
+                    currentRoomsOfAUser[user_index]++;
+                    break;
+                }
+            }else if(currentRoomsOfAUser[user_index]<=numOfRoomsOfAUser){
+                currentRoomsOfAUser[user_index]++;
+                break;
+            }
+        }
         User user = users.get(user_index);
         if(index2 == roomIds.size()) {
             Log.e("Xong","Da update xong");
@@ -190,9 +221,10 @@ public class RoomDB_Test extends ConnectDB {
 //        int deposit = (int)(cost*30/100);
 //        cost = cost*1000;
 //        deposit = deposit*1000;
-//        map.put("dateCreated",between());
+        map.put("dateCreated",between());
 //        map.put("cost",cost);
 //        map.put("deposit",deposit);
+        map.put("isDeleted",false);
         map.put("userPhotoUrl",user.getPhotoUrl());
         map.put("userCreatedId", user.getUserUid());
 //        map.put("isAirCondition",new Random().nextBoolean());
@@ -207,7 +239,7 @@ public class RoomDB_Test extends ConnectDB {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d("Succ", "DocumentSnapshot successfully updated!");
-                        update(roomIds,index2,users);
+                        update(roomIds,index2,users,currentRoomsOfAUser,numOfRoomsOfAUser,numOfRoomsOfLastUser);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
