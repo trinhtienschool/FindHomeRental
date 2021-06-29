@@ -189,6 +189,8 @@ public class LoveFragment extends Fragment implements RoomsResult, StatusResult,
                 window.setAttributes(windowatribute);
                 btnThoat=dialog.findViewById(R.id.btnthoatid);
                 btnXoa=dialog.findViewById(R.id.btnxoaid);
+                txtWarning = dialog.findViewById(R.id.textWarning);
+                txtWarning.setText("Xóa yêu thích vĩnh viễn");
                 btnThoat.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
