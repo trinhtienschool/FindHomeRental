@@ -14,11 +14,13 @@ import com.trinhtien2212.findhomerental.model.Notification;
 import com.trinhtien2212.findhomerental.model.Room;
 import com.trinhtien2212.findhomerental.presenter.RoomPresenter;
 import com.trinhtien2212.findhomerental.presenter.RoomsResult;
+import com.trinhtien2212.findhomerental.ui.Util;
+import com.trinhtien2212.findhomerental.ui.home.IGetMyLocation;
 import com.trinhtien2212.findhomerental.ui.home.RoomDetail;
 
 import java.util.List;
 
-public class WarnDetail extends AppCompatActivity implements RoomsResult {
+public class WarnDetail extends AppCompatActivity implements RoomsResult, IGetMyLocation {
     TextView tv_title,tv_content;
     Button btn_openDetail;
     private RoomPresenter roomPresenter;
@@ -69,5 +71,15 @@ public class WarnDetail extends AppCompatActivity implements RoomsResult {
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    @Override
+    public void returnMyLocation(String location) {
+
+    }
+
+    @Override
+    public void showSnackbar(String message) {
+        Util.showSnackbar(findViewById(R.id.activity_constrain_layout),message);
     }
 }

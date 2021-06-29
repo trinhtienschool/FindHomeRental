@@ -25,11 +25,13 @@ import com.trinhtien2212.findhomerental.presenter.NotificationPresenter;
 import com.trinhtien2212.findhomerental.presenter.NotificationResult;
 import com.trinhtien2212.findhomerental.presenter.StatusResult;
 import com.trinhtien2212.findhomerental.ui.PaginationScrollListener;
+import com.trinhtien2212.findhomerental.ui.Util;
+import com.trinhtien2212.findhomerental.ui.home.IGetMyLocation;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WarnFragment extends Fragment implements NotificationResult, StatusResult {
+public class WarnFragment extends Fragment implements NotificationResult, StatusResult , IGetMyLocation {
 
     private RecyclerView recyclerView;
     private WarnAdapter adapter;
@@ -57,6 +59,12 @@ public class WarnFragment extends Fragment implements NotificationResult, Status
         setFirstData();
         Log.e("WarnFrag","Co vao");
         return root;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Util.checkNetwork(mainActivity,this);
     }
 
     private void assign(){
@@ -119,5 +127,15 @@ public class WarnFragment extends Fragment implements NotificationResult, Status
     @Override
     public void onSuccess() {
 
+    }
+
+    @Override
+    public void returnMyLocation(String location) {
+
+    }
+
+    @Override
+    public void showSnackbar(String message) {
+        mainActivity.showSnackbar(message);
     }
 }

@@ -325,12 +325,14 @@ public class MainActivity extends AppCompatActivity implements StatusResult{
     private void updateUi(boolean isLogin) {
         if (isLogin) {
             setShowAdmin();
+            showItemLogin(true);
             menuItem.setTitle("Đăng xuất");
             Util.setImage(iv_header_avatar, currentUser.getPhotoUrl().toString());
             tv_header_name.setText(currentUser.getDisplayName());
             tv_header_email.setText(currentUser.getEmail());
         } else {
             showItemAdmin(false);
+            showItemLogin(false);
             menuItem.setTitle("Đăng nhập");
             iv_header_avatar.setImageResource(R.drawable.house);
             tv_header_name.setText("Trang chủ");
@@ -342,6 +344,15 @@ public class MainActivity extends AppCompatActivity implements StatusResult{
     {
         Menu nav_Menu = navigationView.getMenu();
         nav_Menu.findItem(R.id.nav_admin).setVisible(show);
+        nav_Menu.findItem(R.id.nav_myroom).setVisible(show);
+        nav_Menu.findItem(R.id.nav_love).setVisible(show);
+        nav_Menu.findItem(R.id.nav_warning).setVisible(show);
+    }
+    private void showItemLogin(boolean show){
+        Menu nav_Menu = navigationView.getMenu();
+        nav_Menu.findItem(R.id.nav_myroom).setVisible(show);
+        nav_Menu.findItem(R.id.nav_love).setVisible(show);
+        nav_Menu.findItem(R.id.nav_warning).setVisible(show);
     }
 
 

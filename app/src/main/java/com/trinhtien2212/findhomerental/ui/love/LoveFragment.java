@@ -81,6 +81,13 @@ public class LoveFragment extends Fragment implements RoomsResult, StatusResult,
         progressBar = root.findViewById(R.id.pb_saving4);
         recyclerView = root.findViewById(R.id.recycler_home4);
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Util.checkNetwork(mainActivity,this);
+    }
+
     //Load data
     private void setFirstData(){
         //Todo FirebaseAuth.getInstance().getCurrentUser().getUid()
@@ -153,6 +160,7 @@ public class LoveFragment extends Fragment implements RoomsResult, StatusResult,
             @Override
             public void onItemClick(int positon) {
                 // Todo item
+                if(!Util.checkNetwork(mainActivity,LoveFragment.this)) return;
                 Log.e("Room", mListRoom.get(positon).toString());
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("room",mListRoom.get(positon));

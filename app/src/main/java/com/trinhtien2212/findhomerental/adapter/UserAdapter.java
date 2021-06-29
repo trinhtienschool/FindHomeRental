@@ -11,12 +11,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.trinhtien2212.findhomerental.R;
+import com.trinhtien2212.findhomerental.UserListActivity;
 import com.trinhtien2212.findhomerental.model.User;
 import com.trinhtien2212.findhomerental.presenter.AdminUserPresenter;
 import com.trinhtien2212.findhomerental.presenter.IUserResult;
 import com.trinhtien2212.findhomerental.presenter.StatusResult;
 import com.trinhtien2212.findhomerental.presenter.UserManagerPresenter;
 import com.trinhtien2212.findhomerental.ui.Util;
+import com.trinhtien2212.findhomerental.ui.home.IGetMyLocation;
 
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     private AdminUserPresenter adminUserPresenter = AdminUserPresenter.getInstance();
     private List<User> mListUser;
     private OnItemClickListener mListener;
-
+    private UserListActivity userListActivity;
     public interface OnItemClickListener {
         void onDeleteClick(int position);
 
@@ -34,7 +36,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
         void onNoteClick(int position);
     }
-
+    public UserAdapter(UserListActivity userListActivity){
+        this.userListActivity = userListActivity;
+    }
     // item click
     public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
@@ -78,7 +82,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         return mListUser == null ? 0 : mListUser.size();
     }
 
-    public class UserViewHolder extends RecyclerView.ViewHolder implements StatusResult {
+    public class UserViewHolder extends RecyclerView.ViewHolder implements StatusResult, IGetMyLocation {
         private TextView txtName, txtEmail;
         private ImageView imgUser;
         private ImageButton btnDelete, btnHouse, btnNote, btnAdmin;
@@ -165,6 +169,16 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                 btnAdmin.setImageResource(R.drawable.ic_baseline_admin_panel_settings_24);
                 btnAdmin.setTag(R.drawable.ic_baseline_admin_panel_settings_24);
             }
+        }
+
+        @Override
+        public void returnMyLocation(String location) {
+
+        }
+
+        @Override
+        public void showSnackbar(String message) {
+            userListActivity.showSnackbar(message);
         }
     }
 }

@@ -12,6 +12,7 @@ public class Bookmark {
 //    private List<Room>rooms;
     private Map<String,String>mapRoomIds;
     public Bookmark() {
+        mapRoomIds = new HashMap<>();
     }
 
     public Bookmark(String userId, List<Room> rooms) {

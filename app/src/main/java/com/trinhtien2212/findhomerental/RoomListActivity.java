@@ -116,6 +116,7 @@ public class RoomListActivity extends AppCompatActivity implements ITotalRoomRes
     @Override
     protected void onStart() {
         super.onStart();
+        Util.checkNetwork(this,this);
         dialogreport = new Dialog(getApplicationContext());
     }
 
@@ -317,8 +318,6 @@ public class RoomListActivity extends AppCompatActivity implements ITotalRoomRes
             mListRoom.addAll(rooms);
             adapter.setData(mListRoom);
             adapter.notifyDataSetChanged();
-
-
             if(isRoomOfAUser){
                 returnTotalRoom(mListRoom.size()+"");
             } else{
@@ -327,11 +326,11 @@ public class RoomListActivity extends AppCompatActivity implements ITotalRoomRes
                     returnTotalRoom(searchPresenter.getTotalResults()+"");
                 }
             }
+        }else {
+            isLoading = false;
+            progressBar.setVisibility(View.INVISIBLE);
+            showWaiting(View.INVISIBLE);
         }
-
-       progressBar.setVisibility(View.INVISIBLE);
-        isLoading = false;
-       showWaiting(View.INVISIBLE);
     }
 
     @Override
@@ -356,6 +355,7 @@ public class RoomListActivity extends AppCompatActivity implements ITotalRoomRes
         }
 
         else if(isDeleting){
+            returnTotalRoom((Integer.parseInt(tv_totalItem.getText().toString())-1)+"");
             isDeleting  = false;
             Toast.makeText(RoomListActivity.this, "Thành công", Toast.LENGTH_LONG).show();
             mListRoom.remove(room_pending_delete);
@@ -432,16 +432,17 @@ public class RoomListActivity extends AppCompatActivity implements ITotalRoomRes
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.filter_1month:
+                if(!Util.checkNetwork(this,this)) return true;
                 Toast.makeText(this, "Lọc theo < 1 tháng tất cả phòng trọ", Toast.LENGTH_SHORT).show();
                 mListRoom= new ArrayList<>();
                     roomPresenter.filterRoom(0,1);
                     isResultSearch = false;
                     isResultSort = false;
                     isResultFilter = true;
-
                     showWaiting(View.VISIBLE);
                 return true;
             case R.id.filter_1_3_month:
+                if(!Util.checkNetwork(this,this)) return true;
                 Toast.makeText(this, "Lọc theo từ 1 đến 3 tháng tất cả phòng trọ", Toast.LENGTH_SHORT).show();
                 mListRoom= new ArrayList<>();
                 roomPresenter.filterRoom(1,3);
@@ -452,6 +453,7 @@ public class RoomListActivity extends AppCompatActivity implements ITotalRoomRes
                 showWaiting(View.VISIBLE);
                 return true;
             case R.id.filter_3month:
+                if(!Util.checkNetwork(this,this)) return true;
                 Toast.makeText(this, "Lọc theo lớn hơn 3 tháng tất cả phòng trọ", Toast.LENGTH_SHORT).show();
                 mListRoom= new ArrayList<>();
                 roomPresenter.filterRoom(3,9);
@@ -462,6 +464,7 @@ public class RoomListActivity extends AppCompatActivity implements ITotalRoomRes
                 showWaiting(View.VISIBLE);
                 return true;
             case R.id.item_price_increase:
+                if(!Util.checkNetwork(this,this)) return true;
                 Toast.makeText(this, "Sắp xếp theo giá tăng dần tất cả phòng trọ", Toast.LENGTH_SHORT).show();
                 mListRoom= new ArrayList<>();
                 roomPresenter.sortRoom(true);
@@ -473,6 +476,7 @@ public class RoomListActivity extends AppCompatActivity implements ITotalRoomRes
                 showWaiting(View.VISIBLE);
                 return true;
             case R.id.item_price_decrease:
+                if(!Util.checkNetwork(this,this)) return true;
                 Toast.makeText(this, "Sắp xếp theo giá giảm dần tất cả phòng trọ", Toast.LENGTH_SHORT).show();
                 mListRoom= new ArrayList<>();
                 roomPresenter.sortRoom(false);
@@ -512,5 +516,7 @@ public class RoomListActivity extends AppCompatActivity implements ITotalRoomRes
     public void returnTotalRoom(String total) {
         this.totalItem = Integer.parseInt(total);
         tv_totalItem.setText(total);
+        progressBar.setVisibility(View.INVISIBLE);
+        showWaiting(View.INVISIBLE);
     }
 }

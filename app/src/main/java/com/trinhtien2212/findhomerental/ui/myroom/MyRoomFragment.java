@@ -95,6 +95,12 @@ public class MyRoomFragment extends Fragment implements RoomsResult,StatusResult
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        Util.checkNetwork(mainActivity,this);
+    }
+
+    @Override
     public void returnRooms(List<Room> rooms) {
         if(rooms == null){
             Toast.makeText(mainActivity,"Chưa có bài đăng phòng trọ nào",Toast.LENGTH_LONG).show();
@@ -123,6 +129,7 @@ public class MyRoomFragment extends Fragment implements RoomsResult,StatusResult
             @Override
             public void onItemClick(int positon) {
                 // Todo item
+                if(!Util.checkNetwork(mainActivity,MyRoomFragment.this)) return;
                 Log.e("Room", mListRoom.get(positon).toString());
                 Log.e("Room", mListRoom.get(positon).toString());
                 Bundle bundle = new Bundle();

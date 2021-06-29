@@ -68,6 +68,12 @@ public class WarnList extends AppCompatActivity implements NotificationResult, S
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Util.checkNetwork(this,this);
+    }
+
     private void buildRecyclerView() {
         adapter = new WarnAdapter();
 

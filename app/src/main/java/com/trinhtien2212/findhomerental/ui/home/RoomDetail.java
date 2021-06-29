@@ -40,6 +40,7 @@ public class RoomDetail extends AppCompatActivity implements StatusResult, Rooms
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Chi tiết phòng trọ");
         Log.e("OnCreateRoomDetail","Dang vao");
 
         setContentView(R.layout.activity_room_detail);

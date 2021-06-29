@@ -200,6 +200,7 @@ public class HomeFragment extends Fragment implements RoomsResult, RoomHomeAdapt
     @Override
     public void onItemClick(int position) {
         // Todo ITEM
+        if(!Util.checkNetwork(mainActivity,this)) return;
         Log.e("Home", "itemClick: clicked" + position);
         Room room = mListRoom.get(position);
         Log.e("room",room.toString());

@@ -73,8 +73,14 @@ public class UserListActivity extends AppCompatActivity implements StatusResult,
         setFirstData();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Util.checkNetwork(this,this);
+    }
+
     private void buildRecyclerView() {
-        userAdapter = new UserAdapter();
+        userAdapter = new UserAdapter(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(userAdapter);
@@ -180,6 +186,7 @@ public class UserListActivity extends AppCompatActivity implements StatusResult,
 
             @Override
             public void onHouseClick(int position) {
+                if(!Util.checkNetwork(UserListActivity.this,UserListActivity.this)) return;
                 User user = mListUser.get(position);
                 Intent intent = new Intent(UserListActivity.this,RoomListActivity.class);
                 Bundle bundle = new Bundle();
@@ -190,6 +197,7 @@ public class UserListActivity extends AppCompatActivity implements StatusResult,
 
             @Override
             public void onNoteClick(int position) {
+                if(!Util.checkNetwork(UserListActivity.this,UserListActivity.this)) return;
                 Log.e("NoteClick",position+"");
                 User user = mListUser.get(position);
                 Intent intent = new Intent(UserListActivity.this,WarnList.class);
