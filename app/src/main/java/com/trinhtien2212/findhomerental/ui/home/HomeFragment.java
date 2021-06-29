@@ -55,7 +55,6 @@ public class HomeFragment extends Fragment implements RoomsResult, RoomHomeAdapt
     private SearchPresenter searchPresenter;
     public HomeFragment() {
     }
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         mainActivity = (MainActivity) getActivity();
@@ -103,6 +102,7 @@ public class HomeFragment extends Fragment implements RoomsResult, RoomHomeAdapt
     public void onStart() {
         super.onStart();
         Util.checkNetwork(mainActivity,this);
+        mainActivity.showWaiting(View.VISIBLE);
 
     }
     private void buildRecyclerView() {

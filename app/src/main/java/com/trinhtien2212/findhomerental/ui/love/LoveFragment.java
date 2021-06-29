@@ -104,8 +104,9 @@ public class LoveFragment extends Fragment implements RoomsResult, StatusResult,
     }
     @Override
     public void returnRooms(List<Room> rooms) {
-
-        if(rooms!=null){
+        Log.e("LoveFragment","Dang vao Love");
+        if(rooms.isEmpty()) Log.e("RoomsLove",rooms.toString());
+        if(rooms!=null || !rooms.isEmpty()){
             mListRoom.addAll(rooms);
             adapter.setData(mListRoom);
             totalPage = bookmarkPresenter.getTotalPage();
