@@ -122,6 +122,7 @@ public class RoomListActivity extends AppCompatActivity implements ITotalRoomRes
 
     private void setFirstData() {
 //        roomPresenter.getRandomRooms();
+        if(!Util.checkNetwork(this,this)) return;
         if(!isRoomOfAUser) {
             roomPresenter.sortRoom(true);
             isResultSort = true;
@@ -202,6 +203,7 @@ public class RoomListActivity extends AppCompatActivity implements ITotalRoomRes
             @Override
             public void onReportClick(int position) {
                 // Todo REPORT
+                if(!Util.checkNetwork(RoomListActivity.this,RoomListActivity.this)) return;
                 Room room = mListRoom.get(position);
                 String roomInfo=room.getAddress();
 
@@ -265,6 +267,9 @@ public class RoomListActivity extends AppCompatActivity implements ITotalRoomRes
         recyclerView.addOnScrollListener(new PaginationScrollListener(linearLayoutManager) {
             @Override
             public void loadMoreItems() {
+                if(!Util.checkNetwork(RoomListActivity.this,RoomListActivity.this)){
+                    return;
+                }
                 isLoading = true;
                 progressBar.setVisibility(View.VISIBLE);
 //                currentPage += 1;

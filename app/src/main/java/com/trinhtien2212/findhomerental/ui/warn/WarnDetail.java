@@ -45,9 +45,8 @@ public class WarnDetail extends AppCompatActivity implements RoomsResult, IGetMy
         btn_openDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!Util.checkNetwork(WarnDetail.this,WarnDetail.this)) return;
                 roomPresenter.getARoomByRoomId(notification.getRoomId());
-
-
             }
         });
     }

@@ -61,7 +61,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements StatusResult{
+public class MainActivity extends AppCompatActivity implements StatusResult, IGetMyLocation{
     //Google sign in
     private GoogleSignInClient mGoogleSignInClient;
     private final int RC_SIGN_IN = 12345;
@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements StatusResult{
             public void onClick(View view) {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
+                if(!Util.checkNetwork(MainActivity.this,MainActivity.this)) return;
                 Log.e("Co", "Co vo dang nahp");
                 if(currentUser !=null){
                     startActivity(new Intent(MainActivity.this,AddRoomActivity.class));
@@ -237,6 +238,7 @@ public class MainActivity extends AppCompatActivity implements StatusResult{
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getTitle() == null) return false;
+        if(!Util.checkNetwork(this,this)) return true;
         if (item.getTitle().equals("Đăng nhập")) {
 //            startActivity(new Intent(MainActivity.this,GoogleSignIn.class));
 //            item.setTitle("Đăng xuất");
@@ -370,6 +372,11 @@ public class MainActivity extends AppCompatActivity implements StatusResult{
 
     }
 
+    @Override
+    public void returnMyLocation(String location) {
+
+    }
+    @Override
     public void showSnackbar(String message) {
         Util.showSnackbar(frameLayout,message);
     }
