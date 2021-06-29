@@ -23,6 +23,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mmin18.widget.RealtimeBlurView;
@@ -60,6 +61,7 @@ public class MyRoomFragment extends Fragment implements RoomsResult,StatusResult
     private int room_pending_delete;
     private Button btnThoat;
     private Button btnXoa;
+    private TextView txtWarning;
     public MyRoomFragment(){
     }
 
@@ -162,6 +164,8 @@ public class MyRoomFragment extends Fragment implements RoomsResult,StatusResult
                 window.setAttributes(windowatribute);
                 btnThoat=dialog.findViewById(R.id.btnthoatid);
                 btnXoa=dialog.findViewById(R.id.btnxoaid);
+                txtWarning = dialog.findViewById(R.id.textWarning);
+                txtWarning.setText("Xóa phòng vĩnh viễn");
                 btnThoat.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
