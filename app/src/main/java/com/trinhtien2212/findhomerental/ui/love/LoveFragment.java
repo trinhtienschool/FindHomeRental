@@ -192,7 +192,7 @@ public class LoveFragment extends Fragment implements RoomsResult, StatusResult,
                 btnThoat=dialog.findViewById(R.id.btnthoatid);
                 btnXoa=dialog.findViewById(R.id.btnxoaid);
                 txtWarning = dialog.findViewById(R.id.textWarning);
-                txtWarning.setText("Xóa yêu thích vĩnh viễn");
+                txtWarning.setText("Xóa phòng yêu thích vĩnh viễn");
                 btnThoat.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
