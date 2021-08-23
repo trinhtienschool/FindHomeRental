@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "findroomrentalmobile",
+  "private_key_id": "ecde5d3a9813f00ab485e02da308a673a9eed965",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCw4gdBaDPOPmOT\nJOc08WJGQl+Gq77Sy79uEHN5PUaKWrcF8eSof7VGywPMz3jkh6lMtubK4+gEVOCD\nOfZNaRu9arMs0j3k9qKqJaMuuWaZQMRAwcjYRXB7qAqsRSq+oakJNZIRV5al1lrH\n7XT3g/zUcvC0SmC78YrZzDkIfl/NzaIdvr17WSqp0gwwkaeuMSM0ZCJKcOlE8xRo\nS8cAeZhCpCkbSw5YGkq4iZHO+ybO1yY8tjYz+wiCB0FbRSfclZhm9mZ2B2REFXdG\nfSJR5CqgnEi2CJE9mgxxdGnL9dLNnoBKO65ZH/6Kd/htdUrpHJpd+femooiBYkf8\nZBLjV1NjAgMBAAECggEAOtOxXgttz1Xof/NyAaWV7Y/9fSh5Wlnw3IYUIWpDn5fz\n7sI4LeHrRBQYu3D03+xOXfkmYKvTaj1gPcR1KeGfHCv0Ux/I/fEYwEWsM8ntWWK0\n4mSQi3zsn/OPOSP3x1a0hR+P6LycmaLkpkFO+VKoL2/apdtmuJrodu74uN5utl7z\nUU56tocczvJpX7Ty1VSyIBmnv4i4UQaTbPrEyqpSMhS5WhHCBXt1OmUveS43jbna\nQFYVlgfTgRphCi1JNqn/PP2G48HpKLTPkcMtErZa6A6uy/faiLt+Le+vUjGwLzIl\n+pCRwIMiqI24CG5rB+0QbM3UEdupn64Fealw9t6noQKBgQDnsqlbZnD6fuQDW5CI\nyl0wXkeWUg34Ro3UGGkGyIeTJj9mi0BiLOWEq9zwFp9a6lEr6Zrjjji0mzstIkGi\nTQq1i8xrAt+qkwmYRYqpQOvYmNqVWegvmUh2Ds1VeHl56TEuG3/svLbTNYiVvpri\nl4aAu6vYJ1Sfjvw8hJDnj1/xTQKBgQDDb4aPdB3BII5gkV8Nkvqe0yd+wS2enYiT\nYT4zxnMRIiNSbtYlh6XHP87z9M2rhfsaGunURFnG2ndMyAs72RPESIbpiPHr1i9u\nvFKQHKDGj+OiamCrTSUb75L067FQYNpBowdYXFF0G/FOCHbcYacaaSZR3V0XRygc\nMnJPc+r/bwKBgDPFpDocJdqTR/fIGf+22CParTxVkXGMslxWKAGwBTtILJqJOxW0\n2oROssujAnCaMxEQ3d9DBEC2/v4SzX+qn135ou+2cKv4twgjYdx3+TsozI7azBr2\nsU5P+GnExcAL70VSN796W4/OQnrTYGCJYzCYvslJ4IrWtF4BcS+Mxe9xAoGAQLIn\nqk93Fhqv5znYbIbuXitqVKSgdHST5K35SGx2ZQKXDM/SJkRcVbRCzzGH8DL/J+om\n4/Tof1KM0acbSOmYiI610pNZ+odB1neTIU/IzVKOuZJbg/mawj+xt1Bat1AIkFfm\ns5KECFrDq+BTcKsHBVAvtkQAcBdHKOZuPu0RqxMCgYEAikjrdj9lzD+KbefBJkn9\nhJ6tND8riLetp6rapD39Uq2WjkHI6axkwaihJjyC+p2eGZRw7I+PTp+f6KfGGEvs\nBkjzvn1zRSE2bmrezDdqYgKZfCj/1ms32JIuQmuixdrufa6VMS/VnjU6c3vswi6F\nECD6b0rd4SKXVWL6fGoBduI=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-hifj5@findroomrentalmobile.iam.gserviceaccount.com",
+  "client_id": "100946255714932306979",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-hifj5%40findroomrentalmobile.iam.gserviceaccount.com"
+}

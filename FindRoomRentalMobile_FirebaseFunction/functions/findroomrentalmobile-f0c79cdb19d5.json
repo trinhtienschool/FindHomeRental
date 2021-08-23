@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "findroomrentalmobile",
+  "private_key_id": "f0c79cdb19d5b032a573597b699eabe9b5ccaaf6",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCvOPWen8JxfUVh\naeDmzBYUsjkbUQyx+AsC8Bkoc3NTZnIQkDeRb78Tbaca4YWI7lNiPZa9IxoCuqZG\nNhTaO3r0su1p0YJ2vBG2rTvfVaA3H0B8xcDaaZrbmVaFuz9e0ZE2p042KN5YHIW9\n1qjHFd5ZpHuKH9rPPqMm1d3m3KPuA+Af+cU+sltozcfow7InnbmTWzC4n51JZ6EO\nxOHRq/sRiSpesHHP5U/p+F75Y6ejvzfGaAL0swxYVdHA/wIX34C9bPWmxIGpOhl9\nChKM0IDaRgu4c/j43fo9c+H0o4nMwg/9yOZFryjzBhtVk4gYELPfRXKSXRZDIyYO\nmP4AXvWXAgMBAAECggEAM2dIVyKTDmwroGpJOiwBBk1Kh4L9cHBN+qypFL7ZxEu3\nhrhoNNhNe8udTDuAyyzvdVCQGihkBwzunoZbE7KDXanoEDUQSvjdUXP8roYWHFWk\nu3XgH7L/ZRDU2yKVcqGUMi5euXC/2aV0br68gLsfobipLVou/MFpZ4kyMfnkdXxb\n4eNkV7uL2pFDNyOZSFsslG4lVvrSaosFo246MQDYHGYBgvAiONb8B2U6cqDFLmQD\nNo6/x8OENWO1D63z4fW6mbDw2mvjH9WVqIv8BMxDKp96dtp96C8W1p1QTqqMaPdv\nHqNNqMith23bPDC4YvBQ3i8fqPODD0bX1V07tVRpQQKBgQD2VP/Z/998AKgXrdKY\nxYaQWz5QlN/tsI2E3b5GRs1+/MIS/8CqTvbPRZxoJwzjtnyhaFIprlomBNJjnByU\nh2xIWSZQc0M33mqUmBwYGmd64NUV7JHUfpMVIZd0/pfcFfHFYJKao3xoGYFlQpfo\nfW/hNoL81XgiDRG4GPxKao8TRwKBgQC2GX4wqArvhE66ozCUtcjNIsWjAeYs2Wl8\npDtJt4PK6vdSDVhebtVaBcisH+yeSESCksmuQnEiSUnSfxGfjRK66oAUjV+bSRwy\nBJ/xb3NUcWdOLdFoiVoq1OpC4pE3ew5/2QTP06WUj8KDE2+sBLcWsZngf7whC/CU\nRzGvegITMQKBgQDv/6i3USEAw/MB/w0sY2bTxtJT2HjEMDvxs8nq1pjonILJ1/xy\n8jRthbj5kPJx+h47dFR437JdUF1bR4JhBABwDMvTnjljeYQF+p2ErlUb12pEzhTX\nH+tVr0DNcC+s8oR4dbrgh2ByXEdBzTwL/ArBNkcw5xsAshMNdup35pI3iQKBgCpl\nQQXe+bzN1u6I89SLhhaMU+shlA85BuAn9E2zVhG2JqKJzNsffriYxCGexR4MwTaN\nKjtR6LkMyw0g3F+DHqs50Vv3lhy3JsNWZE53nig4xs5iyHBIGiACtg+gZCLAmZ2W\nTxJ7uf8egTC3I7au2lmEO8kStCAVgYtkD+NEyprhAoGBALMKoQjNWdP7tu2bDZsI\n5ja3NvDoQEZRl8TkoOiR5rl5lHWNtMKZuGYaZQcQXaKBhhai7IgkRwjY7OGm8kHO\nBUHf+x3b+QBDpi4POaOp9VczTD1YnZzGUK8Efg+QrXLOgb+ZXqBR5PpORMYwVJtV\npsGHjdw24SPaAa8sEqrTMlX3\n-----END PRIVATE KEY-----\n",
+  "client_email": "findroomrentalmobile@appspot.gserviceaccount.com",
+  "client_id": "108781047931161603496",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/findroomrentalmobile%40appspot.gserviceaccount.com"
+}
