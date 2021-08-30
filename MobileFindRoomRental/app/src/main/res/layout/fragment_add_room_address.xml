@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.add_room.AddRoomAddressFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp"
+        tools:layout_editor_absoluteX="122dp"
+        tools:layout_editor_absoluteY="45dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="Địa chỉ"
+            android:textColor="#FF9800"
+            android:inputType="text"
+
+            android:textSize="22sp" />
+
+        <EditText
+
+            android:id="@+id/txt_province"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:hint="Tỉnh/Thành phố"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/txt_district"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:textSize="18sp"
+            android:hint="Quận/Huyện"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/txt_commune"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:textSize="18sp"
+            android:hint="Xã/Phường"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/txt_street"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:textSize="18sp"
+            android:hint="Đường"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/txt_apart_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:textSize="18sp"
+            android:hint="Số nhà"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/txt_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:textSize="18sp"
+            android:hint="Số điện thoại"
+            android:inputType="phone" />
+
+        <Button
+            android:id="@+id/btn_next_info"
+            android:layout_width="238dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="16sp"
+            android:layout_margin="20dp"
+            android:text="Tiếp theo"
+            android:textColor="#FFFFFF"
+            app:backgroundTint="#FFC107" />
+    </LinearLayout>
+
+</FrameLayout>

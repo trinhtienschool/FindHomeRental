@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/item_price_increase"
+        android:title="Giá thuê tăng dần (tất cả)"/>
+    <item android:id="@+id/item_price_decrease"
+        android:title="Giá thuê giảm dần (tất cả)"/>
+</menu>

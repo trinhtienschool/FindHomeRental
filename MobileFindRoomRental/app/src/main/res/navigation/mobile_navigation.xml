@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.trinhtien2212.mobilefindroomrental.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/nav_myroom"
+        android:name="com.trinhtien2212.mobilefindroomrental.ui.myroom.MyRoomFragment"
+        android:label="@string/menu_myRoom"
+        tools:layout="@layout/fragment_my_room" />
+    <fragment
+        android:id="@+id/nav_love"
+        android:name="com.trinhtien2212.mobilefindroomrental.ui.love.LoveFragment"
+        android:label="@string/menu_love"
+        tools:layout="@layout/fragment_love" />
+    <fragment
+        android:id="@+id/nav_warning"
+        android:name="com.trinhtien2212.mobilefindroomrental.ui.warn.WarnFragment"
+        android:label="@string/menu_warn"
+        tools:layout="@layout/fragment_warn" />
+    <fragment
+        android:id="@+id/nav_contactus"
+        android:name="com.trinhtien2212.mobilefindroomrental.ui.home.ContactFragment"
+        android:label="@string/menu_contactus"
+        tools:layout="@layout/fragment_contact" />
+    <fragment
+        android:id="@+id/nav_admin"
+        android:name="com.trinhtien2212.mobilefindroomrental.ui.home.AdminFragment"
+        android:label="@string/menu_admin"
+        tools:layout="@layout/fragment_admin" />
+</navigation>

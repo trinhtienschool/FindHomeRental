@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.ContactFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+
+        android:layout_height="match_parent">
+
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+
+            android:paddingTop="60dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+
+                android:theme="@style/Theme.AppCompat.NoActionBar"
+                tools:context=".ui.home.RoomDetail">
+
+
+                <ImageView
+                    android:id="@+id/slider"
+                    android:layout_width="match_parent"
+                    android:layout_height="210dp"
+                    android:src="@drawable/house"
+
+
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/include"
+                    app:layout_constraintVertical_bias="0.0"></ImageView>
+
+
+
+                <RelativeLayout
+                    android:paddingTop="10dp"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/image_phone"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="0dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:src="@drawable/phone_call"
+                        android:text="Giá:"
+                        android:textColor="@color/black"
+                        android:textSize="18dp">
+
+                    </ImageView>
+
+                    <TextView
+
+                        android:id="@+id/text_phone"
+
+                        android:paddingTop="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_toRightOf="@+id/image_phone"
+                        android:text="0987654321"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"></TextView>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:paddingTop="10dp"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/image_phone2"
+                        android:src="@drawable/phone_call"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="0dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="Giá:"
+                        android:textColor="@color/black"
+                        android:textSize="18dp">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/text_phone2"
+
+                        android:paddingTop="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_toRightOf="@+id/image_phone2"
+                        android:text="0332089065"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"></TextView>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:paddingTop="10dp"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/image_zalo"
+                        android:src="@drawable/facebook"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="0dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="Giá:"
+                        android:textColor="@color/black"
+                        android:textSize="18dp">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/text_zalo"
+
+                        android:paddingTop="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_toRightOf="@+id/image_zalo"
+                        android:text="NongLamUniversity"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"></TextView>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:paddingTop="10dp"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/image_gmail"
+                        android:src="@drawable/logogmail"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="0dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="Giá:"
+                        android:textColor="@color/black"
+                        android:textSize="18dp">
+
+                    </ImageView>
+
+                    <TextView
+
+                        android:id="@+id/text_gmail"
+
+                        android:paddingTop="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_toRightOf="@+id/image_gmail"
+                        android:text="18130068@st.hcmuaf.edu.vn"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"></TextView>
+                </RelativeLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+
+
+</FrameLayout>

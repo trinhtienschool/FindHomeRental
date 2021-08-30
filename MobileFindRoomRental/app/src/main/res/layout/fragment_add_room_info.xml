@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.add_room.AddRoomInfoFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <ScrollView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+
+
+        <LinearLayout
+            android:id="@+id/layout_info"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dp"
+            tools:layout_editor_absoluteX="106dp"
+            tools:layout_editor_absoluteY="60dp">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineHeight="100dp"
+                android:text="Giá tiền (VNĐ):"
+                android:textColor="#FF9800"
+
+                android:textSize="22sp" />
+
+            <EditText
+                android:id="@+id/txt_costPerMonth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:textSize="18sp"
+                android:layout_marginBottom="5dp"
+                android:hint="Giá tiền thuê trong tháng"
+                android:inputType="number"
+                android:lineHeight="100dp" />
+
+            <EditText
+                android:textSize="18sp"
+                android:id="@+id/txt_depositCost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_marginBottom="5dp"
+                android:inputType="number"
+                android:hint="Giá tiền đặt cọc" />
+
+            <EditText
+                android:textSize="18sp"
+                android:id="@+id/txt_eleCost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_marginBottom="5dp"
+                android:inputType="number"
+                android:hint="Giá tiền điện" />
+
+            <EditText
+                android:textSize="18sp"
+                android:id="@+id/txt_watCost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_marginBottom="5dp"
+                android:inputType="number"
+                android:hint="Giá tiền nước" />
+            <TextView
+                android:id="@+id/tv_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Diện tích:(m2)"
+
+                android:textColor="#FF9800"
+                android:textSize="22sp"/>
+
+            <EditText
+                android:id="@+id/txt_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:textSize="18sp"
+                android:layout_marginBottom="5dp"
+                android:inputType="number"
+                android:hint="Diện tích"/>
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mô tả:"
+                android:textColor="#FF9800"
+                android:textSize="22sp"/>
+
+            <EditText
+                android:textSize="18sp"
+                android:id="@+id/txt_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="100"
+                android:maxLines="60"
+                android:gravity="start|top"
+                android:inputType="textMultiLine"
+                android:layout_marginBottom="5dp"
+                android:hint="Nội dung mô tả chi tiết"/>
+
+            <Button
+                android:id="@+id/btn_NextImageFrag"
+                android:layout_width="238dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="16sp"
+                android:layout_margin="20dp"
+                android:text="Tiếp theo"
+                android:textColor="#FFFFFF"
+                app:backgroundTint="#FFC107" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>
